@@ -1,0 +1,210 @@
+Sujet: Physique nucléaire
+
+La physique nucléaire est la science qui a pour objet l'étude du noyau atomique et des interactions dont il est le siège, c'est-à-dire l'étude du noyau atomique en tant que tel (par l'élaboration d'un modèle théorique décrivant son état fondamental, ses différents modes d'excitation et de désexcitation), mais aussi de la façon dont il interagit avec des particules chargées électriquement comme le proton ou les électrons, ou avec d'autres noyaux atomiques. La physique nucléaire expérimentale étudie des phénomènes très énergétiques (les énergies mises en jeu vont de la fraction de MeV à plusieurs GeV) et très localisés dans l'espace (l'ordre de grandeur des distances est 10−14 m). Après un bref résumé historique, cet article se consacre à décrire :
+
+la structure nucléaire, qui vise à comprendre comment les nucléons (protons et neutrons) interagissent pour former le noyau ;
+les mécanismes des réactions nucléaires, dont le but est de décrire les différentes façons qu'ont les noyaux d'interagir : fission, fusion, diffusion (élastique, inélastique), collisions avec des particules, collisions entre noyaux, radioactivité, etc. ;
+les domaines d'applications de la physique nucléaire, de la médecine à l'astrophysique, en passant par la production d'énergie. Tous ces domaines d'activité exploitent la physique des interactions rayonnement-matière ;
+les organismes de recherche en physique nucléaire, en France et dans le monde.
+
+
+== Introduction ==
+La matière est constituée de molécules, de cristaux ou d'ions, eux-mêmes constitués d'atomes. Ces atomes sont formés d'un noyau central entouré par un nuage électronique. La physique nucléaire est la science qui s'intéresse à l'ensemble des phénomènes physiques faisant intervenir le noyau atomique. En raison de la taille microscopique de celui-ci, les outils mathématiques utilisés s'inscrivent essentiellement dans le cadre du formalisme de la mécanique quantique.
+Le noyau atomique est constitué de nucléons, qui se répartissent en protons et en neutrons. Les protons sont des particules qui possèdent une charge électrique élémentaire positive, alors que les neutrons sont des particules neutres. Ils n'ont qu'un moment magnétique, et ne sont donc que peu sensibles au champ électromagnétique, contrairement aux protons. Si l'on assimilait le noyau atomique à une sphère dure, le rayon de cette sphère serait de quelques fermis, un fermi valant 10−15 mètre (un fermi = un femtomètre). Les noyaux possédant la même valeur de Z, c'est-à-dire le même nombre de protons, et n'ayant pas le même nombre de neutrons, sont appelés « isotopes ».
+
+
+== Le noyau dans l'Histoire ==
+
+Jusqu'au tournant du XXe siècle, on a cru que les atomes étaient les constituants ultimes de la matière. La découverte de la radioactivité en 1896 par Henri Becquerel et les études qui suivirent, en particulier par les époux Curie, commencèrent de suggérer que les atomes étaient peut-être eux-mêmes des objets composés. Cela expliquait que la matière puisse émettre spontanément des particules comme dans le cas de la radioactivité alpha.
+C'est en 1911 que Rutherford découvrit que les atomes semblaient effectivement être des objets composés. En analysant la diffusion de particules alpha émises par une source radioactive à travers une feuille d'or, il en vint à conclure que « le plus simple semble de supposer que l'atome contient une charge [électrique] centrale distribuée dans un volume très petit » (« it seems simplest to suppose that the atom contains a central charge distributed through a very small volume… »). Le modèle de Rutherford de l'atome était donc un noyau central possédant une charge électrique entouré par des électrons maintenus en orbite par l'interaction électromagnétique. Il avait déjà été proposé en 1904 par Hantarō Nagaoka.
+En 1919, Rutherford, toujours, découvre l'existence dans le noyau du proton, particule possédant une charge positive élémentaire e, mais possédant une masse beaucoup plus grande que celle de l'électron (qui, lui, a une charge électrique élémentaire négative). En 1932, Chadwick met en évidence l'existence du neutron, particule très semblable au proton, hormis le fait qu'il ne possède pas de charge électrique (d'où son nom). À la même époque, Heisenberg propose que le noyau atomique est en fait constitué d'un ensemble de protons et de neutrons.
+En 1932, Leó Szilárd suppose de possibles réactions nucléaires en chaine donnant de l'énergie thermique. En 1934, Enrico Fermi débute par la notion d'interaction faible, ce qui sera la théorie finalisée en 1970 de l'interaction élémentaire applicable à la cinétique des neutrons, 
+la stabilité du noyau atomique et ce qu'on appelle maintenant la « réaction nucléaire ». Cette physique sort de la physique classique, traduisant sans discontinuité des énergies pour entrer dans la physique quantique, c'est-à-dire des énergies faibles mais à valeurs discontinues.
+
+
+== Structure nucléaire ==
+
+L'interaction qui maintient la cohésion des nucléons au sein du noyau résulte de l'interaction nucléaire forte qui lie les quarks dans le nucléon. L'interaction nucléaire forte est la plus intense des quatre forces fondamentales de la nature (d'où son nom) ; elle est à très courte portée, ce qui assure la forte cohésion des nucléons ; on peut les considérer comme des particules élémentaires (ignorer leur structure interne) dans un large domaine d'énergie (jusqu'au GeV).
+Le résidu de cette interaction se fait sentir à l'extérieur des nucléons : fortement répulsive jusqu'à un fermi où elle devient fortement attractive, elle décroit ensuite exponentiellement (voir la figure pour une configuration de spin particulière). Les protons étant des particules chargées, ils interagissent également via l'interaction coulombienne. Si le nombre de protons dans le noyau est important, cette dernière prend le pas sur l'interaction forte et les noyaux deviennent instables. La quantité d'énergie qui assure la cohésion du noyau est appelée énergie de liaison du noyau.
+
+
+== Les réactions nucléaires ==
+
+Une réaction est dite nucléaire lorsqu'il y a modification de l'état quantique du noyau. Participent alors à la réaction les nucléons constituant le noyau, mais également d'autres particules, tels les électrons e–, les positrons e+...
+Les réactions nucléaires peuvent être de plusieurs types. Les plus importantes modifient la composition du noyau et sont donc aussi des transmutations ; dans la nature, on observe :
+
+la fission : un noyau lourd se brise en deux ou plusieurs fragments. C'est ce type de réaction qui est mis en œuvre dans les bombes atomiques de type A et dans les centrales nucléaires électrogènes ;
+la fusion : deux noyaux légers fusionnent. C'est le mode de production d'énergie des étoiles. La fusion nucléaire est à la source de la nucléosynthèse qui permet d'expliquer la genèse de tous les éléments du tableau périodique des éléments de Mendeleïev et de leurs isotopes. C'est également le type de réaction qui est utilisé dans les bombes dites à hydrogène (bombe H). L'utilisation de la fusion à des fins de production d'énergie civile n'est pas encore maîtrisée. Sa maîtrise est l'objet du projet international ITER ;
+la radioactivité : un noyau émet une ou plusieurs particules spontanément. On distingue :
+la radioactivité α, où un noyau d'hélium 4 est émis,
+la radioactivité β, où sont émis soit un électron et un antineutrino électronique (β–), soit un positron et un neutrino électronique (β+),
+la radioactivité γ, par laquelle un noyau perd son énergie par un rayonnement électromagnétique de haute énergie.
+Avec l'arrivée des accélérateurs de particules et de noyaux lourds (A > 8), de nouveaux types de réactions ont été étudiés :
+
+les réactions de transfert où un ou quelques nucléons sont échangés entre les noyaux du faisceau et ceux de la cible ;
+la spallation (en anglais : knock-out reaction) : des particules légères (neutrons par exemple) sont envoyées sur un noyau cible et expulsent un ou plusieurs nucléons de ce noyau ;
+les collisions entre noyaux lourds, où la quantité d'énergie cinétique disponible est très importante et conduit à des noyaux très excités (noyaux chauds, voire aux très hautes énergies à la formation de plasma quarks-gluons) ;
+dans les collisions violentes, la multifragmentation décompose un noyau en plus de deux noyaux.
+D'autres interactions ne modifient pas la composition du noyau, mais lui transfèrent de l'énergie d'excitation :
+
+les réactions de diffusion : le projectile (un photon, un nucléon ou un ensemble de nucléons) voit sa trajectoire modifiée. On parle de diffusion élastique lorsqu'il y a conservation de l'énergie cinétique du système {projectile-cible}. Dans le cas contraire, on parle de diffusion inélastique : une énergie potentielle supplémentaire (qui provient du noyau) est libérée au moment de l'interaction. Lorsque la particule incidente est un photon, on nomme différemment la diffusion, selon le phénomène physique mis en jeu :
+la diffusion de Thomson concerne un photon qui interagit avec un électron libre. On parle de diffusion cohérente car la longueur du photon diffusé est la même que l'incidente (voir le point suivant). La diffusion Thomson est une diffusion élastique qui a lieu généralement entre quelques dizaines de keV et 100 keV,
+lorsque le photon a une énergie incidente supérieure (au-delà de 100 keV environ), l'énergie du photon réémis est inférieure à celle du photon incident. On parle d'effet Compton (variation de la longueur d'onde). La diffusion Compton est également une diffusion élastique (la différence d'énergie entre le gamma incident et celui réémis est transmise à l'électron). La diffusion Thomson est un cas particulier de la diffusion Compton (lorsque l'énergie du photon incident est très inférieure à 511 keV). La diffusion Thomson n'est donc pas au sens strict une diffusion cohérente mais la différence de longueur d'onde entre la particule émise et l'incidente est trop faible pour être mesurée,
+lorsque le photon incident interagit avec un électron apparié (plus précisément avec une molécule ayant un moment dipolaire comme N2 ou O2 qu'on retrouve dans l'air ; le barycentre du nuage électronique d'un des deux atomes ne coïncide pas avec le noyau), on parle de diffusion Rayleigh. Cette dernière est parfaitement cohérente. Elle prédomine pour les photons de quelques eV. Elle explique notamment la couleur bleue du ciel ;
+l'effet photoélectrique : le photon incident « disparaît » en transmettant son énergie sous forme d'énergie cinétique à un électron. Ce phénomène est prédominant pour les photons d'énergie inférieure à quelques dizaines de keV.
+
+
+== Applications ==
+
+
+=== Astrophysique ===
+La nucléosynthèse explique la fabrication dans l'Univers des divers noyaux qui le constituent actuellement. Trois processus bien distincts sont cependant nécessaires pour expliquer l'abondance des différents éléments chimiques dans l'univers.
+
+
+==== Nucléosynthèse primordiale ====
+
+Dans une première phase, lors du Big Bang, sont formés à partir de l'hydrogène les noyaux de 2D, 3He, 4He et 7Li. Aucun élément plus lourd n'est synthétisé, car cette phase est relativement courte.
+
+
+==== Nucléosynthèse stellaire ====
+Cependant, pour former des éléments plus lourds que le lithium, il est nécessaire d'avoir recours à une réaction faisant intervenir trois noyaux d'hélium, dite réaction triple alpha. Ce type de réaction est extrêmement difficile à réaliser et ne peut se faire que sur des périodes beaucoup plus longues que les quelques minutes de la nucléosynthèse primordiale. La suite de la nucléosynthèse s'est ainsi produit au cœur des étoiles. On parle alors de nucléosynthèse stellaire. Celle-ci se scinde d'ailleurs en deux procédés : la nucléosynthèse lente, ayant lieu dans les étoiles, qui permet de synthétiser les éléments plus légers que le fer, puis la nucléosynthèse explosive, produite uniquement lors des explosions d'étoiles, appelées supernovae.
+
+
+==== Nucléosynthèse interstellaire ====
+
+La spallation est un processus qui survient lorsqu'un noyau atomique frappé par un particule incidente ou une onde électro-magnétique de grande énergie se décompose en particules ou atomes plus petits.
+
+
+=== Archéologie ===
+
+
+=== Médecine ===
+La médecine nucléaire repose sur l'utilisation de sources radioactives et de l'interaction de ces sources avec les tissus humains. Cette interaction est exploitée à des fins de diagnostic (radiologie, radiodiagnostic) ou de traitement (radiothérapie). À partir des années 1980 se sont développées les techniques d'imagerie par résonance magnétique nucléaire (IRM) qui font appel aux propriétés magnétiques des noyaux.
+
+
+=== Production d'énergie ===
+La production d'énergie nucléaire peut avoir deux origines : la fission d'un noyau lourd (famille des actinides comme l'uranium) ou la fusion de noyaux légers (de type deutérium, tritium).
+La production d'énergie peut être :
+
+brève et intense : c'est le principe d'une bombe nucléaire ;
+contrôlée dans le temps (à des fins de production civile mais aussi militaire).
+
+
+==== Production d'énergie contrôlée ====
+Actuellement, les industriels ne peuvent exploiter que l'énergie qui provient de la fission des noyaux lourds. L'énergie est ensuite utilisée :
+
+soit pour produire de l'électricité, c'est le cas des centrales nucléaires ;
+
+soit pour permettre de mouvoir un véhicule, particulièrement dans le domaine maritime (porte-avions, sous-marins à propulsion nucléaire) et de l'aérospatiale.
+ 
+L'utilisation de la fusion à des fins de production d'énergie civile n'est pas encore maîtrisée. Sa maîtrise est l'objet du projet international ITER.
+
+
+==== Application militaire (bombe nucléaire) ====
+
+
+=== Agro-alimentaire : stérilisation des aliments ===
+
+L'irradiation des aliments par des rayonnements ionisants (électrons, rayons γ ou X) vise à réduire le nombre de micro-organismes qu'ils contiennent. C'est une technique parfois contestée, qui est l'objet de règlements spécifiques, très variables selon les pays.
+
+
+=== Analyse par activation ===
+
+Le principe est d'irradier un objet, sous flux neutronique, dans le but de créer des produits d'activations qui sont des radioisotopes formés à partir des éléments présents dans la matrice à analyser. Chaque radioisotope émet des raies X/gamma qui lui sont caractéristiques. En fonction de l'intensité des raies émises, il est possible de remonter à la composition initiale, dans des proportions nettement inférieures à celles d'une analyse chimique : alors que le ppm (partie par million) est typiquement la limite basse d'une concentration issue d'une mesure chimique, il est possible d'atteindre, avec l'analyse par activation, des concentrations allant jusqu'à 10−12.
+
+
+=== Contrôle non destructif ===
+
+Les techniques radiologiques pour le contrôle non destructif reposent sur le même principe que les techniques d'imageries utilisées en médecine, mais les sources de rayonnement sont plus intenses et ont un spectre plus « dur » du fait des épaisseurs et de la nature de la matière (acier…) à traverser.
+
+
+=== Détection et localisation d'une explosion nucléaire ===
+
+
+== Organismes de recherche en physique nucléaire ==
+
+
+=== En France ===
+Commissariat à l'énergie atomique (CEA)
+Institut national de physique nucléaire et de physique des particules (IN2P3), du Centre national de la recherche scientifique (CNRS)
+Grand accélérateur national d'ions lourds (GANIL, Caen)
+Laboratoire de physique des deux infinis Irène Joliot-Curie (IJCLab, Orsay)
+Institut de physique nucléaire (IPN, Orsay)
+Laboratoire de l'accélérateur linéaire (LAL, Orsay)
+Centre de spectrométrie nucléaire et de spectrométrie de masse (CSNSM, Orsay)
+Imagerie et modélisation en neurobiologie et cancérologie (IMNC, Orsay)
+Institut de radioprotection et de sûreté nucléaire (IRSN)
+Synchrotron soleil (Saclay)
+European Synchrotron Radiation Facility (ESRF, Grenoble)
+Institut Laue-Langevin (ILL, Grenoble)
+Laboratoire Léon Brillouin (LLB, Orsay)
+Laboratoire national Henri Becquerel (Saclay)
+Centre d'études nucléaires de Bordeaux Gradignan (CENBG, Bordeaux Gradignan)
+Institut de Physique des 2 Infinis de Lyon (IP2I, Villeurbanne, ex-IPN)
+Laboratoire de physique corpusculaire  (LPC Caen, Clermont-Ferrand)
+Institut pluridisciplinaire Hubert-Curien (IPHC, Strasbourg)
+Laboratoire de physique nucléaire et de hautes énergies (LPNHE, Paris Jussieu)
+Laboratoire de physique subatomique et des technologies associées (Subatech, Nantes)
+
+
+=== En Europe ===
+Conseil Européen de Recherche Nucléaire (CERN)
+
+
+=== Dans le monde ===
+Oak Ridge National Laboratory (ORNL)
+Los Alamos National Laboratory (LANL)
+Argonne National Laboratory (ANL)
+Centre for Heavy Ion Research (GSI)
+National Superconducting Cyclotron Laboratory (en) (NSCL)
+RIKEN Nishina Center (Japon)
+
+
+== Notes et références ==
+
+
+== Bibliographie ==
+
+
+=== Ouvrages de vulgarisation ===
+James M. Cork, Radioactivité & physique nucléaire, Dunod, 1949.
+Bernard Fernandez, De l'atome au noyau - Une approche historique de la physique atomique et de la physique nucléaire, éd. Ellipses, 2006  (ISBN 2729827846).
+
+
+=== Ouvrages d'initiation ===
+Claude Le Sech et Christian Ngô, Physique nucléaire : des quarks aux applications  (ISBN 978-2-10-081089-5).
+Luc Valentin, Le monde subatomique - Des quarks aux centrales nucléaires, Hermann, 1986  (ISBN 2-7056-6043-7).
+Luc Valentin, Noyaux et particules - Modèles et symétries, Hermann, 1997 (ISBN 2-7056-6096-3) édité erroné (BNF 35081579).
+David Halliday, Introduction à la physique nucléaire, Dunod, 1957.
+
+
+=== Ouvrages de physique fondamentale ===
+(en) Irving Kaplan, Nuclear physics, the Addison-Wesley Series in Nuclear Science & Engineering, Addison-Wesley, 1956.
+(en) A. Bohr et B. Mottelson, Nuclear Structure, 2 vol., Benjamin, 1969-1975. vol. 1 : Single Particle Motion ; vol. 2 : Nuclear Deformations. Réédité par World Scientific Publishing Company, 1998  (ISBN 981-02-3197-0).
+(en) P. Ring et P. Schuck, The nuclear many-body problem, Springer Verlag, 1980  (ISBN 3-540-21206-X).
+(en) A. de Shalit et H. Feshbach, Theoretical Nuclear Physics, 2 vol., John Wiley & Sons, 1974. vol. 1 : Nuclear Structure ; vol. 2 : Nuclear Reactions  (ISBN 0-471-20385-8).
+C. Cohen-Tannoudji, B. Diu et F. Laloë, Mécanique quantique, 2 vol., Hermann, coll. « Enseignement des sciences »  (ISBN 2-7056-6074-7 et 2-7056-6121-2).
+
+
+== Annexes ==
+
+
+=== Articles connexes ===
+
+Concernant les bombes atomiques
+Bombe A
+Bombe H
+Bombe à neutrons
+Bombardements atomiques d'Hiroshima et de Nagasaki
+Hibakusha
+
+
+=== Liens externes ===
+
+Ressource relative à la santé : Medical Subject Headings 
+Ressource relative à l'audiovisuel : France 24  
+
+Service de Physique Nucléaire CEA/DAM, France
+Institut National de Physique Nucléaire et de Physique des Particules (In2p3), France
+
+ Portail du nucléaire   Portail de la physique

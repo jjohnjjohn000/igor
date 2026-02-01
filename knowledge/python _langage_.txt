@@ -1,0 +1,83 @@
+Sujet: Python (langage)
+
+Python (prononcé /pi.tɔ̃/) est un langage de programmation interprété, multiparadigme et multiplateformes. Il favorise la programmation impérative structurée, fonctionnelle et orientée objet. Il est doté d'un typage dynamique fort, d'une gestion automatique de la mémoire par ramasse-miettes et d'un système de gestion d'exceptions ; il est ainsi similaire à Perl, Ruby, Scheme, Smalltalk et Tcl.
+Le langage Python est placé sous une licence libre proche de la licence BSD et fonctionne sur la plupart des plateformes informatiques, des smartphones aux ordinateurs centraux, de Windows à Unix avec notamment GNU/Linux en passant par macOS, ou encore Android, iOS, et peut aussi être traduit en Java ou .NET. Il est conçu pour optimiser la productivité des programmeurs en offrant des outils de haut niveau et une syntaxe simple à utiliser.
+
+
+== Utilisation ==
+Python est un langage de programmation qui peut s'utiliser dans de nombreux contextes grâce à des bibliothèques spécialisées.
+Il est utilisé comme langage de script pour automatiser des tâches comme la récupération de la météo sur Internet ou l'enchaînement d'actions en conception assistée par ordinateur (voir la section Adoption). On l'utilise également comme langage de développement de prototype lorsqu'on a besoin d'une application fonctionnelle avant de l'optimiser avec un langage compilé. Il est particulièrement répandu dans le monde scientifique, et possède des bibliothèques optimisées pour le calcul numérique.
+C'est l'un des langages utilisés dans le domaine du big data, de l'informatique quantique et de l'intelligence artificielle incluant l'apprentissage automatique.
+
+
+=== Python à l'école ===
+Python est  apprécié par les pédagogues qui y trouvent un langage où la syntaxe, clairement séparée des mécanismes de bas niveau, permet une initiation aisée aux concepts de base de la programmation.
+Cette initiation commence généralement au début du lycée en classe de seconde. Les élèves souhaitant approfondir le sujet peuvent choisir un enseignement de spécialité Numérique et sciences informatiques (NSI).
+Les calculatrices supportant Python destinées aux lycéens fonctionnent en Python 3. Ces calculatrices peuvent échanger des programmes avec des ordinateurs personnels.
+14 000 lycéens participent à la Nuit du code, un challenge à partir de la classe de première NSI pour créer un jeu en 6 heures avec le moteur Pyxel de Python. À Berlin et Tokyo, les lycées français internationaux (LFI) participent à l'évènement.
+Au LFI de Pékin, l'Heure de code est en langage graphique Scratch de puzzles colorés aimantés pour les collégiens ou en langage textuel Python pour les lycéens. Drew Houston (Dropbox), Mark Zuckerberg (Meta), Bill Gates (Microsoft) et Barack Obama apportent leur soutient à Code.org (en), une organisation à but non lucratif à l'initiative de Hour of code et Hour of AI.
+En janvier-février, Passe ton hack d'abord réunit 7 000 lycéens en ligne pour capturer le drapeau (en) en programmant en Python la détection d'une injection SQL, d'une attaque par force brute avec dictionnaire d'un mot de passe ou le décryptage d'un chiffrement par décalage de César.
+Python est utilisé comme langage de programmation dans l'enseignement secondaire et supérieur, notamment en France. Depuis 2013, il y est enseigné à tous les étudiants de classes préparatoires scientifiques dans le cadre du tronc commun (informatique commune). Auparavant, l'enseignement d'informatique était limité à une option en MP, l'enseignement se faisant en langage Caml ou Pascal. Cette option existe toujours, mais Pascal a été abandonné à partir de la session 2015 des concours et Caml a, lui, été enlevé au profit de OCaml dans cet enseignement. Les premières épreuves de concours portant sur le langage Python sont également celles de la session 2015.
+
+
+== Historique ==
+
+
+=== Au CWI ===
+
+En 1982, au Centre pour les mathématiques et l'informatique (CWI) d'Amsterdam, aux Pays-Bas, l'informaticien Guido van Rossum participe au développement du langage de programmation ABC conçu pour l'enseignement :PUT "ABC" IN B cible les débutants (Beginners) absolus.
+Il travaille alors dans l'équipe du système d'exploitation Amoeba dont les appels systèmes sont difficilement interfaçables avec le Bourne shell utilisé comme interface utilisateur. Il estime alors qu'un langage de script inspiré d'ABC pourrait être intéressant comme interpréteur de commandes pour Amoeba.
+En 1989, profitant d'une semaine de vacances durant les fêtes de Noël, il utilise son ordinateur personnel pour écrire la première version du langage. Fan de la série télévisée Monty Python's Flying Circus, il décide de baptiser ce projet Python. Il s'est principalement inspiré d'ABC, par exemple pour l'indentation comme syntaxe ou les types de haut niveau mais aussi de Modula-3 pour la gestion des exceptions, du langage C et des outils UNIX.
+Durant l'année suivante, le langage commence à être adopté par l'équipe du projet Amoeba, Guido poursuivant son développement principalement pendant son temps libre. Entre le 19 et le 20 février 1991, la première version publique, numérotée 0.9.0, immédiatement patchée en 0.9.1, est postée sur le forum Usenet alt.sources.
+La dernière version sortie au CWI est Python 1.2.
+
+
+=== Au CNRI ===
+En 1995, van Rossum continue son travail sur Python à la Société pour les initiatives nationales de recherche (en) à Reston, en Virginie, où il sort plusieurs versions du logiciel.
+Au CNRI, l'équipe Python travaille sur le navigateur web expérimental Grail utilisant Tcl/Tk. Il est l'équivalent pour Python du navigateur HotJava, permettant d'exécuter des applets dans un environnement sécurisé. Il entraîne le développement de modules pour la bibliothèque standard de gestion de HTML.
+En 1999, le projet Computer Programming for Everybody (CP4E) est lancé conjointement entre le CNRI et la DARPA. Il s'agit d'utiliser Python comme un langage d'enseignement de la programmation. Cette initiative conduira à la création de l'environnement de développement dénommé IDLE.
+En décembre 1999, Andrew M. Kuchling, le manager pendant une décennie des versions de Python 2.0 à 2.7, publie une critique dénommée "Les bizarreries de Python" (Python Warts), qui synthétise les griefs les plus fréquents exprimés à l'encontre du langage. Ce document aura une influence certaine sur les développements futurs du langage.
+Du fait du manque de financement du projet par la DARPA, et du départ de nombreux développeurs Python du CNRI (dont Guido van Rossum), le projet IDLE s'éteint en 2000. Python 1.6 est la dernière version sortie au CNRI.
+
+
+=== Zope ===
+En 2000, l'équipe principale de développement de Python déménage à BeOpen pour former l'équipe PythonLabs à l’origine de Python 2.0. Après cette version, Guido van Rossum et les autres développeurs de PythonLabs rejoignent Digital Creations à présent connue sous le nom de Zope Corporation.
+
+
+=== La Python Software Foundation ===
+En 2001, Python 2.1 est une version dérivée de Python 1.6.1 et de Python 2.0. Sa licence est renommée Python Software Foundation License. Tout code, documentation et spécification ajouté, depuis la sortie de Python 2.1 alpha, est détenu par la Python Software Foundation (PSF), une association sans but lucratif fondée en 2001, modelée d'après l'Apache Software Foundation.
+
+
+=== Google ===
+En 2005, Guido van Rossum travaille sur les projets Mondrian et Rietveld.
+En 2008, Python 3.0 est publié. L'équipe Python a choisi de casser la compatibilité ascendante dans cette nouvelle version majeure pour :
+
+Réparer certains défauts du langage : par exemple l'orienté objet avec deux types de classes) ;
+Nettoyer la bibliothèque standard de ses éléments obsolètes et redondants.
+En 2012, Python 3.1 corrige les erreurs de jeunesse de la version 3.0.
+
+
+=== Dropbox ===
+En 2013, Guido van Rossum est embauché par Dropbox (mypy) jusqu'en 2019.
+
+
+=== Microsoft ===
+En 2020, Guido van Rossum entre dans la division développeur chez Microsoft.
+Selon l'Index TIOBE, « Python, qui est devenu un élément incontournable de la science des données, du DevOps et du développement web, est aussi désormais le langage le plus populaire dans le classement de TIOBE. Classé troisième langage le plus populaire de l'index au début de l'année 2021, Python s'est hissé à la première place en octobre 2022 », notamment en raison de son efficacité pour l'apprentissage automatique. 
+En août 2025, Python  occupe la première place de ce classement.
+
+
+== Caractéristiques ==
+
+
+=== Syntaxe ===
+Python a été conçu pour être un langage lisible. Il vise à être visuellement épuré. Par exemple, il possède moins de constructions syntaxiques que des langages structurés tels que C, Perl, ou Pascal. Les commentaires sont indiqués par le caractère croisillon #.
+Les blocs sont identifiés par l'indentation, au lieu d'accolades comme en C ou C++ ; ou de begin ... end comme en Pascal ou Ruby. Une augmentation de l'indentation marque le début d'un bloc, et une réduction de l'indentation marque la fin du bloc courant. Par convention, l'indentation est de quatre espaces en Python selon le standard de codage PEP 8.
+
+Remarque : L'indentation pourrait être modifiée ou supprimée dans la version en C sans modifier son comportement. De même, la fonction Python peut être écrite avec une expression conditionnelle. Cependant, une indentation correcte permet de détecter plus aisément des erreurs en cas d'imbrication de plusieurs blocs et facilite donc l'élimination de ces erreurs. C'est pourquoi il est préférable d'indenter convenablement les programmes en C. La version courte s'écrirait ainsi :
+
+
+==== Mots-clés du langage ====
+Les mots-clés réservés du langage Python sont fournis dans la liste keyword.kwlist du module keyword.
+Les mots-clés de Python 2.7.5 sont les suivants : and, as, assert, break, class, continue, def, del, elif, else, except, exec, finally, for, from, global, if, import, in, is, lambda, not, or, pass, print, raise, return, try, while, with, yield.
+À partir de Python 

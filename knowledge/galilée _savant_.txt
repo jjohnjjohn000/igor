@@ -1,0 +1,90 @@
+Sujet: Galilée (savant)
+
+Galilée (en italien : Galileo Galilei), né à Pise le 15 février 1564 et mort à Arcetri près de Florence le 8 janvier 1642, est un mathématicien, géomètre, physicien et astronome italien du XVIIe siècle.
+Parmi ses réalisations techniques, il a perfectionné et exploité la lunette astronomique, perfectionnement de la découverte hollandaise d'une lunette d'approche, pour procéder à des observations rapides et précoces qui ont bouleversé les fondements de l'astronomie. Cet homme de sciences s'est ainsi posé en défenseur de l'approche modélisatrice copernicienne de l'Univers, proposant d'adopter l'héliocentrisme et les mouvements satellitaires. Ses observations et généralisations se sont alors heurtées aux critiques des philosophes partisans d'Aristote (proposant un géocentrisme stable, une classification des corps et des êtres, un ordre immuable des éléments et une évolution réglée des substances) et des scientifiques attachés au modèle de Ptolémée, ainsi qu'à une partie des théologiens de l'Église catholique romaine et des Églises protestantes. Galilée, qui ne disposait pas de preuves directes du mouvement terrestre, a parfois oublié la prudence qui lui était prônée par ses protecteurs religieux.
+Dans son opus sur les comètes de 1623, il se fait le partisan de « l'écriture mathématique du livre de l'Univers ». Si Galilée n'a pas contribué à faire progresser l'algèbre, il a tout de même produit des travaux inédits et remarquables sur les suites, sur certaines courbes géométriques et sur la prise en compte des infiniment petits.
+Par ses études et ses nombreuses expériences, parfois uniquement de pensée, sur l'équilibre et le mouvement des corps solides, notamment leur chute, leur translation rectiligne, leur inertie, ainsi que par la généralisation des mesures, en particulier du temps par l'isochronisme du pendule, et la résistance des matériaux, ce chercheur a posé les bases de la mécanique avec la cinématique et la dynamique. Il est considéré depuis 1680 comme le fondateur de la physique, qui s'est imposée comme la première des sciences exactes modernes.
+
+
+== Les premières années ==
+Galileo Galilei (Galilée), fils de Vincenzo Galilei et de Giulia Ammannati, est l'aîné de leurs sept enfants. La famille florentine appartient à la petite noblesse et gagne sa vie dans le commerce à Pise. Vincenzo Galilei, son père, est luthiste, musicien, chanteur, et auteur en 1581 d'un Dialogue de la musique moderne. Il participe à des controverses sur la théorie musicale.
+
+
+=== L'enfance ===
+
+Galilée fait preuve très tôt d'une grande habileté manuelle. Enfant, il s'amuse à réaliser les maquettes de machines qu'il a aperçues.
+Il est éduqué chez ses parents jusqu'à l'âge de 10 ans. Ceux-ci déménagent alors à Florence et le confient à un prêtre du voisinage, Jacopo Borghini, pendant deux ans. Par la suite, Galilée entre au couvent de Santa Maria de Vallombrosa et y reçoit une éducation religieuse. Poussé au noviciat par ses maîtres, il ne poursuit pas sa carrière ecclésiastique très longtemps : son père, réagissant à une maladie des yeux de son fils, le ramène à Florence en 1579.
+Deux ans plus tard, Vincenzo Galilei l'inscrit à l'université de Pise où il suit des cours de médecine (sur les traces d'un de ses glorieux ancêtres, le magister (maître) Galilaeus de Galilaeis), (1370 - ~1450), mais sans y porter de l'intérêt. Il revient à Florence en 1585 sans avoir fini ses études ni obtenu son diplôme.
+
+
+=== La découverte de sa vocation ===
+
+Dès 1583, Galilée est initié aux mathématiques par Ostilio Ricci, un ami de la famille, élève de Tartaglia. Bien que Ricci soit un savant peu renommé, il a l'habitude, rare à l'époque, de lier la théorie à la pratique par l'expérience. Il a également été influencé par Giovanni Battista Benedetti, autre élève de Tartaglia.
+À l'âge de dix-neuf ans, il découvre, en chronométrant à l'aide de son pouls, la régularité des oscillations des lustres de la cathédrale de Pise. De retour chez lui, il compare les oscillations de deux pendules et travaille à la loi de l'isochronisme des pendules, dont le Néerlandais Christian Huygens découvre la vraie loi de l'isochronisme rigoureux (nécessitant l'invention d'un autre mouvement isochrone : le pendule cycloïdal alors que le pendule simple de Galilée n'est pas parfaitement isochrone) en décembre 1659, étape de la découverte d'une nouvelle science : la mécanique galiléenne.
+Galilée observe la régularité du mouvement du pendule simple et le décrit en 1638. Il affirme que la période d'un pendule ne dépend pas de sa masse mais de sa longueur et il énonce la loi sur les périodes : les carrés des périodes d’oscillations sont proportionnels aux longueurs des pendules.  La formule (dans le cadre de l'approximation des petites oscillations) s'énonce de nos jours sous la forme suivante :
+
+ 
+  
+    
+      
+        T
+        =
+        2
+        π
+        
+          
+            
+              l
+              g
+            
+          
+        
+      
+    
+    {\displaystyle T=2\pi {\sqrt {\frac {l}{g}}}}
+  
+ 
+avec 
+  
+    
+      
+        T
+      
+    
+    {\displaystyle T}
+  
+ la période des oscillations, 
+  
+    
+      
+        l
+      
+    
+    {\displaystyle l}
+  
+ la longueur du pendule et 
+  
+    
+      
+        g
+      
+    
+    {\displaystyle g}
+  
+ l'intensité de la pesanteur.
+Galilée entame des études de médecine, mais n'ayant aucun goût pour la médecine et la philosophie aristotélicienne, il les abandonne. Grâce à Euclide, qui l'éblouit, Galilée réoriente ses études vers les mathématiques. Dès lors, il se réclame de Pythagore, de Platon et d'Archimède et contre le géocentrisme aristotélicien. Dans le courant humaniste, il rédige aussi un pamphlet féroce sur le professorat de son temps. Deux ans plus tard, il est de retour à Florence sans diplôme, mais avec de grandes connaissances et une grande curiosité scientifique.
+
+
+=== De Florence à Pise (1585-1592) ===
+
+Galilée commence par démontrer plusieurs théorèmes sur le centre de gravité de certains solides dans son Theoremata circa centrum gravitatis solidum, et entreprend en 1586 de reconstituer la balance hydrostatique d'Archimède ou Bilancetta. En même temps, il poursuit ses études sur les oscillations du pendule pesant et invente le pulsomètre. Cet appareil permettait d'aider à la mesure du pouls et fournissait un étalon de temps, qui n'existait pas à l'époque. Il commence aussi ses études sur la chute des corps.
+Depuis son retour de Pise, l'ancien étudiant fréquente à Florence les cercles d'amateurs de musique, chers à son père, excellent théoricien de la musique. Il y donne des conférences érudites sur l'art et la littérature[réf. nécessaire]. Le fils Galilée est ainsi remarqué par le cénacle du cardinal del Monte, qui, en politique péninsulaire, soutient le parti français. En 1588, il est invité par l'Accademia Fiorentina (Académie florentine) à présenter deux leçons sur la forme, le lieu et la dimension de l'Enfer de Dante.
+Parallèlement à ses activités diversifiées, il cherche vainement un emploi de professeur de géométrie ou de mathématiques dans une université. La mort de son père tombé gravement malade en 1589 rend cette quête cruciale, car il doit désormais subvenir seul aux besoins de sa famille. Il cherche alors à rencontrer, entre autres grands personnages avec lesquels il correspond déjà, le père jésuite Christophorus Clavius, sommité des mathématiques au Collège pontifical. Il obtient aussi l'aide du mathématicien Guidobaldo Del Monte, avec lequel il entretient une relation épistolaire, échangeant des découvertes et théorèmes. Ce dernier recommande Galilée au grand-duc Ferdinand Ier de Toscane, qui le nomme à la chaire de mathématiques de l'université de Pise pour 60 écus d'or par an, une misère. Sa leçon inaugurale a lieu le 12 novembre 1589.
+En 1590 et 1591, il découvre la cycloïde et s'en sert pour dessiner des arches de ponts.
+Il expérimente également sur la chute des corps et rédige son premier ouvrage de mécanique, le De motu (Le mouvement). La réalité même de ces « expériences » est aujourd'hui largement mise en doute et serait une invention de son premier biographe, Vincenzo Viviani. Ce volume contient des idées nouvelles pour l'époque, mais il expose encore, pour s'adapter aux contraintes de l'enseignement officiel, les principes de l'école aristotélicienne et le système de Ptolémée. Galilée les enseigne d'ailleurs longtemps après avoir été convaincu de la justesse du système copernicien, faute de preuves tangibles.
+
+
+=== L'université de Padoue (1592-1610) ===
+En 1592, Galilée part enseigner à l'université de Padoue, où il reste 18 ans. Le départ de Pise, après seulement trois ans, s'expliquerait par un différend l'opposant à un fils du grand-duc Ferdinand Ier de Toscane. Ce nouveau poste à Padoue lui a été proposé par l'entremise du cardinal Del Monte. Il jouit alors d'un revenu stable, bien que modeste, qu'il multiplie par trois avec des cours particuliers qu'il dispense et la location de chambres. Par ailleurs, il offre de grandes facilités de recherche.
+Padoue, qui possède des artisans des métaux et du bois, experts en fonderie et en menuiserie, appartenait à la puissante république de Venise, ce qui garantissait à Galilée une grande liberté intellectuelle, l'Inquisition y étant très peu puissante. Même si Giordano Bruno avait été livré à l'Inquisition romaine par les patriciens de la République, Galilée pouvait effectuer ses recherches sans trop de soucis. Venise est alors très réputée pour son arsenal, et tout son savoir-faire artisanal et technique, ce qui offre à Galilée de grandes possibilités. Détail qui a son importance, la grande cité républicaine est également célèbre pour la qualité de son industrie verrière, protégée dans les îlots de Murano. Il logera modestement dans la ville, la « Sérénissime », avec sa compagne et ses enfants.
+Galilée enseigne la mécanique appliquée, les mathématiques, l'astronomie et l'architecture militaire. Il installe une fructueuse coopération avec les at

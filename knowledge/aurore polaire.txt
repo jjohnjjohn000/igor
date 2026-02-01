@@ -1,0 +1,67 @@
+Sujet: Aurore polaire
+
+Une aurore polaire, également appelée « aurore boréale » dans l'hémisphère nord et « aurore australe » dans l'hémisphère sud, est un phénomène lumineux atmosphérique caractérisé par des voiles extrêmement colorés dans le ciel nocturne, le vert étant prédominant dans les latitudes proches des pôles.
+Provoquées par l'interaction entre les particules chargées du vent solaire et la haute atmosphère, les aurores se produisent principalement dans les régions proches des pôles magnétiques, dans une zone annulaire justement appelée « zone aurorale » (entre 65 et 75° de latitude).
+En cas d'activité magnétique solaire intense, l'arc auroral s'étend et commence à envahir des zones beaucoup plus proches de l'équateur.
+
+
+== Légendes et études scientifiques ==
+
+Les aurores boréales ont été observées depuis toujours et ont probablement beaucoup impressionné les Anciens ; dans l'Antiquité, aussi bien en Occident qu'en Chine, les aurores étaient ainsi considérées comme des serpents ou des dragons dans le ciel.
+Pline l'Ancien écrit : « On a vu pendant la nuit, sous le consulat de C. Caecilius et de Cn. Papirius (an de Rome 641), et d'autres fois encore, une lumière se répandre dans le ciel, de sorte qu'une espèce de jour remplaçait les ténèbres. »
+Les aurores polaires sont associées à de nombreux mythes et légendes. L'anglais et l'allemand les désignent sous le nom de « lumières du nord » ou « lumières du sud ». 
+Le finnois utilise le terme de revontulet, qu’on peut traduire par « queue de renard rouge » ou « feux du renard » : certains peuples Samis racontent en effet que le renard polaire, en parcourant rapidement les vastes étendues enneigées, éjecte de la poussière avec sa queue dans le ciel, ce qui crée ainsi les aurores boréales le long de son passage. 
+Les Inuits du Groenland surnomment les aurores aqsarniit, croyant que les âmes des morts jouent à la balle avec des crânes de morses.
+Une tribu du Nunavut pense à l'inverse que ce sont les morses qui jouent à la balle avec des crânes humains. 
+Leur teinte rouge, associée au sang, est responsable du fait que les Inuits de l'Est du Groenland croient que les aurores polaires sont les âmes des enfants mort-nés.
+D'autres mythologies nordiques évoquent le bifröst, la danse des esprits de certains animaux, particulièrement les saumons, les rennes, les phoques et les bélugas ; le souffle des baleines de l'océan Arctique ; le reflet du Soleil ou de la Lune sur les armures des Valkyries quand elles traversent le ciel ; des torches allumées par les esprits des morts pour accueillir au paradis les nouveaux arrivants.
+En Europe au Moyen Âge, les aurores polaires qui prennent des teintes rouges sont associées au sang et à la guerre.
+Les aurores boréales présagent une catastrophe ou sont vues comme le souffle des guerriers célestes qui racontent leurs combats dans le ciel.
+Elles n'ont été étudiées scientifiquement qu'à partir du XVIIe siècle.
+En 1621, l'astronome français Pierre Gassendi décrit ce phénomène observé jusque dans le sud de la France et lui donne le nom d'aurore boréale. 
+Au XVIIIe siècle, l'astronome britannique Edmond Halley soupçonne le champ magnétique terrestre de jouer un rôle dans la formation des aurores boréales.
+Henry Cavendish, en 1768, parvient à évaluer l'altitude à laquelle se produit le phénomène, mais il faudra attendre 1896 pour que celui-ci soit reproduit en laboratoire par Birkeland. 
+Les travaux de Carl Størmer sur les mouvements des particules électrisées dans un champ magnétique ont facilité la compréhension du mécanisme de formation des aurores boréales.
+À partir de 1957, l'exploration spatiale a permis non seulement une meilleure connaissance des aurores polaires terrestres mais aussi l'observation de phénomènes auroraux sur les grosses planètes comme Jupiter ou Saturne.
+En 1975, le programme franco-russe ARAKS parvient à créer une aurore boréale artificielle.
+En 2008, le chercheur Jean Lilensten a mis au point une expérience, reprenant la terrella de Birkeland, appelée la Planeterrella. Celle-ci permet de simuler les aurores polaires.
+En 2023, une étude confirme un lien récemment mis en évidence, entre le nombre d'aurores polaires, la température de la troposphère et de la stratosphère dans la zone circumpolaire et la consommation hivernale d’électricité en Finlande : Les flux de particules énergétiques apportées par le vent solaire dans l’atmosphère polaire peuvent significativement influencer le vortex polaire stratosphérique, et donc secondairement la température de la troposphère en hiver austral, notamment en Finlande où l’activité géomagnétique (indicatrice de la précipitation énergétique des particules solaires) fait baisser la température moyenne, ce qui se traduit par un besoin accru de chauffage et une hausse de la consommation d’électricité.
+Ceci se produit quand les vents stratosphériques équatoriaux dominants (dits vents QBO) sont orientés vers l’est. 
+Les prévisionnistes de l'énergie sont invités à tenir compte de cette météo spatiale, sachant que les aurores boréales sont aujourd'hui prévisibles, grâce notamment aux travaux de l'observatoire Kjell Henriksen avec le Centre universitaire du Svalbard, et à leur programme informatique SvaltrackII disponible au grand public.
+
+
+== Formation ==
+Une éruption solaire ou un sursaut solaire important provoque un afflux de particules chargées, éjectées par le Soleil, qui entre en collision avec le bouclier que constitue la magnétosphère provoquant ainsi un orage magnétique. 
+Des particules électrisées à haute énergie peuvent alors être captées et canalisées par les lignes du champ magnétique terrestre du côté nuit de la magnétosphère (la queue) et aboutir dans une zone appelée ovale auroral. 
+Ces particules — électrons, protons et ions positifs — excitent ou ionisent les atomes de la haute atmosphère, l'ionosphère. L'atome excité ne peut rester dans cet état, et un électron change alors de couche, libérant au passage un peu d'énergie, en émettant un photon (particule élémentaire constitutive de la lumière visible). 
+Comme la nature des gaz composant l'atmosphère (oxygène, hydrogène, azote, etc.) dépend de l'altitude, ceci explique en partie les variations de teintes des nuages, draperies, rideaux, arcs, rayons… qui se déploient dans le ciel à des altitudes comprises entre 80 et 1 000 km. L'ionisation résultant de cet afflux de particules provoque la formation de nuages ionisés réfléchissant les ondes radio.
+C'est en juillet 2008 qu'une explication cohérente de ce phénomène a été fournie par la NASA grâce à la mission américaine THEMIS. Les scientifiques ont en effet localisé la source de ces phénomènes dans des explosions d'énergie magnétique se produisant à un tiers de la distance qui sépare la Terre de la Lune. Ils sont ainsi provoqués par des « reconnexions » entre les « cordes magnétiques géantes » reliant la Terre au Soleil qui stockent l'énergie des vents solaires.
+
+
+=== Couleurs ===
+
+Les phénomènes auroraux prennent plusieurs teintes différentes, passant du vert au rose, au rouge et à l'indigo violet. 
+L'étude spectrographique de la lumière émise montre la présence de l'oxygène atomique (raie verte à 557,7 nm entre 120  et   180 km d'altitude et doublet rouge à 630  et   636,4 nm au-dessus de 150 km d'altitude), de l'azote et de ses composés et de l'hydrogène (656,3 nm) lors des aurores à protons. 
+Aux plus basses altitudes, la couleur observée le plus fréquemment est le pourpre (altitudes de 90  à   100 km).
+L'excitation des molécules, atomes et ions d'azote et d'oxygène sont à l'origine des principales couleurs.
+L'oxygène émet principalement du vert et du rouge, tandis que l'azote émet du bleu, du rouge et du violet.
+L'atmosphère a des densités en oxygène et en azote qui varient avec l'altitude, l'oxygène devenant plus dense que l'azote au-dessus de 200 km d'altitude, ce qui explique en partie la prédominance de vert dans les aurores polaires. 
+Certaines des molécules de diazote excitées interagissent aussi avec l'oxygène, causant une émission additionnelle de vert, ce qui contribue également à la dominance de la couleur verte. 
+L'hélium et l'hydrogène produisent des aurores boréales mauves ou bleues. Enfin, l'énergie du vent solaire joue aussi un rôle dans les couleurs observées.
+
+
+=== Classifications ===
+
+Les premiers scientifiques qui se sont intéressés aux phénomènes auroraux ont tout d'abord instauré des classifications de ceux-ci en tenant compte de la forme, de l'étendue et de l'intensité des émissions, ce qui permet une approche objective et quantitative du phénomène. Ainsi en sont-ils venus à deux types d'aurores : les formes discrètes et les formes diffuses.
+Les formes discrètes ont comme caractéristique de se former en longs arcs ou en bandes. Les arcs « ondulent » de seconde en seconde, comme certains nuages changent d'apparence sous l'effet du vent. Elles prennent ainsi la forme de la magnétosphère, ce qui leur donne les apparences d'une largeur plutôt mince (de 1  à   10 km), mais d'une longueur courbée presque infinie.
+En 2018, une nouvelle forme d'aurore polaire, les « dunes », a été décrite pour la première fois. Ce nouveau type témoigne de phénomènes atmosphériques ayant lieu à environ 100 km d'altitude, où il est difficile d'envoyer des instruments de mesure.
+
+
+== Observations ==
+
+
+=== Aspect ===
+
+Les aurores boréales ou polaires recouvrent le ciel de draperies luminescentes pouvant furtivement reproduire sur leur bord toutes les couleurs du spectre. Il faut que le ciel soit clair, dégagé de préférence sans lune et dépourvu de lumières parasites.
+Le spectacle est très changeant et peut débuter par la formation d'un arc (arc auroral) perpendiculaire au méridien magnétique du lieu, puis s'accompagner de rayons parfois animés d'une pulsation plus ou moins rapide (0,05  à   15 hertz) ou se déplacer plus ou moins rapidement. On observe parfois des lueurs ressemblant à un rideau ou une draperie agitée par la brise.
+La luminosité peut considérablement varier, de sorte que le 

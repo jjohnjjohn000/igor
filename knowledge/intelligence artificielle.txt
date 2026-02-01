@@ -1,0 +1,56 @@
+Sujet: Intelligence artificielle
+
+L'intelligence artificielle (IA) est l'ensemble des systèmes informatiques capables d'effectuer des tâches typiquement associées à l'intelligence, telles que l'apprentissage, le raisonnement, la résolution de problèmes, la perception ou la prise de décision. L'intelligence artificielle est également le champ de recherche visant à développer de tels systèmes.
+L'IA est un domaine de l'informatique qui s'appuie sur des fondements mathématiques (statistiques, algèbre linéaire, probabilités) et des concepts issus des sciences cognitives. Elle vise à résoudre des problèmes à forte complexité logique ou algorithmique. Par extension, dans le langage courant, l'IA inclut les dispositifs imitant, simulant ou remplaçant l'homme dans certaines mises en œuvre de ses fonctions cognitives.
+Les applications de l'IA couvrent de nombreux domaines, notamment les moteurs de recherche, les systèmes de recommandation, l'aide au diagnostic médical, la compréhension du langage naturel, les voitures autonomes, les chatbots, les outils de génération d'images, les outils de prise de décision automatisée, les programmes compétitifs dans des jeux de stratégie et certains personnages non-joueurs de jeu vidéo.
+Le champ de recherche, établi en 1956, a connu des périodes d'optimisme et de déception au cours du XXe siècle. Dès 2012, l'utilisation de processeurs graphiques a permis de largement accélérer les réseaux de neurones, favorisant l'adoption de l'apprentissage automatique au détriment d’approches reposant sur des règles explicitement programmées. Cette tendance s'est renforcée en 2017 avec l'apparition de l'architecture transformeur et des grands modèles de langage, qui sont entraînés sur de grandes quantités de texte issu d'internet. En 2022, l'IA générative a été largement popularisée avec la sortie de ChatGPT. Des modèles de génération de musique, d'images ou de vidéos ont également vu le jour.
+L'IA suscite des inquiétudes concernant l'emploi, la désinformation, son impact environnemental, et la protection des données personnelles. Certains estiment que les progrès en intelligence artificielle pourraient représenter un risque existentiel.
+
+
+== Définition ==
+
+L’expression « intelligence artificielle », souvent abrégée par le sigle « IA » (ou « AI » en anglais, pour artificial intelligence) a été introduite en 1956 par John McCarthy, qui l’a définie en 2004 comme « la science et l'ingénierie de la fabrication de machines intelligentes, en particulier de programmes informatiques intelligents. Elle est liée à la tâche similaire qui consiste à utiliser des ordinateurs pour comprendre l'intelligence humaine, mais l'IA ne doit pas se limiter aux méthodes qui sont biologiquement observables ».
+Pour Marvin Lee Minsky, l'un de ses créateurs, l'IA est « la construction de programmes informatiques qui s'adonnent à des tâches qui sont, pour l'instant, accomplies de façon plus satisfaisante par des êtres humains car elles demandent des processus mentaux de haut niveau tels que : l'apprentissage perceptuel, l'organisation de la mémoire et le raisonnement critique ». Cette définition combine l'aspect « artificiel » des ordinateurs et des processus informatiques, aux aspects « intelligents » d'imitation de comportements humains, notamment de raisonnement et d'apprentissage. Celui-ci est à l'œuvre dans les jeux, dans la pratique des mathématiques, dans la compréhension du langage naturel, dans la perception visuelle (interprétation des images et des scènes), auditive (compréhension du langage parlé) ou par d'autres capteurs, dans la commande d'un robot dans un milieu inconnu ou hostile.
+Avant les années 2000, d'autres définitions sont proches de celle de Minsky, mais varient sur deux points fondamentaux :
+
+les définitions qui lient l'IA à un aspect humain de l'intelligence et celles qui la lient à un modèle idéal d'intelligence, non forcément humaine, nommée rationalité ;
+les définitions qui insistent sur le fait que l'IA a pour but d'avoir toutes les apparences de l'intelligence (humaine ou rationnelle), et celles qui insistent sur le fait que le fonctionnement interne du système d'IA doit ressembler également à celui de l'être humain et être au moins aussi rationnel.
+
+Le grand public confond souvent l'intelligence artificielle avec l'apprentissage automatique (machine learning) et l'apprentissage profond (deep learning). Ces trois notions diffèrent et sont en réalité imbriquées : l'intelligence artificielle englobe l'apprentissage automatique, qui lui-même englobe l'apprentissage profond.
+Les définitions font souvent intervenir :
+
+une capacité à percevoir l'environnement et à prendre en compte la complexité du monde réel ;
+un traitement de l'information (collecter et interpréter des intrants, captés sous forme de données) ;
+des prises de décision (y compris dans le raisonnement et l'apprentissage), choix d'actions, exécution de tâches (dont d'adaptation, de réaction aux changements de contexte…), avec un certain niveau d'autonomie ;
+la réalisation d'objectifs spécifiques (raison ultime des systèmes d'IA).
+Le groupe AI Watch note que les IA peuvent aussi être classées en fonction des familles d’algorithmes et/ou des modèles théoriques qui les sous-tendent, des capacités cognitives reproduites par l’IA, des fonctions exécutées par l’IA. Les applications de l’IA peuvent, elles, être classées en fonction du secteur socioéconomique et/ou des fonctions qu'elles y remplissent.
+Une manière de définir l'intelligence artificielle est de considérer ses applications et les types de tâches qu'elle résout. Un rapport de la Commission européenne publié en 2020 présente une taxonomie classant les définitions de l'IA selon diverses tâches réalisées, telles que le raisonnement, l'apprentissage, la perception, etc.. La même année, le professeur Jack Copeland propose une définition similaire, qui permet de distinguer plus clairement les facettes de l'IA, selon cinq catégories principales :
+
+L'apprentissage généralisé : l'IA apprend à partir de données diverses pour identifier des modèles et appliquer ces connaissances à de nouvelles situations, comme détecter des fraudes en ligne ;
+Le raisonnement : cette capacité permet à l'IA de faire des prédictions et tirer des conclusions à partir des données, aidant dans des décisions comme la prédiction de comportements d'achat ;
+La résolution de problèmes : l'IA trouve des solutions optimales pour des problèmes spécifiques, utilisée dans des contextes comme l'optimisation industrielle ou les stratégies de jeu ;
+La perception : elle permet à l'IA de reconnaître et interagir avec son environnement, utilisée dans la robotique avancée et les véhicules autonomes pour naviguer et accomplir des tâches ;
+La compréhension du langage : l'IA analyse et génère du langage à travers le NLP, utilisé dans des applications comme les assistants vocaux et les chatbots pour améliorer l'interaction utilisateur.
+
+
+== Techniques ==
+
+
+=== Apprentissage automatique ===
+L'apprentissage automatique consiste à permettre au modèle d'IA d'apprendre à effectuer une tâche au lieu de spécifier exactement comment il doit l'accomplir. Le modèle contient des paramètres dont les valeurs sont ajustées tout au long de l'apprentissage. La méthode de la rétropropagation du gradient est capable de détecter, pour chaque paramètre, dans quelle mesure il a contribué à une bonne réponse ou à une erreur du modèle, et peut l'ajuster en conséquence. L'apprentissage automatique nécessite un moyen d'évaluer la qualité des réponses fournies par le modèle. Les principales méthodes d'apprentissage sont :
+
+Apprentissage supervisé
+Un jeu de données annoté est utilisé pour entraîner l'algorithme. Il contient des données d'entrée fournies au modèle et les réponses correspondantes attendues, que le modèle est entraîné à produire. Il est parfois difficile de se procurer suffisamment de données annotées avec les réponses attendues.
+Apprentissage non supervisé
+Un jeu de données est fourni au modèle, mais n'est pas annoté avec les réponses attendues. Le but peut par exemple être de regrouper les données similaires entre elles (clustering).
+Apprentissage auto-supervisé
+Un problème d'apprentissage supervisé est automatiquement généré à partir d'un jeu de données non annoté. Cela fonctionne souvent en cachant une partie des informations (des mots d'un texte, des morceaux d'images…) afin d'entraîner le modèle à les prédire.
+Apprentissage par renforcement
+L'agent est plongé dans un environnement où ce qu'il fait est évalué. Par exemple, un agent peut apprendre à jouer aux échecs en jouant contre lui-même, et le résultat (victoire ou défaite) permet à chaque itération d'évaluer s'il a bien joué. Il n'y a dans ce cas pas besoin de jeu de données.
+
+
+==== Réseaux de neurones ====
+
+Les réseaux de neurones artificiels sont inspirés du fonctionnement du cerveau humain : les neurones sont en général connectés à d'autres neurones en entrée et en sortie. Les neurones d'entrée, lorsqu'ils sont activés, agissent comme s'ils participaient à un vote pondéré pour déterminer si un neurone intermédiaire doit être activé et ainsi transmettre un signal vers les neurones de sortie. En pratique, pour l'équivalent artificiel, les « neurones d'entrée » ne sont que des nombres et les poids de ce « vote pondéré » sont des paramètres ajustés lors de l'apprentissage.
+Hormis la fonction d'activation, les réseaux de neurones artificiels n'effectuent en pratique que des additions et des multiplications matricielles, ce qui fait qu'ils peuvent être accélérés par l'utilisation de processeurs graphiques. En théorie, un réseau de neurones peut approximer n'importe quelle fonction.
+Pour de simples réseaux de neurones à propagation avant (feedforward en anglais), le signal ne passe que dans une direction. Avec les réseaux de neurones récurrents, le signal de sortie de chaque neurone est réinjecté en entrée de ce neurone, permettant d’implémenter un mécanisme de mémoire à court terme. Les réseaux neuronaux convolutifs, qui sont 

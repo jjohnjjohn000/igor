@@ -1,0 +1,334 @@
+Sujet: Physique quantique
+
+La physique quantique est un ensemble de théories physiques nées au XXe siècle, qui décrivent le comportement des atomes et des particules et permettent d'élucider certaines propriétés du rayonnement électromagnétique.
+Comme la théorie de la relativité, les théories dites « quantiques » marquent une rupture avec ce que l'on appelle maintenant la physique classique, qui regroupe les théories et principes physiques connus au XIXe siècle — notamment la mécanique newtonienne et la théorie électromagnétique de Maxwell —, et qui ne permettaient pas d'expliquer certaines propriétés physiques.
+La physique quantique recouvre l'ensemble des domaines de la physique où l'utilisation des lois de la mécanique quantique est une nécessité pour comprendre les phénomènes en jeu. La mécanique quantique est la théorie fondamentale des particules de matière constituant les objets de l'univers et des champs de force animant ces objets.
+
+
+== Histoire ==
+
+Au cours du XIXe siècle, les cristallographes et les chimistes essaient de prouver l'existence des atomes, mais ce n'est qu'au début du XXe siècle qu'ils seront définitivement mis en évidence, grâce à la diffraction des rayons X. Pour les modéliser, la quantification de la matière est un passage obligé, ce qui donne naissance à la physique quantique. En 1900, Max Planck émet l'hypothèse que les échanges d'énergie avec la matière se font par petites quantités : les « quanta ».
+Louis de Broglie est à l'origine de la mécanique quantique qui permet de modéliser correctement l'atome. La physique quantique finit par absorber tous les domaines de la physique classique en une seule discipline. Les accélérateurs de particules montrent alors que les atomes sont composés de particules plus élémentaires, comme le proton ou le neutron, eux-mêmes composés de quarks. C'est la théorie quantique des champs, construite à partir de l'électrodynamique quantique qui décrira l'ensemble des particules élémentaires.
+
+
+== Principe ==
+À l'échelle macroscopique, les objets possèdent une masse, une position et une vitesse. Ces caractéristiques définissent l'état physique de l'objet. Chacune de ces caractéristiques est une valeur absolue (chaque caractéristique possède une valeur unique à un instant t). Nous sommes dans le champ d'étude appelé physique classique (celle définie par les travaux de Newton).
+À l'échelle microscopique (à l'échelle des atomes), les objets physiques possèdent des caractéristiques différentes de celles observées à l'échelle macroscopique. Par exemple un atome de fer isolé, dans le vide et sans lumière, pourra occuper une infinité de positions différentes en même temps. On parle alors de « superposition quantique cohérente d'états ».
+À l'échelle microscopique, les objets physiques ont la particularité d'agir à la fois comme une onde et à la fois comme une particule. L'objet est alors présent partout autour d'une position comme de l'eau autour d'une vague.
+
+
+== Panorama général ==
+La physique quantique a apporté une révolution conceptuelle ayant des répercussions jusqu'en philosophie (remise en question du déterminisme) et en littérature (science-fiction). Elle a permis nombre d'applications technologiques : énergie nucléaire, imagerie médicale par résonance magnétique nucléaire, diode, transistor, circuit intégré, microscope électronique et laser. Un siècle après sa conception, elle est abondamment utilisée dans la recherche en chimie théorique (chimie quantique), en physique (mécanique quantique, théorie quantique des champs, physique de la matière condensée, physique nucléaire, physique des particules, physique statistique quantique, astrophysique, gravité quantique), en mathématiques (formalisation de la théorie des champs) et, récemment[C'est-à-dire ?], en informatique (ordinateur quantique, cryptographie quantique). Elle est considérée avec la relativité générale d'Einstein comme l'une des deux théories majeures du XXe siècle.
+La physique quantique est connue pour être contre-intuitive (choquer le « sens commun ») et nécessiter un formalisme mathématique ardu. Richard Feynman, l'un des plus grands théoriciens spécialistes de la physique quantique de la seconde moitié du XXe siècle, a ainsi écrit :
+
+« Je crois pouvoir affirmer que personne ne comprend vraiment la physique quantique. »
+
+La raison principale de ces difficultés est que le monde quantique (limité à l'infiniment petit, mais pouvant avoir des répercussions à plus grande échelle) se comporte très différemment de l'environnement macroscopique auquel nous sommes habitués. Quelques différences fondamentales qui séparent ces deux mondes sont par exemple :
+
+la quantification : certaines observables, par exemple l'énergie émise par un atome lors d'une transition entre états excités, sont quantifiées, c'est-à-dire qu'elles ne peuvent prendre leur valeur que dans un ensemble discret de résultats. A contrario, la mécanique classique prédit le plus souvent que ces observables peuvent prendre continûment n'importe quelle valeur ;
+la dualité onde-corpuscule : les notions d'onde et de particule (ou corpuscule), qui sont séparées en mécanique classique, deviennent deux facettes d'un même phénomène, décrit de manière mathématique par sa fonction d'onde. En particulier, l'expérience prouve que la lumière peut se comporter comme des particules (photons, mis en évidence par l'effet photoélectrique) ou comme une onde (rayonnement produisant des interférences) selon le contexte expérimental, les électrons et autres particules pouvant également se comporter de manière ondulatoire ;
+le principe d'indétermination de Heisenberg : une « indétermination » fondamentale empêche la mesure exacte simultanée de deux grandeurs conjuguées. Il est notamment impossible d'obtenir une grande précision sur la mesure de la vitesse d'une particule sans obtenir une précision médiocre sur sa position, et vice versa. Cette incertitude est structurelle et ne dépend pas du soin que l'expérimentateur prend à ne pas « déranger » le système ; elle constitue une limite à la précision de tout instrument de mesure ;
+le principe de superposition quantique : si l'évolution d'un système est bel et bien déterministe (par exemple, la fonction d'onde régie par l'équation de Schrödinger), la mesure d'une observable d'un système dans un état donné connu peut donner aléatoirement une valeur prise dans un ensemble de résultats possibles ;
+l'observation influe sur le système observé : au cours de la mesure d'une observable, un système quantique voit son état — initialement superposé — modifié. Ce phénomène, appelé réduction du paquet d'onde, est inhérent à la mesure et ne dépend pas du soin que l'expérimentateur prend à ne pas « déranger » le système ;
+la non-localité ou intrication : des systèmes peuvent être intriqués de sorte qu'une interaction en un endroit du système a une répercussion immédiate en d'autres endroits. Ce phénomène contredit en apparence la relativité restreinte pour laquelle il existe une vitesse limite à la propagation de toute information, la vitesse de la lumière ; toutefois, la non-localité ne permet pas de transférer de l'information ;
+la contrafactualité : des évènements qui auraient pu se produire, mais qui ne se sont pas produits, influent sur les résultats de l'expérience.
+
+
+== Le quantique et le vivant ==
+Existe-t-il dans le monde du vivant des phénomènes obéissant à ces règles de l'infiniment petit ? Depuis quelques années, des études dans divers domaines de la biologie indiquent que c'est le cas. Ces résultats vont à contre-courant de l'idée généralement admise que le monde macroscopique est trop chaotique pour permettre des effets de décohérence quantique. Le vivant serait capable de tirer parti de cette agitation désordonnée des particules, du moins en ce qui concerne la photosynthèse. Les récepteurs de l'odorat semblent dépendre de l'effet tunnel, pour acheminer des électrons à l'intérieur même des molécules odorantes, ce qui permet de les distinguer d'autres molécules structurellement analogues. Certaines structures protéiques bactériennes se comportent comme des ordinateurs quantiques primitifs, « calculant » le meilleur canal de transport des électrons parmi tous les chemins possibles.
+
+De récents travaux sur la photosynthèse ont révélé que l'intrication quantique des photons joue un rôle essentiel dans cette opération fondamentale du règne végétal, phénomène que l'on tente actuellement d'imiter pour optimiser la production d'énergie solaire.
+L'adhérence aux surfaces des setæ des geckos fonctionne grâce aux forces de van der Waals, des interactions de nature quantique qui font intervenir des particules virtuelles sans aucune interaction moléculaire classique. Ce phénomène est également à l'étude en vue d'applications militaires et civiles.
+
+
+== Liste des expériences ==
+
+Des physiciens américains seraient parvenus à observer la trace des premiers instants du Big Bang, atteignant un des « objectifs les plus importants de la cosmologie aujourd'hui » selon les termes de John Kovac, professeur à Harvard et responsable de l'équipe à l'origine de cette découverte en mars 2014. La survenue du Big Bang marquant la naissance de l'Univers il y a 13,8 milliards d'années, s'est accompagnée de l'émission d'ondes gravitationnelles primordiales « créées par des fluctuations du vide quantique » et des théories prédisent que leur présence « polariserait certains photons d’une manière particulière, analogue à un « tourbillon » ». L'observation de l'empreinte que ces ondes ont laissée sur le rayonnement fossile a été effectuée via le télescope Bicep2. Pour Alan Guth (MIT), « C'est une preuve cosmologique totalement nouvelle et indépendante de la vision inflationniste », et ces travaux « valent assurément un prix Nobel ». Mais cette annonce a été démentie par les mesures faites par le satellite Planck, ce dernier étant capable de différencier les effets de poussières de la Galaxie.
+
+
+=== Fentes de Young ===
+
+L'expérience originelle de Thomas Young avait mis en évidence le comportement ondulatoire de la lumière en montrant que deux faisceaux lumineux pouvaient entrer en interférence. L'expérience des fentes de Young, effectuée avec une seule particule (en faisant en sorte que la source d'émission n'émette qu'un quantum à la fois), montrera qu'un seul électron « interfère avec lui-même » et produit des franges d'interférences au sortir des deux fentes, comme s'il s'agissait de deux flux de particules interférant l'un avec l'autre.
+
+
+=== Effet Aharonov-Bohm (Ehrenberg et Siday) ===
+
+Dans la mécanique classique, la trajectoire d'une particule chargée ne peut pas être affectée par la présence d'un champ magnétique si elle se trouve hors de ce champ. L'effet Aharonov-Bohm est un phénomène quantique décrit en 1949 par Ehrenberg et Siday et redécouvert en 1959 par David Bohm et Yakir Aharonov. Il décrit le paradoxe suivant :
+
+« Un champ magnétique (le cercle bleu B, ci-contre) peut affecter une région de l'espace à distance, le potentiel vecteur n'ayant par contre pas disparu. »
+
+L'effet Aharonov-Bohm démontre donc que ce sont les potentiels électromagnétiques, et non les champs électriques et magnétiques, qui fondent la mécanique quantique. En physique quantique, une entité mathématique utile, le potentiel vecteur magnétique, peut avoir de véritables effets.
+
+
+=== Expérience de Stern et Gerlach ===
+L'expérience de Stern et Gerlach fut l'une des premières à mettre en évidence la nature purement quantique du monde microscopique et plus particulièrement du spin. Construite en 1921-1922 pour tester l'hypothèse de quantification spatiale, elle ne put obtenir une description théorique satisfaisante que cinq ans plus tard grâce au développement de la mécanique quantique.
+
+
+=== Expérience d'Aspect ===
+L'expérience d'Aspect est, historiquement, la première expérience qui ait réfuté de manière satisfaisante les inégalités de Bell dans le cadre de la physique quantique, validant ainsi le phénomène d'intrication quantique, et apportant une réponse expérimentale au paradoxe EPR.
+Concrètement, elle consiste à produire deux photons dans un état intriqué 
+  
+    
+      
+        
+          
+            
+              1
+              
+                2
+              
+            
+          
+        
+        
+          {
+          
+            
+              |
+            
+            ↑
+            ,
+            ↑
+            ⟩
+            +
+            
+              |
+            
+            →
+            ,
+            →
+            ⟩
+          
+          }
+        
+      
+    
+    {\displaystyle {\tfrac {1}{\sqrt {2}}}\left\{|\uparrow ,\uparrow \rangle +|\rightarrow ,\rightarrow \rangle \right\}}
+  
+ puis à les séparer pour réaliser enfin la mesure de leur polarisation. La mesure du premier photon a alors 50 % de chance de donner 
+  
+    
+      
+        ↑
+      
+    
+    {\displaystyle \uparrow }
+  
+ et autant de donner 
+  
+    
+      
+        →
+      
+    
+    {\displaystyle \rightarrow }
+  
+ tandis que le second photon est immédiatement projeté dans ce même état. Le paradoxe provient du fait que les deux photons semblent s’échanger cette information à une vitesse supérieure à celle de la lumière. Ce point n'est cependant pas pertinent car aucune information ne peut être transmise par ce moyen.
+L'intrication quantique permet cependant d'échanger une clé de chiffrement de manière sûre, ce qu'exploite la cryptographie quantique. Alain Aspect est lauréat du prix Nobel de physique 2022.
+
+
+=== Expérience de la gomme quantique à choix retardé ===
+L’expérience de la gomme quantique à choix retardé constitue une extension de celle d'Alain Aspect et des fentes d'Young, mais y introduit ce qui semble être une rétroaction implicite dans le temps : un effet du présent sur le passé.
+
+
+== Interprétations ==
+
+Les paradoxes liés à la mesure amènent à se poser la question : la physique quantique décrit-elle la réalité ?
+
+Décohérence quantique
+École de Copenhague
+Interprétation transactionnelle
+Théorie d'Everett des mondes multiples
+Théories « à variables cachées »
+
+Théorie de De Broglie-Bohm et Théorie de l'onde pilote de De Broglie
+
+
+== Genèse de la physique quantique ==
+
+
+=== Corps noir et catastrophe ultraviolette ===
+D’après les théories classiques de la physique, un corps noir à l'équilibre thermodynamique est censé rayonner un flux infini. Plus précisément, l'énergie rayonnée par bande de longueur d'onde doit tendre vers l'infini quand la longueur d'onde tend vers zéro, dans l'ultraviolet pour les physiciens de l'époque, puisque ni les rayons X ni les rayons gamma n'étaient alors connus. C’est la catastrophe ultraviolette.
+
+
+=== Introduction des quanta en physique ===
+Elle remonte aux travaux effectués en 1900 par Max Planck sur le rayonnement du corps noir à l’équilibre thermique. Une cavité chauffée émet un rayonnement électromagnétique (lumière) aussitôt absorbé par les parois. Pour rendre compte du spectre lumineux par le calcul théorique des échanges d’énergie d’émission et d’absorption (
+  
+    
+      
+        d
+        E
+      
+    
+    {\displaystyle dE}
+  
+), Planck dut faire l’hypothèse que ces échanges sont discontinus et proportionnels aux fréquences (
+  
+    
+      
+        ν
+      
+    
+    {\displaystyle \nu }
+  
+) du rayonnement lumineux : 
+  
+    
+      
+        d
+        E
+        =
+        n
+        h
+        ν
+      
+    
+    {\displaystyle dE=nh\nu }
+  
+
+où
+
+  
+    
+      
+        n
+      
+    
+    {\displaystyle n}
+  
+ est un nombre entier ;
+
+  
+    
+      
+        h
+      
+    
+    {\displaystyle h}
+  
+ est le quantum d’action qui apparut bientôt comme l’une des constantes fondamentales de la nature (constante de Planck) ;
+
+  
+    
+      
+        ν
+      
+    
+    {\displaystyle \nu }
+  
+ est la fréquence de la lumière.
+
+
+=== Quantification du rayonnement et des atomes ===
+En 1905, à la suite d’un raisonnement thermodynamique dans lequel il donnait aux probabilités un sens physique (celui de fréquences d’états pour un système), Einstein fut amené à considérer que ce ne sont pas seulement les échanges d’énergie qui sont discontinus, mais l’énergie du rayonnement lumineux elle-même.
+Il montra que cette énergie est proportionnelle à la fréquence de l’onde lumineuse : 
+  
+    
+      
+        E
+        =
+        h
+        ν
+      
+    
+    {\displaystyle E=h\nu }
+  
+.
+Cela donnait immédiatement l’explication de l’effet photoélectrique observé 20 ans auparavant par Hertz.
+
+
+=== Effet photoélectrique ===
+
+L’énergie 
+  
+    
+      
+        E
+        =
+        h
+        ν
+      
+    
+    {\displaystyle E=h\nu }
+  
+ apportée par le quantum de lumière à l’électron lié dans un atome permet à celui-ci de se libérer si cette énergie est supérieure ou égale à l’énergie de liaison de l’électron, nommée également travail de sortie 
+  
+    
+      
+        W
+      
+    
+    {\displaystyle W}
+  
+, en vertu de la relation :
+
+  
+    
+      
+        h
+        ν
+        =
+        W
+        +
+        
+          E
+          
+            c
+          
+        
+      
+    
+    {\displaystyle h\nu =W+E_{c}}
+  
+
+où 
+  
+    
+      
+        
+          E
+          
+            c
+          
+        
+      
+    
+    {\displaystyle E_{c}}
+  
+ est l'énergie cinétique acquise par ce dernier.
+Cet effet de seuil était inexplicable dans la conception continue de l’énergie lumineuse de la théorie électromagnétique classique.
+
+
+=== Limites de la théorie électromagnétique classique ===
+Einstein s’aperçut alors que cette propriété du rayonnement était en opposition de manière irréductible avec la théorie électromagnétique classique (élaborée par Maxwell).
+Dès 1906, il annonça que cette théorie devrait être modifiée dans le domaine atomique.
+La manière dont cette modification devrait être obtenue n’était pas évidente puisque la physique théorique reposait sur l’utilisation d’équations différentielles, dites équations de Maxwell, correspondant à des grandeurs à variation continue.
+
+
+=== L’hypothèse quantique ===
+Malgré la puissance de la théorie des quanta, peu de physiciens étaient enclins à imaginer que la théorie électromagnétique classique puisse être invalidée. Einstein s’efforça alors de mettre en évidence d’autres aspects des phénomènes atomiques et du rayonnement qui rompaient avec la description classique. Il étendit ainsi l’hypothèse quantique, par-delà les propriétés du rayonnement, à l’énergie des atomes, par ses travaux sur les chaleurs spécifiques aux basses températures. Il retrouvait l’annulation des chaleurs spécifiques des corps au zéro absolu, phénomène observé mais inexplicable par la théorie classique.
+D’autres physiciens (P. Ehrenfest, W. Nernst, H.-A. Lorentz, H. Poincaré) le rejoignirent peu à peu pour conclure au caractère inéluctable de l’hypothèse quantique que Planck lui-même hésitait à admettre.
+Elle n’était cependant encore acceptée généralement que pour les échanges d’énergie[réf. souhaitée].
+
+
+== Dans la culture ==
+
+
+=== Energie et médecine ===
+Sur Internet, on peut trouver très facilement des thérapeutes prônant des médecines alternatives à base d'énergie quantique. Il s'agit de pseudo-science.
+De même, le mysticisme quantique est un ensemble de réflexions métaphysiques, de croyances et de pratiques connexes qui cherchent à établir un rapport entre la conscience, l’intelligence, certaines philosophies orientales et les théories de la mécanique quantique et ses interprétations.
+
+
+=== Roman ===
+José Rodrigues Dos Santos, La clé de Salomon, Éditions Hervé Chopin, Paris, 2014.  (ISBN 9-7823-5720-1767)
+Il s'agit d'un roman « prétexte » à la vulgarisation de la physique quantique.
+
+
+=== Bande dessinée ===
+Laurent Schafer, Quantix - La physique quantique et la relativité en BD, Paris, Dunod, 2019, 176 p.  (ISBN 978-2100789429)
+Thibault Damour et Mathieu Burniat, Le Mystère du monde quantique, Paris, Dargaud, 2016, 160 p. (ISBN 978-2-205-07516-8)
+
+
+== Notes et références ==
+
+

@@ -1,0 +1,56 @@
+Sujet: Héliocentrisme
+
+L'héliocentrisme est une théorie physique qui s'oppose au géocentrisme en plaçant le Soleil (plutôt que la Terre) au centre de l'Univers. D’après les variantes plus modernes, le Soleil n'est plus le centre de l'Univers, mais un point relatif autour duquel s'organise le Système solaire. Même si le sens de cette affirmation a varié depuis les premières théories héliocentriques, ce modèle reste globalement accepté.
+L'idée que le Soleil ne soit que le centre du Système solaire et que l'Univers en soit dépourvu apparaît dès 1584 dans les écrits du frère dominicain Giordano Bruno. La cosmologie moderne l'approuve pour deux raisons : d'une part, le Soleil lui-même est en révolution autour du centre galactique, et les galaxies elles-mêmes sont en mouvement, d'autre part, elle considère que l'Univers ne peut admettre de centre, ni même de point de vue privilégié — ce principe a été nommé principe de Copernic.
+
+
+== Historique ==
+Bien que quelques précurseurs, comme Aristarque de Samos (vers 280 av. J.-C.), aient envisagé le mouvement de la Terre autour du Soleil, ce fut Nicolas Copernic qui proposa le premier, vers 1513, un modèle héliocentrique incluant la Terre et toutes les planètes connues à l'époque. Johannes Kepler établit vers 1609 un modèle plus précis du Système solaire, se démarquant notamment par l'introduction d'orbites planétaires non plus circulaires mais elliptiques, admettant le Soleil comme un de leurs foyers. On doit à Galilée les observations astronomiques et les premiers principes mécaniques justifiant l'héliocentrisme.
+La théorie de l'héliocentrisme s'est opposée à la théorie du géocentrisme, lors de la controverse ptoléméo-copernicienne, entre la fin du XVIe siècle et le début du XVIIIe siècle : l'héliocentrisme fut l'objet d'interdits religieux, d'abord de la part des protestants (Luther condamna Copernic), puis, après une période d'intérêt, par l'Église catholique en 1616. Galilée fut condamné à se rétracter en 1633 pour son livre, le Dialogue sur les deux grands systèmes du monde. Les interdits furent levés en 1741 et 1757 par Benoît XIV.
+Enfin, en 1687, Isaac Newton propose une formulation mathématique de la gravitation, et des lois de mécaniques qui permettent de démontrer les lois empiriques de Kepler. À partir du XVIIe siècle, l'héliocentrisme devint progressivement la représentation du monde communément adoptée en Occident. Au début du XVIIIe siècle, les observations confirmèrent définitivement la théorie de la gravitation de Newton, expliquant très précisément les phénomènes astronomiques alors observés. Déjà, dans la théorie de Newton, la position du Soleil comme point fixe du Système solaire est la limite obtenue en considérant que la masse des planètes est négligeable devant celle du Soleil, pour simplifier les calculs et s'affranchir des problèmes d'évaluation des masses. La correction obtenue est toutefois si faible que le fait de considérer le Soleil comme fixe n'est pas tenu comme faux.
+Divers sondages conduits sur la période 2004-2012 montrent cependant que le principe de l'héliocentrisme n'est pas encore compris par une large partie du grand public : 34 % des Européens (2005), 30 % des Indiens (2004), 28 % des Malaisiens (2008), 26 % des Américains (2012) ou 14 % des Sud-Coréens (2004) pensent ainsi que c'est le Soleil qui tourne autour de la Terre.
+
+
+== Précurseurs de Copernic ==
+Contrairement à une idée répandue, Copernic n'a pas inventé l'héliocentrisme. Cette hypothèse est beaucoup plus ancienne, mais elle a eu du mal à se diffuser en Occident, car, d'une part, elle semblait être en contradiction avec un certain nombre d'observations, comme le mouvement apparent du Soleil dans le ciel, ou le fait que tout semble attiré par la Terre et, d'autre part, elle s'opposait à certains dogmes religieux[Lesquels ?].
+
+
+=== Grèce antique ===
+
+Au Ve siècle av. J.-C., Philolaos de Crotone est le premier penseur grec à affirmer que la Terre n'était pas au centre de l'Univers. Il fait tourner notre planète en un jour autour d'un « Feu central ». Comme elle tourne sur elle-même également en un jour, ce feu central nous est invisible et nous percevons uniquement sa lumière reflétée par le Soleil.
+Héraclide du Pont, disciple de Platon et d'Aristote, propose vers 340 av. J.-C. une théorie héliocentrique pour les orbites de Vénus et de Mercure, tout en gardant le principe du géocentrisme pour la Terre. Il soutient aussi la thèse de la rotation de la Terre sur elle-même, afin d'expliquer le mouvement apparent des étoiles au cours de la nuit.
+L'astronome et mathématicien Aristarque de Samos (310-230 av. J.-C.) pousse plus loin le raisonnement d'Héraclide. Ayant évalué le diamètre du Soleil, il émet au IIIe siècle av. J.-C. l'hypothèse que, puisque le diamètre de celui-ci est beaucoup plus important que celui de la Terre, c'est autour de lui que celle-ci doit tourner, ainsi que toutes les autres planètes. Conscient qu'une telle théorie devrait faire apparaître une parallaxe dans l'observation des étoiles, il place la sphère des étoiles fixes à une très grande distance du Soleil. On connaît cette théorie notamment par les critiques qu'en fait Archimède et l'hypothèse héliocentrique fut rejetée par la majorité des scientifiques de l'Antiquité.
+Toutefois, la théorie d'Héraclide du Pont était couramment exposée dans les manuels anciens, comme le montre le fait que sept siècles après son apparition, elle est encore présentée dans les Noces de Philologie et de Mercure, un manuel encyclopédique de Martianus Capella, rédigé vers 420. Cet ouvrage extrêmement populaire durant tout le Moyen Âge était connu de Copernic, puisque ce dernier le mentionne dans le De revolutionibus orbium coelestium (I, 10). En outre, tout indique que Copernic connaissait aussi la théorie d'Aristarque, mais qu'il a délibérément effacé de son manuscrit final la référence qu'il y faisait, retrouvée dans un de ses brouillons.
+
+
+=== Astronomie indienne ===
+Selon quelques historiens, on trouverait trace d'une pensée héliocentrique chez certains astronomes indiens comme Âryabhata au VIe siècle ou Bhāskara II au XIIe siècle.
+Dans son ouvrage Āryabhaṭīya, Âryabhata présente une Terre qui tourne sur elle-même, mais son modèle planétaire reste géocentrique. Cependant le calcul qu'il présente concernant les périodes des planètes sont pour l'historien des sciences Bartel Leendert van der Waerden des indices que le modèle d'Âryabhata serait pensé de manière héliocentrique. Il envisage même une filiation de pensée d'Aristarque à Âryabhata. Ce mathématicien est le premier à soutenir cette hypothèse, mais celle-ci est critiquée par de nombreux historiens.
+Au XIIe siècle Bhāskara II publie Siddhanta-Shiromani, un traité d'astronomie dans lequel il approfondit les travaux de Âryabhata.
+Au XVe siècle, l'école astronomique de Kérala, et plus précisément l'astronome Nilakantha Somayaji dans son traité Tantrasamgraha (en), présente un système planétaire dans lequel les cinq planètes Mercure, Vénus, Mars, Jupiter et Saturne, tournent autour du Soleil qui, lui, tourne autour de la terre.
+
+
+=== Astronomie musulmane ===
+Les modèles planétaires des astronomes arabes restent principalement de type géocentrique, mais il semble qu'ils aient eu connaissance des théories héliocentriques.
+Ainsi Van des Waerden étudiant les travaux de l'astronome perse Abû Ma'shar (IXe siècle) au travers des écrits des astronomes al-Biruni et al-Sijzi pense déceler dans l'étude des périodes des planètes de ce savant une pensée héliocentrique. Selon lui, le modèle est plus primitif que celui d'Aryabhata, mais semble dériver d'une théorie héliocentrique qui trouverait sa source dans les Zij-i Shah des Sassanides.
+Au XIe siècle, l'astronome Al-Biruni fait l'inventaire de l'état de l'art en astronomie à son époque. Il était au courant des écrits d'Âryabhata et d'Aristarque de Samos et s'est posé la question du mouvement de la Terre. S'il s'est beaucoup interrogé sur la possibilité de la rotation de la Terre sur elle-même, il n'a pas mis en doute le modèle géocentrique hérité de Ptolémée.
+À partir du XIe siècle se développe, dans le monde arabe, une critique du modèle de Ptolémée, des erreurs sont relevées, d'autres modèles sont proposés, principalement dans la partie orientale du monde arabe, dans ce qu'on appelle l'école de Maragha, avec les astronomes Nasir ad-Din at-Tusi et Ibn al-Shatir, par exemple. Mais ces modèles conservent le principe d'un Soleil tournant autour de la Terre. Cependant, ils mettent en place des outils (couple d'al-Tusi, modèle d'ibn al-Shatir) que l'on retrouve dans l’œuvre de Copernic.
+
+
+=== Moyen Âge européen ===
+Au XIVe siècle, des auteurs comme Jean Buridan ou Nicole Oresme ont abordé la question de la possibilité du mouvement de rotation diurne de la Terre.
+Un siècle plus tard, le théologien et cardinal Nicolas de Cues réexamine ces travaux et postule, en se basant sur des arguments théologiques, que la taille de l'Univers n'est pas finie (de fait il voulait dire que l'Univers est illimité, sans borne, bien que fini), et que la Terre est un astre en mouvement, de même nature que ceux que l'on voit dans le ciel.
+Dans son Codex Leicester paru en 1510, Léonard de Vinci découvre que la lumière cendrée de la Lune est due à la réverbération de la Terre. Il émet l'hypothèse que la Terre est un astre de même nature que la Lune.
+
+
+== Le système de Copernic ==
+
+Le système imaginé par Copernic au XVIe siècle annonce l'abandon progressif du système géocentrique utilisé jusqu'alors comme modèle de l'Univers.
+Le système de Copernic est un système théorique destiné à simplifier les calculs astronomiques. Il se fonde sur trois principes :
+
+le mouvement circulaire est parfait ;
+les mouvements sont des mouvements circulaires uniformes ou des combinaisons de mouvements circulaires uniformes ;
+les mathématiques se doivent de trouver les modèles les plus simples pour expliquer les phénomènes naturels.
+Dans son livre De revolutionibus (1543), il énonce une série de postulats :
+
+l

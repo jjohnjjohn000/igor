@@ -1,0 +1,50 @@
+Sujet: Toxoplasmose
+
+La toxoplasmose est une infection parasitaire dont l'agent est le protozoaire Toxoplasma gondii. Le parasite infecte le plus souvent des animaux à sang chaud, y compris l’être humain, mais son hôte définitif est un félidé (dont le chat fait partie). L'infection est asymptomatique dans la majorité des cas pour les sujets immunocompétents, ne présentant un risque sérieux que pour les femmes enceintes, les personnes séropositives au VIH et les sujets ayant un système de défense immunitaire affaibli.
+La maladie est présente partout dans le monde et on estime qu’un tiers de la population mondiale est porteur de Toxoplasma gondii. Sa prévalence chez l’être humain est variable. Évaluée d'après la séropositivité au toxoplasme (entraînant donc une immunité à une réinfection), la prévalence est faible en Asie ou en Amérique et varie entre 20 % et 70 % dans les autres régions du monde.
+La toxoplasmose est transmissible de la mère au fœtus. En France en 2003, la séropositivité chez la femme enceinte était de près de 44 %. Chez les mères séronégatives, en cas d'infection maternelle le risque de transmission au fœtus dépend de l'âge de la grossesse au moment de la contamination. Il est inférieur à 2 % avant deux mois de grossesse, mais, dans ce cas, l’atteinte fœtale est grave. Il atteint 70 % en fin de grossesse et le fœtus subira alors essentiellement des lésions oculaires.
+
+
+== Historique ==
+
+Le parasite est décrit pour la première fois en 1908 à l’Institut Pasteur de Tunis par deux médecins français, Charles Nicolle et Louis Herbert Manceaux, après une épidémie de laboratoire sur un rongeur sauvage d’Afrique du Nord, le Ctenodactylus gundi. Ils isolent un protozoaire de forme arquée qu’ils nomment Toxoplasma gondii, « toxoplasma » venant des mots grecs toxon, « arc », et plasma, « forme ». Au même moment, l’Italien Alfonso Splendore trouve ce même parasite après la mort des lapins de son laboratoire à Sao Paulo au Brésil. Nicolle et Manceaux proposent le genre Toxoplasma et T. gondii devient l’espèce type du genre. Par la suite, ce parasite sera isolé chez de nombreuses autres espèces animales, et à chaque fois une nouvelle espèce est proposée, nommée d’après l’espèce hôte chez qui elle avait été détectée. Ce n’est qu’en 1939 que Sabin apporte la preuve que ces différentes espèces n’en sont en fait qu’une seule, T. gondii.
+La classification reste cependant incertaine et seuls les stades asexués, merozoïtes et kystes tissulaires, sont alors connus. C’est dans les années soixante que les preuves de la nature coccidienne de T. gondii arrivent, et dans les années 1970 que l’on décrit le cycle parasitaire de type coccidien de T. gondii et l’existence de stades sexués dans l’intestin grêle des chats.
+En 1923, l’ophtalmologiste tchèque Josef Jankù décrit la maladie humaine, un cas de toxoplasmose congénitale chez un enfant atteint d’une choriorétinite.
+Ce n’est qu’en 1939 que la toxoplasmose est reconnue comme une maladie congénitale par Wolf et al. chez un enfant atteint d’encéphalite.
+En 1948, Sabin et Feldman mettent au point un test immunologique, le Dye test, qui permet le diagnostic sérologique de la maladie.
+
+
+== Cycle du toxoplasme et pathogénie ==
+
+
+=== Les trois formes parasitaires ===
+
+Toxoplasma gondii ne peut se multiplier de manière sexuée que chez les Félidés, qui constituent ainsi ses hôtes définitifs, bien qu’il puisse infecter tous les animaux homéothermes, dénommés hôtes intermédiaires. Le toxoplasme a un cycle complexe qui implique la transmission entre hôtes par des
+stades spécialisés pour l’invasion (voir figure) :
+
+le stade tachyzoïte, forme proliférative infectieuse chez l’hôte intermédiaire, se développe dans des vacuoles transitoires qui peuvent contenir jusqu’à 128 parasites ; cette forme peut se retrouver aussi chez le fœtus.
+le stade bradyzoïte, chez l’hôte intermédiaire, est contenu dans des kystes intracellulaires qui mesurent environ 100 µm de diamètre et contiennent plusieurs milliers de parasites ;
+le stade mérozoïte, chez l’hôte définitif, est le seul stade capable de reproduction sexuée ;
+le stade sporozoïte, résultat de la reproduction sexuée chez l’hôte définitif, est libéré dans l’environnement avec les déjections du chat dans des oocystes de 10 à 15 µm de diamètre qui contiennent 8 sporozoïtes.
+Les stades sporozoïte et bradyzoïte correspondent à des formes de résistance et de dissémination du parasite car, dans une certaine mesure, les kystes et les oocystes protègent les parasites qu’ils contiennent des variations de température, de pH, etc. T. gondii peut alterner entre ces stades en fonction de son hôte et de son contexte, par un processus de différenciation.
+
+Forme végétative
+Le tachyzoïte ou trophozoïte : C’est la forme que prend le parasite seul. Il est alors très fragile ; sa présence est toujours endocellulaire (il ne résiste ni à l’eau de Javel ni à l’acide chlorhydrique gastrique). L’ingestion n’est donc pas contaminante.
+Il se reproduit rapidement par un processus de multiplication asexuée (endodyogénie) chez l’hôte intermédiaire, toujours dans des macrophages. Puis il en sort en perforant la paroi au moyen d’une protéine qu’il produit (perforine). Des parasites génétiquement modifiés pour ne pas produire cette protéine ne peuvent sortir du macrophage qui gonfle en formant une boule. Visuellement, l’enveloppe du parasite a la forme d’une goutte d’eau un peu arquée (toxon en grec signifie « arc »), d’environ 6  à   8 μm de longueur et de 3  à   4 μm de largeur. Le pôle postérieur arrondi contient le noyau tandis que le pôle antérieur plus aigu possède des ultrastructures adaptées à la pénétration cellulaire (complexe apical).
+Forme kystique
+Cette forme est plus résistante que la précédente (forme de résistance et de dissémination), entourée par une membrane épaisse, de forme sphérique ou ovoïde, elle mesure de 50 à 200 µm. Elle contient en plusieurs milliers d’exemplaires une forme végétative particulière le bradyzoïte ou cystozoïte (3 à 4 microns), un kyste de 100 µm en contient 2 000 à 3 000. Les bradyzoïtes résultent d’une série de multiplications asexuées, colonisant l’intérieur d’une cellule hôte. Leur multiplication est assez lente, et ne peut se faire que dans une cellule nerveuse ou musculaire de l’hôte intermédiaire. Dans les tissus, les kystes restent longtemps vivants, produisant des antigènes qui entretiennent l’immunité. Les kystes peuvent survivre plusieurs jours à température ambiante et plusieurs mois à 4 °C. Ils sont détruits par la chaleur (un quart d’heure à 56 °C) ou la congélation (24 heures à −20 °C).
+L’oocyste
+L’oocyste coccidien est très résistant, même à l’eau de Javel (forme de résistance et de dissémination), c’est la forme que l’on retrouve dans le milieu extérieur (sol, plantes…) où il effectue sa maturation en quelques jours (de un à cinq) à température ambiante et en présence d’oxygène. Sa résistance lui permet de rester vivant pendant plusieurs mois dans le sol, mais il est détruit par la chaleur lors de la cuisson, la dessiccation ou la congélation (−30 °C). Il est le résultat de la reproduction sexuée du parasite chez le chat. C’est un ovoïde de 15 µm par 10 µm regroupant 2 sporocystes de 6 à 8 µm de diamètre, contenant 4 sporozoïtes chacun (un sporozoïte ressemble à un tachyzoïte).
+
+
+=== Cycle de reproduction du parasite ===
+Le cycle peut être direct, c’est-à-dire sans hôte intermédiaire (cycle monoxène ou court), ou indirect, passant par un ou plusieurs hôtes intermédiaires (cycle hétéroxène ou long). L’hôte définitif du parasite est principalement le chat, mais les autres félidés sont aussi concernés. Les hôtes intermédiaires sont tous les animaux à sang chaud : mammifères et oiseaux (le chat, hôte définitif, se contamine en dévorant des oiseaux ou des souris).
+
+Les membres de la famille des chats (Felidae) sont les seuls hôtes définitifs connus pour les étapes sexuées de Toxoplasma gondii et représentent le principal réservoir de l'infection. Les chats sont d'abord infectés (étape 1 de la figure) en mangeant de la viande contenant des formes kystiques de T. gondii, ce qui aboutit à la formation, dans son intestin, de gamétocytes dont la fusion donne des oocystes, éliminés dans les selles. Ceux-ci peuvent survivre dans le milieu extérieur, où ils se transforment en sporocystes puis en sporozoïtes infectants, qui sont ingérés par des animaux tels que des rongeurs, des moutons ou des porcs. Le parasite quitte le tractus digestif et, au stade trophozoïte, gagne divers tissus, se multipliant dans les macrophages et survivant dans les muscles, le cœur, le cerveau sous forme de kystes contenant les bradyzoïtes, ce qui entretient l'immunité du sujet infecté.
+L'humain peut être infecté de différentes façons : A) ingestion de viandes crues infectées contenant des formes kystiques de T. gondii (étape 2 de la figure) ; B) ingestion d'oocystes provenant de fèces de chat à partir de mains ou d'aliments contaminés (étape 3 de la figure ; contrairement à une idée reçue, la contamination ne se fait pas par contact direct avec les chats) ; C) transplantation d'organe ou transfusions sanguine ; D) transmission congénitale de la mère au fœtus ; E) inoculation accidentelle de tachyzoites.
+
+
+==== Contamination initiale ====
+Les oocystes sont présents sur les plantes ou la terre souillées par des déjections d’animaux (chats en particulier). De là, ils peuvent contaminer les aliments, les mains ou l’eau de boisson, puis être ingérés.
+La présence des kystes dans la viande est fréquente : 80 % des ovins et des caprins adultes sont contaminés, le porc est généralement contaminé dans moins de 40 % des cas, les autres espèces animales peuvent toutes être contaminées mais dans des proportions inconnues.
+Lorsque la viande est consommée crue ou insuffisamment cuite, les kystes ne sont pas détruits et s’installent dans l’organisme hôte. Les kystes ne passent pas la barrière placentaire, seuls les trophozoïtes ou tachyzoïtes passent, si la maladie se déclenche en cours de 

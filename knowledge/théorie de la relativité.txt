@@ -1,0 +1,21 @@
+Sujet: Théorie de la relativité
+
+L'expression théorie de la relativité renvoie le plus souvent à deux théories complémentaires élaborées par Albert Einstein avec l'aide de son épouse Mileva Marić : la relativité restreinte (1905) et la relativité générale (1915). Ce terme peut aussi renvoyer à une idée plus ancienne, la relativité galiléenne, qui s'applique à la mécanique newtonienne.
+En 1905, le physicien allemand Max Planck utilise l'expression « théorie relative » (Relativtheorie), qui met l'accent sur l'usage du principe de relativité. Dans la partie discussion de cet article, le physicien allemand Alfred Bucherer utilise pour la première fois le terme « théorie de la relativité » (Relativitätstheorie).
+Les concepts mis en avant par la théorie de la relativité restreinte comprennent plusieurs aspects :
+
+l'espace-temps : l'espace et le temps doivent être perçus comme formant une seule entité ;
+la vitesse de la lumière dans le vide est invariable, quelles que soient la vitesse de l'observateur et celle de la source lumineuse. Les calculs montrent que dans ces conditions, elle est aussi la vitesse maximale de déplacement, qu'elle n'est atteinte que pour la lumière ou toute entité dépourvue de masse, et doit être considérée comme la vitesse maximale de déplacement de l'information ;
+les mesures de diverses quantités sont relatives à la vitesse de l'observateur. En particulier, le temps se dilate et l'espace se contracte.
+Les concepts mis en avant par la théorie de la relativité générale comprennent :
+
+l'espace-temps se courbe d'autant plus que la masse à proximité est grande ;
+la gravitation influence l'écoulement du temps.
+
+
+== Critiques ==
+
+
+== Notes et références ==
+
+

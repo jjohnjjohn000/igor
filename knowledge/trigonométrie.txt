@@ -1,0 +1,329 @@
+Sujet: Trigonométrie
+
+La trigonométrie (du grec τρίγωνος / trígônos, « triangulaire », et μέτρον / métron, « mesure ») est une branche des mathématiques qui traite des relations entre distances et angles dans les triangles et des fonctions trigonométriques telles que sinus, cosinus, tangente.
+
+
+== Présentation ==
+
+
+=== Histoire de la trigonométrie ===
+
+
+==== Premières techniques de mesure du triangle ====
+Les origines de la trigonométrie remontent aux civilisations d’Égypte antique, de Mésopotamie et de la vallée de l’Indus, il y a plus de 4 000 ans. Il semblerait que les Babyloniens aient basé la trigonométrie sur un système numérique à base 60.
+La tablette paléo-babylonienne Plimpton 322 (ca -1800) présenterait des rudiments de trigonométrie.
+
+
+==== Les astronomes grecs ====
+L'astronome et mathématicien grec Hipparque de Nicée (-190 ; -120) construisit les premières tables trigonométriques sous la forme de tables de cordes : elles faisaient correspondre à chaque valeur de l'angle au centre (avec une division du cercle en 360°), la longueur de la corde interceptée dans le cercle, pour un rayon fixe donné. Ce calcul correspond au double du sinus de l'angle moitié, et donne donc, d'une certaine façon, ce que nous appelons aujourd'hui une table de sinus. Toutefois, les tables d'Hipparque n'étant pas parvenues jusqu'à nous, elles ne nous sont connues que par le grec Ptolémée, qui les publia, vers l'an 150, avec leur mode de construction dans son Almageste. C'est ainsi qu'elles furent redécouvertes à la fin du Moyen Âge par Georg von Purbach et son élève Regiomontanus. On attribue à Ménélaos d'Alexandrie (fin du Ier siècle) des développements en trigonométrie sphérique, au moins partiellement présents dans l'Almageste et longtemps attribués à Ptolémée lui-même.
+
+
+==== Les mathématiciens indiens ====
+Vers l'an 400, est rédigé un traité indien d'astronomie, le Surya Siddhanta, qui s'inspire de l'astronomie grecque, mais qui apporte une innovation concernant la trigonométrie. Alors que les mathématiciens grecs associaient la mesure d'une corde à un arc, l'ouvrage préfère associer la demi-corde à un arc donné. Cela donnera naissance à la notion de sinus. Il en sera de même plus tard des mathématiciens arabes. Le mathématicien indien Âryabhata, en 499, donne une table des sinus et des cosinus. Il utilise zya pour sinus, kotizya pour cosinus et otkram zya pour l'inverse du sinus. Il introduit aussi le sinus verse.
+Un autre mathématicien indien, Brahmagupta, utilise en 628 l'interpolation numérique pour calculer la valeur des sinus jusqu'au second ordre.
+
+
+==== Essor dans le monde musulman ====
+C'est dans le monde musulman que la trigonométrie prend le statut de discipline à part entière et se détache de l'astronomie.
+Abu l-Wafa (940-998) simplifie l'Almageste de Ptolémée en remplaçant l'usage du théorème de Ptolémée (qu'il nomme méthode du quadrilatère et des six quantités) par des formules de trigonométrie comparables aux nôtres (sinus de la somme de deux arcs, par exemple). Omar Khayyam (1048-1131) combine l'utilisation de la trigonométrie et la théorie de l'approximation pour fournir des méthodes de résolutions d'équations algébriques par la géométrie. Des méthodes détaillées de constructions de tables de sinus et cosinus pour tous les angles sont écrites par le mathématicien Bhāskara II en 1150. Il développe aussi la trigonométrie sphérique. Au XIIIe siècle, Nasir al-Din Tusi, à la suite de Bhāskara, est probablement un des premiers à considérer la trigonométrie comme une discipline distincte des mathématiques. Enfin, au XIVe siècle, Al-Kachi réalise des tables de fonctions trigonométriques lors de ses études en astronomie.
+
+
+==== En Europe : redécouverte de Ptolémée ====
+En 1220, en Europe, Fibonacci propose une table trigonométrique dans sa Practica Geometriae, mais qui comporte malheureusement plusieurs erreurs.
+La mise en place de mesures trigonométriques précises se développe vers le milieu du XVe siècle, avec la traduction en latin des œuvres de Ptolémée. Les pionniers en ce domaine sont Georg von Peuerbach et surtout son étudiant Regiomontanus. Ce dernier adopte la notion de sinus utilisée par les mathématiciens indiens et arabes. Il dresse une table des sinus avec un rayon de 600 000 unités, puis 10 000 000 d'unités et donne également une table des tangentes. Suivent au début du XVIe siècle les traités d'Oronce Fine, Pedro Nunes et Joachim Rheticus. Ce dernier dresse une table trigonométrique pour un rayon de 1015 d'unités et avec un incrément de 10 secondes d'arc. Le mathématicien silésien Bartholomäus Pitiscus publie un travail remarquable sur la trigonométrie en 1595, dont le titre (Trigonometria) a donné son nom à la discipline. C'est le mathématicien flamand Adrien Romain qui introduit la notation moderne 
+  
+    
+      
+        sin
+        ⁡
+        α
+      
+    
+    {\displaystyle \sin \alpha }
+  
+[réf. nécessaire].
+L'utilisation de rayons ayant comme mesure une puissance de 10 et le développement du calcul décimal à la fin du XVIe, avec François Viète et Simon Stevin, amenèrent petit à petit à se ramener à un rayon unité et à introduire 
+  
+    
+      
+        π
+      
+    
+    {\displaystyle \pi }
+  
+ en tant que nombre et non plus en tant que rapport de deux longueurs.
+
+
+=== Applications ===
+Les applications de la trigonométrie sont extrêmement nombreuses. En particulier, elle est utilisée en astronomie et en navigation avec notamment la technique de triangulation. Les autres champs où la trigonométrie intervient sont (liste non exhaustive) : physique, électricité, électronique, mécanique, acoustique, optique, statistiques, économie, biologie, chimie, médecine, météorologie, géodésie, géographie, cartographie, cryptographie, informatique etc.
+
+
+== Trigonométrie ==
+
+Une définition possible des fonctions trigonométriques est d'utiliser les triangles rectangles, c’est-à-dire les triangles qui possèdent un angle droit (90 degrés ou π/2 radians).
+Et parce que la somme des angles d'un triangle fait 180° (ou π radians), l'angle le plus grand dans un tel triangle est l'angle droit. Le côté le plus long dans un triangle rectangle, c’est-à-dire le côté opposé à l'angle le plus grand (l'angle droit), s'appelle l'hypoténuse.
+Dans la figure à droite, l'angle 
+  
+    
+      
+        
+          
+            
+              
+                A
+                C
+                B
+              
+              ^
+            
+          
+        
+      
+    
+    {\displaystyle {\widehat {ACB}}}
+  
+ forme l'angle droit. Le côté [AB] est l'hypoténuse.
+Les fonctions trigonométriques se définissent ainsi, en notant 
+  
+    
+      
+        
+          
+            
+              A
+              ^
+            
+          
+        
+      
+    
+    {\displaystyle {\widehat {A}}}
+  
+ l'angle 
+  
+    
+      
+        
+          
+            
+              
+                B
+                A
+                C
+              
+              ^
+            
+          
+        
+      
+    
+    {\displaystyle {\widehat {BAC}}}
+  
+ :
+
+  
+    
+      
+        sin
+        ⁡
+        
+          
+            
+              A
+              ^
+            
+          
+        
+        =
+        
+          
+            
+              
+                côté opposé
+              
+            
+            
+              
+                hypoténuse
+              
+            
+          
+        
+        =
+        
+          
+            a
+            c
+          
+        
+        
+        cos
+        ⁡
+        
+          
+            
+              A
+              ^
+            
+          
+        
+        =
+        
+          
+            
+              
+                côté adjacent
+              
+            
+            
+              
+                hypoténuse
+              
+            
+          
+        
+        =
+        
+          
+            b
+            c
+          
+        
+        
+        tan
+        ⁡
+        
+          
+            
+              A
+              ^
+            
+          
+        
+        =
+        
+          
+            
+              
+                côté opposé
+              
+            
+            
+              
+                côté adjacent
+              
+            
+          
+        
+        =
+        
+          
+            a
+            b
+          
+        
+      
+    
+    {\displaystyle \sin {\widehat {A}}={{\mbox{côté opposé}} \over {\mbox{hypoténuse}}}={a \over c}\qquad \cos {\widehat {A}}={{\mbox{côté adjacent}} \over {\mbox{hypoténuse}}}={b \over c}\qquad \tan {\widehat {A}}={{\mbox{côté opposé}} \over {\mbox{côté adjacent}}}={a \over b}}
+  
+
+Ce sont les fonctions trigonométriques les plus importantes. Elles ont été définies pour les angles entre 0° et 90° (soit entre 0 et π/2 radians). En utilisant le cercle unité, on peut étendre cette définition à un angle quelconque, comme exposé dans l’article fonctions trigonométriques.
+
+
+== Formules de trigonométrie ==
+
+
+=== Identité remarquable ===
+Quel que soit le réel 
+  
+    
+      
+        a
+      
+    
+    {\displaystyle a}
+  
+, on a (d'après le théorème de Pythagore):
+
+  
+    
+      
+        
+          cos
+          
+            2
+          
+        
+        ⁡
+        a
+        +
+        
+          sin
+          
+            2
+          
+        
+        ⁡
+        a
+        =
+        1
+        
+      
+    
+    {\displaystyle \cos ^{2}a+\sin ^{2}a=1\,}
+  
+
+
+=== Formules d'addition et de différence des arcs ===
+
+Les deux formules principales sont les formules d'addition pour le cosinus et le sinus :
+
+  
+    
+      
+        cos
+        ⁡
+        (
+        a
+        +
+        b
+        )
+        =
+        cos
+        ⁡
+        a
+        cos
+        ⁡
+        b
+        −
+        sin
+        ⁡
+        a
+        sin
+        ⁡
+        b
+      
+    
+    {\displaystyle \cos(a+b)=\cos a\cos b-\sin a\sin b}
+  
+ ;
+
+  
+    
+      
+        sin
+        ⁡
+        (
+        a
+        +
+        b
+        )
+        =
+        sin
+        ⁡
+        a
+        cos
+        ⁡
+        b
+        +
+    

@@ -1,0 +1,51 @@
+Sujet: Plomberie
+
+La plomberie est une spécialité de l'ingénieur en mécanique appliquée au bâtiment et du plombier spécialisé, regroupant l'ensemble des techniques utilisées pour faire circuler des fluides (liquide ou gaz) à l'aide de tuyaux, tubes, vannes, robinets, soupapes, pompes aux différents points d'usage d'une installation. Le mot a pour origine le terme latin pour plomb (plumbum) et provient de l'utilisation de ce métal malléable pour réaliser les installations de plomberie au cours des siècles précédents.
+Ces techniques se sont améliorées au fil du temps grâce à l'évolution des connaissances scientifiques et à leur mise en application. Les premières applications systématiques de la plomberie ont été la mise en service de la gravité et des premières pompes, en agriculture, pour l'irrigation au moyen de pentes et de fossés.
+
+
+== Histoire et objectif ==
+
+
+=== Antiquité ===
+Les Babyloniens ou les Perses : les premières villes fortifiées ont développé des systèmes d'aqueduc qui permettaient de subir des sièges prolongés par l'utilisation de rivières souterraines.
+Les villes des Sumériens (comme Haran) présentaient parfois des systèmes d'égouts et d'alimentation en eau individuels. Les Incas, les Chinois et plusieurs peuples asiatiques ont développé les plateaux de culture étagés le long des pentes des régions montagneuses avec l'installation de systèmes d'irrigation sophistiqués qui sont les précurseurs des aqueducs.
+Les Égyptiens ont développé des systèmes d'irrigation (des fossés) alimentés par des pompes manuelles constituées d'une perche avec contrepoids à laquelle était fixée une peau attachée comme récipient pour élever l'eau jusqu'au début du fossé d'irrigation des cultures. Les Égyptiens auraient aussi développé l'utilisation de tubes de cuivre pour la distribution de l'eau dans certains temples ;  Un tube de cuivre datant d'environ 2 750 av J.-C. est présenté au musée de Berlin, et il en existe un exemple provenant d'un temple proche de la pyramide de Sahourê à Abousir.
+Les Grecs : déjà Archimède inventa une des premières pompes à vis qui porte encore son nom de nos jours (vis d'Archimède). Cette pompe alimentait les fossés pour l'irrigation agricole.
+
+
+==== Antiquité romaine ====
+Les Romains construisirent des systèmes d'égouts souterrains (comme le Cloaca Maxima) sous les voies carrossables et des aqueducs qui allaient chercher l'eau potable nécessaire à la vie à des sources élevées, et à de très grandes distances des villes desservies.
+Outre ces aqueducs, les ingénieurs romains ont créé des systèmes complexes de distribution d'eau par gravité, qui se terminaient à l'intérieur des villes par l'alimentation des fontaines et des bains publics "les thermes" qui ont permis une nette évolution dans la propreté sanitaire des personnes. L'évolution des techniques de distribution de l'eau au moyen de tuyaux de plomb soudés a probablement compté pour une part dans la déchéance de la civilisation romaine, en raison de la maladie générée par le plomb (voir saturnisme).
+Les historiens disposent de peu de documents décrivant précisément le système de plomberie ou évoquant les dates de son installation. Mais les couches de sédiments déposés en aval des sorties d'égouts, sédiments qui ont saisonnièrement et annuellement enregistré les variations de teneur en différents métaux. Des chercheurs ont récemment étudié 177 échantillons prélevés dans la colonne des sédiments portuaires d'une ancienne zone portuaire romaine (Ostie, le premier port de la ville antique de Rome) en aval d'un exutoire d'égout romain. Par datation au radiocarbone ils ont pu dater chaque couche sédimentée. Ces analyses ont mis en évidence une forte augmentation de la concentration de plomb en aval de l'exutoire portuaire de ces anciens égouts.
+Cette étude (publiée en 2017) apporte trois informations historiques nouvelles et d'importance : 
+
+c'est au cours du IIe siècle av. J.-C. (c'est-à-dire 300 ans après la construction du grand aqueduc) que les canalisations de plomb de cette ville ont été installées. Durant trois siècles les Romains ont bu de l'eau de fontaine sans plomb, puis durant un siècle (de guerre et de décadence selon les historiens) nombre d'entre eux ont bu de l'eau acheminée par des tubulures de plomb soudé. Une première découverte est que ces tuyaux ont irrigué la ville en eau (polluée) considérablement plus tôt que ne le pensaient jusqu'alors les historiens (environ 150 ans plus tôt) au vu des preuves archéologiques disponibles concernant les tuyaux de plomb installés dans l'Empire romain. Les analyses isotopiques montrent qu'il ne s'agit pas de plomb d'origine "naturelle" ;
+un siècle après l'installation de ce réseau de distribution en plomb, le taux de plomb a nettement diminué dans le sédiment du port, traduisant une panne ou un abandon partiel du système d'alimentation et/ou d'évacuation des eaux. Ce calendrier rétrospectif est cohérent avec les dates connues des guerres civiles romaines à cette époque, qui ont sans doute contribué à faire négliger l'entretien des canalisations ;
+cette étude apporte des éléments de preuve que non seulement les Romains se sont probablement empoisonnés avec leur "eau du robinet" et de fontaine (qui contenait environ 100 fois plus de plomb environ que l'eau de source) et via leurs récipients d'étain contenant du plomb, mais - au vu des teneurs en plomb trouvées dans les sédiments de cette époque - il est permis de penser que le poissons, les poulpes, les mollusques, les oursins et les crustacés pêchés dans le port et à son aval aient aussi pu être contaminés par le plomb ; au détriment des écosystèmes marins locaux (et des oiseaux marins et de rivages) d'une part, et aussi au détriment de la santé des consommateurs de ces produits de la mer, qui étaient à l'époque des mets très appréciés de l'aristocratie et de la population romaine. D'autres grandes villes romaines ont probablement des problèmes similaires dont Naples.
+
+
+=== Du moyen-âge à l'époque moderne ===
+Dans les siècles qui suivent longtemps les réseaux de distribution d'eau sont du ressort du fontainier qui collabore activement avec les plombiers ouvriers  spécialisés  dans le travail du plomb mais aussi les pompiers, les spécialistes des pompes. Les installations sont alors essentiellement publiques (fontaines, etc.). Ce n'est qu'à partir du début XIXe siècle qu'elles se répandent progressivement à l'intérieur des appartements. L'invention du premier WC (Water Closet), qui devient ensuite le « cabinet d'aisance avec réservoir de chasse » est à lui seul un grand pas vers la modernité, en introduisant les groupes sanitaires dans les immeubles.
+
+
+== Objectifs ==
+Les objectifs de la plomberie visent à permettre une meilleure  hygiène et faciliter la vie en société en permettant de rencontrer les besoins fondamentaux biologiques de l'être humain. On sait déjà  que respirer, boire et évacuer les déchets est fondamental et essentiel. La grande concentration d'humains sur de petits territoires oblige à de telles mesures sanitaires.
+Améliorer la salubrité des résidences, des villes par les techniques de la plomberie, la construction des services d'égouts et d'aqueducs. On peut comparer les services rendus par la plomberie à ceux qui l'ont été par l'invention de la collecte des vidanges par monsieur Poubelle. La santé des citadins a pu s'améliorer et permettre la croissance des villes dans des conditions d'hygiène en dépit de l'augmentation de la population sur un espace restreint de territoire.
+
+
+== Le drainage des appareils de plomberie ==
+Pour obtenir une bonne efficacité du renvoi d'un appareil, des évents sont nécessaires pour permettre le passage de l'air. Quand nous mettons de l'huile dans le moteur d'un véhicule à partir d'une canette métallique, on perce le dessus du contenant à deux endroits opposés sur le couvercle. Le but est de permettre un écoulement régulier par l'introduction d'air dans la boite. La même procédure s'applique pour la tuyauterie afin de faciliter la vidange des appareils sans que le siphon se désamorce à la fin du cycle.
+
+
+== Principes en Amérique ==
+L'installation de la plomberie est régie en Amérique du Nord par des codes d'installation strictes de type directifs et/ou de performance.
+Les codes directifs obligent l'installateur à faire ceci ou cela. Le code de performance décrit le rendement minimum que l'installation doit rencontrer. Les nouveaux codes en préparation sont des codes de performance.
+Pour obtenir le droit de travailler dans sa spécialité, l'artisan obtient sa carte de compétence après avoir suivi un cours plus ou moins long dépendant de la spécialité embrassée. Des stages de formation viennent compléter les études : en 2009 l'entrepreneur doit posséder sa carte de compétence pour le gaz naturel, pour la vapeur, les gicleurs, la soudure de pipeline, en fonction de sa spécialité.
+Pour travailler dans le domaine institutionnel, commercial ou industriel le plombier doit savoir lire les plans, connaître les mesures de sécurité, avoir une expérience des matériaux, leur manipulation, leur installation, de leur résistance, connaitre les supports et ancrages appropriés, etc.
+
+
+== Distribution d'eau (courbe de Hunter) ==
+Le Dr Roy B. Hunter du National Bureau of Standards, actuellement NIST, a développé des tables pour déterminer les charges de la demande pour les appareils de plomberie. Ces courbes basées sur la probabilité simultanée d'utilisation des appareils, a permis d'élaborer un graphique de la demande pour éviter le sous ou sur-dimensionnement de la tuyauterie. Ce graphique simple à utiliser est reconnu comme fiable par la communauté des concepteurs et ingénieurs.
+La courbe de Hunter a été construite à partir de l'appareil unitaire qui s'appuie sur le débit d'eau du plus petit appareil de plomberie (le robinet d'un lavabo vaut un appareil unitaire).
+Il s'agit d'un outil auquel le concepteur doit ajouter son jugement, parce que cette courbe ne peut être utilisée pour un réseau municipal ou un gros édifice à lo
