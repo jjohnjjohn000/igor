@@ -1,0 +1,63 @@
+{
+    "agent_name": "Jarvis",
+    "user_name": "Thomas",
+    "facts": [
+        "J'aime les crudités (Igor)",
+        "Utilisateur habite à Montréal",
+        "Utilisateur travaille tous les matins de la semaine à 5 h 20",
+        "Utilisateur travaille au Mc Donald's",
+        "Utilisateur aime Pamela",
+        "Utilisateur et Pamela sont ensemble depuis le 8 aout 2025",
+        "L'utilisateur a 45 ans",
+        "Pamela a 30 ans",
+        "aime les pizzas",
+        "aime le café",
+        "Le nom de la fille de Paméla est Noélie.",
+        "anniversaire 23 décembre",
+        "anniversaire de Paméla est le 8 octobre",
+        "aime la couleur bleue",
+        "aime le café noir",
+        "Mon chat s'appelle Felix",
+        "Felix"
+    ],
+    "voice_speed": 3.0,
+    "notebook": [],
+    "alarms": [
+        {
+            "type": "recurring",
+            "time": "22:00",
+            "days": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            ],
+            "raw": "tous les jours à 22h"
+        }
+    ],
+    "alarm_sound": "douceur",
+    "auto_learn": true,
+    "pinned": false,
+    "muted": false,
+    "fav_music_app": "Scary Videos",
+    "fav_browser": "firefox",
+    "window_x": 3334,
+    "window_y": 1660,
+    "current_project": "SiteWeb",
+    "wake_lang": "EN",
+    "audio_config": {
+        "mic_enabled": true,
+        "mic_index": 30,
+        "sys_enabled": true,
+        "sys_index": 156,
+        "sys_delay": 0,
+        "debug_audio": false
+    },
+    "fav_email": "gmail.com",
+    "fav_voip": "zoiper5",
+    "fav_terminal": "Poker",
+    "fav_filemanager": "nautilus"
+}

@@ -1,0 +1,24 @@
+{
+    "john newman - love me again": "https://www.youtube.com/watch?v=CfihYWRWRTQ&list=RDNMvMR-jNSKg&index=2",
+    "nostromo": "https://www.youtube.com/watch?v=BRaj7eVMYkw&list=RDBRaj7eVMYkw&start_radio=1",
+    "rince-creme episode #164 (mark": "https://www.youtube.com/watch?v=bbdLBnGeBDs&list=PLOR0i02-pVaUShHsarASQl3gVdNI7xVCg&index=163",
+    "scary videos that will prime y": "https://www.youtube.com/watch?v=JJ7vLWetg7g",
+    "rince-creme le podcast des den": {
+        "url": "https://www.youtube.com/watch?v=ZfVecQ2dLQE&list=PLOR0i02-pVaUShHsarASQl3gVdNI7xVCg&index=189",
+        "original_name": "Rince-Cr\u00e8me le podcast des Den",
+        "source": "MEDIA_NATIVE_API",
+        "added": "2026-01-27T23:01:58.981976"
+    },
+    "mail": {
+        "url": "https://gmail.com",
+        "original_name": "mail",
+        "added": "2026-01-29T03:04:21.947418",
+        "source": "manual"
+    },
+    "travail": {
+        "url": "https://www.youtube.com/watch?v=QittdyEFaE0",
+        "original_name": "Travail",
+        "source": "MEDIA_NATIVE_API",
+        "added": "2026-01-31T15:17:50.262352"
+    }
+}
