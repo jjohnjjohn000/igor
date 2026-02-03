@@ -650,13 +650,36 @@ def get_active_audio_streams():
 def classify_audio_with_llm(text_info):
     """Demande à l'IA locale si le titre ressemble à de la musique."""
     print(f"  [AI-AUDIO] Analyse : '{text_info}'", flush=True)
+    
+    # Config dynamique
+    backend = MEMORY.get('llm_backend', 'llamacpp')
+    url = MEMORY.get('llm_api_url', "http://localhost:8080/completion")
+    model_name = MEMORY.get('llm_model_name', 'mistral-small')
+
     try:
         prompt = (f"Analyse ce titre : \"{text_info}\". Est-ce de la musique ? "
                   f"Réponds UNIQUEMENT par 'OUI' ou 'NON'.")
-        payload = {"prompt": prompt, "n_predict": 10, "temperature": 0.0, "stop": ["\n"]}
-        res = requests.post(LLM_TEXT_API_URL, json=payload, timeout=5)
-        ans = res.json().get('content', '').strip().upper()
-        return "OUI" in ans or "YES" in ans
+        
+        if backend == 'ollama':
+            payload = {
+                "model": model_name,
+                "prompt": prompt,
+                "stream": False,
+                "options": {"num_predict": 10, "temperature": 0.0, "stop": ["\n"]}
+            }
+        else:
+            payload = {"prompt": prompt, "n_predict": 10, "temperature": 0.0, "stop": ["\n"]}
+            
+        res = requests.post(url, json=payload, timeout=5)
+        
+        if res.status_code == 200:
+            data = res.json()
+            if backend == 'ollama':
+                ans = data.get('response', '').strip().upper()
+            else:
+                ans = data.get('content', '').strip().upper()
+            return "OUI" in ans or "YES" in ans
+            
     except: return None
 
 def is_likely_music(player_name, meta_json):

@@ -8,9 +8,10 @@ import re
 import datetime
 import urllib.parse
 import shlex
-import threading
 import time
 import requests
+import stat
+import threading
 from gi.repository import GLib
 from difflib import SequenceMatcher
 from collections import Counter
@@ -1966,3 +1967,62 @@ def tool_exit(arg):
     threading.Thread(target=_shutdown_sequence, daemon=True).start()
     
     return "Au revoir ! Je m'éteins."
+
+# ==========================================
+# INSTALLATION & TÉLÉCHARGEMENT LLM
+# ==========================================
+
+def download_with_progress(url, dest_path, progress_callback=None, done_callback=None):
+    """Télécharge un fichier avec suivi de progression (Thread-safe)."""
+    def _worker():
+        try:
+            print(f"  [DOWNLOAD] Démarrage : {url} -> {dest_path}", flush=True)
+            response = requests.get(url, stream=True, timeout=10)
+            response.raise_for_status()
+            
+            total_size = int(response.headers.get('content-length', 0))
+            downloaded = 0
+            
+            with open(dest_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+                        downloaded += len(chunk)
+                        if total_size > 0 and progress_callback:
+                            fraction = downloaded / total_size
+                            GLib.idle_add(progress_callback, fraction)
+            
+            print(f"  [DOWNLOAD] Terminé.", flush=True)
+            # Rendre exécutable si c'est un binaire
+            if "server" in dest_path or "llama" in dest_path:
+                st = os.stat(dest_path)
+                os.chmod(dest_path, st.st_mode | stat.S_IEXEC)
+                
+            if done_callback:
+                GLib.idle_add(done_callback, True, f"Téléchargement réussi : {os.path.basename(dest_path)}")
+                
+        except Exception as e:
+            print(f"  [DOWNLOAD] Erreur : {e}", flush=True)
+            if done_callback:
+                GLib.idle_add(done_callback, False, str(e))
+
+    threading.Thread(target=_worker, daemon=True).start()
+
+def install_llama_cpp_bin(dest_folder, progress_cb, done_cb):
+    """Télécharge la dernière release linux de llama.cpp."""
+    # URL directe vers la dernière release statique (souvent la plus compatible)
+    # Note : Pour CUDA, il faudrait une version spécifique, ici on prend la version CPU/Vulkan générique
+    url = "https://github.com/ggerganov/llama.cpp/releases/download/b4653/llama-b4653-bin-ubuntu-x64.zip" 
+    # ASTUCE : Pour faire simple, on télécharge juste un binaire pré-compilé si dispo, 
+    # mais GitHub release donne des ZIP. Pour simplifier ce script, on va supposer 
+    # que l'utilisateur a 'unzip'. Sinon, voici une URL vers un build static tiers fiable ou on demande à l'utilisateur.
+    
+    # Pour cet exemple, je fournis une URL vers mon propre build static ou un build fiable direct sans zip
+    # pour éviter la complexité de décompression en Python.
+    # Remplaçons par une logique simulée ou une URL directe si vous en avez une. 
+    # Sinon, on va télécharger le ZIP et extraire.
+    
+    # URL temporaire vers un build "llama-server" direct (exemple)
+    # Mieux : On utilise curl dans un subprocess pour gérer le ZIP si besoin, 
+    # mais ici utilisons la fonction download générique.
+    pass # À implémenter dans l'UI via download_with_progress directement sur l'URL du modèle.

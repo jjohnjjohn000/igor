@@ -1,4 +1,5 @@
 # igor_ui_widgets.py
+import os
 import threading
 import subprocess
 import numpy as np
@@ -6,10 +7,11 @@ import re
 import math
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk, GLib, GdkPixbuf
+from gi.repository import Gtk, Gdk, GLib, GdkPixbuf, Pango, PangoCairo
 import igor_skills as skills
 import igor_config
 import igor_globals
+import igor_system
 from igor_audio import stop_speaking
 
 # --- WIDGET VISAGE ---
@@ -184,6 +186,57 @@ class FaceWidget(Gtk.DrawingArea):
         self.queue_draw()
         return True
 
+    def _draw_llm_status(self, cr):
+        """Affiche un petit indicateur du modèle actif (Ollama/Llama) en haut à gauche."""
+        backend = skills.MEMORY.get('llm_backend', 'llamacpp')
+        model = skills.MEMORY.get('llm_model_name', '')
+        
+        # Configuration visuelle
+        if 'ollama' in backend.lower():
+            color = (0.2, 0.8, 1.0) # Cyan pour Ollama
+            letter = "O"
+        else:
+            color = (1.0, 0.6, 0.2) # Orange pour Llama.cpp
+            letter = "L"
+            
+        # Nom court du modèle (ex: mistral-nemo -> Mistral)
+        short_model = "Local"
+        if model:
+            short_model = model.split(':')[0].split('-')[0].title()[:8]
+
+        cr.save()
+        # Position statique (Top Left)
+        cr.translate(10, 10)
+        
+        # 1. Fond sombre du badge
+        cr.set_source_rgba(0.1, 0.1, 0.1, 0.6)
+        cr.arc(12, 12, 14, 0, 2*math.pi)
+        cr.fill()
+        
+        # 2. Lettre du Backend (O ou L)
+        layout = self.create_pango_layout(letter)
+        layout.set_font_description(Pango.FontDescription("Sans Bold 12"))
+        
+        # Ombre portée texte
+        cr.set_source_rgba(0, 0, 0, 0.5)
+        cr.move_to(8, 4)
+        PangoCairo.show_layout(cr, layout)
+        
+        # Texte coloré
+        cr.set_source_rgba(*color, 1.0)
+        cr.move_to(7, 3)
+        PangoCairo.show_layout(cr, layout)
+        
+        # 3. Nom du modèle (Petit, dessous)
+        layout_sub = self.create_pango_layout(short_model)
+        layout_sub.set_font_description(Pango.FontDescription("Sans 7"))
+        
+        cr.set_source_rgba(0.9, 0.9, 0.9, 0.8)
+        cr.move_to(0, 28)
+        PangoCairo.show_layout(cr, layout_sub)
+        
+        cr.restore()
+
     def on_draw(self, w, cr):
         w = self.get_allocated_width(); h = self.get_allocated_height()
 
@@ -193,6 +246,10 @@ class FaceWidget(Gtk.DrawingArea):
             cr.paint()
             cr.set_source_rgba(0, 0, 0, 0.4)
             cr.paint()
+
+        # --- NOUVEAU : INDICATEUR LLM ---
+        self._draw_llm_status(cr)
+        # -----------------------------
 
         # --- 2. CONFIGURATION DU TRAIT ---
         # Couleur (Cyan si vidéo, Blanc sinon)
@@ -402,6 +459,10 @@ class ConfigDialog(Gtk.Dialog):
         # === ONGLET 3 : GÉNÉRAL ===
         self.general_tab = self._create_general_tab()
         self.notebook.append_page(self.general_tab, Gtk.Label(label="🔧 Général"))
+
+        # === ONGLET 4 : LLMS (NOUVEAU) ===
+        self.llm_tab = self._create_llm_tab()
+        self.notebook.append_page(self.llm_tab, Gtk.Label(label="🧠 LLMs"))
         
         # Boutons de dialogue
         self.add_button("Annuler", Gtk.ResponseType.CANCEL)
@@ -760,6 +821,507 @@ class ConfigDialog(Gtk.Dialog):
         return scroll
     
     # ============================================================
+    # ONGLET 4 : CONFIGURATION LLMS (MULTI-INSTANCES)
+    # ============================================================
+    
+    def _create_llm_tab(self):
+        import time
+        scroll = Gtk.ScrolledWindow()
+        scroll.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        
+        main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=15)
+        main_box.set_margin_top(20); main_box.set_margin_bottom(20)
+        main_box.set_margin_start(20); main_box.set_margin_end(20)
+        scroll.add(main_box)
+        
+        # Titre Global
+        title = Gtk.Label()
+        title.set_markup("<span size='x-large' weight='bold' foreground='#ffffff'>Moteurs IA &amp; Priorité</span>")
+        main_box.pack_start(title, False, False, 0)
+        
+        info = Gtk.Label()
+        info.set_markup("<span foreground='#c0c0c0'>Configurez ici vos modèles <b>Mistral</b>. L'agent utilisera le premier de la liste qui est <b>activé (ON)</b>.<br/>Activez 'Nemo' pour la vitesse ou 'Small' pour l'intelligence.</span>")
+        info.set_line_wrap(True)
+        main_box.pack_start(info, False, False, 0)
+
+        # Barre d'outils (Ajouter)
+        toolbar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        btn_add_llama = Gtk.Button(label="➕ Ajouter un profil Llama.cpp")
+        btn_add_llama.connect("clicked", self._on_add_instance, "llamacpp")
+        toolbar.pack_start(btn_add_llama, False, False, 0)
+        
+        # On garde le bouton Ollama au cas où, mais il n'est plus le défaut
+        btn_add_ollama = Gtk.Button(label="➕ Ajouter Ollama (Service)")
+        btn_add_ollama.connect("clicked", self._on_add_instance, "ollama")
+        toolbar.pack_start(btn_add_ollama, False, False, 0)
+        
+        main_box.pack_start(toolbar, False, False, 0)
+
+        # Conteneur de la liste des LLMs
+        self.llm_list_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=15)
+        main_box.pack_start(self.llm_list_box, False, False, 0)
+
+        # --- INITIALISATION INTELLIGENTE ---
+        self.llm_instances = skills.MEMORY.get('llm_instances', [])
+        
+        # Si aucune configuration n'existe (premier lancement ou après reset)
+        # On crée les trois boites : Llama.cpp (Custom) et les Mistral (Ollama)
+        if not self.llm_instances:
+            base_bin = skills.MEMORY.get('llm_binary_path', '') # Récupère ancien chemin si existe
+            
+            # 1. Instance Llama.cpp (Serveur Local / GGUF Custom)
+            llama_inst = {
+                'id': f"llamacpp_custom_{int(time.time())}",
+                'type': 'llamacpp',
+                'name': 'Llama.cpp (Local)',
+                'enabled': False, 
+                'binary_path': base_bin,
+                'gguf_path': os.path.join(igor_config.USER_HOME, "igor_llm/model.gguf"),
+                'url': 'http://localhost:8080/completion'
+            }
+
+            # 2. Instance Mistral Nemo (Via Ollama)
+            nemo_inst = {
+                'id': f"mistral_nemo_{int(time.time())+1}",
+                'type': 'ollama', # Bascule sur Ollama
+                'name': 'Ollama (Nemo)',
+                'enabled': True,
+                'model_name': 'mistral-nemo',
+                'url': 'http://localhost:11434/api/generate'
+            }
+            
+            # 3. Instance Mistral Small (Via Ollama)
+            small_inst = {
+                'id': f"mistral_small_{int(time.time())+2}",
+                'type': 'ollama', # Bascule sur Ollama
+                'name': 'Ollama (Small)',
+                'enabled': False,
+                'model_name': 'mistral-small',
+                'url': 'http://localhost:11434/api/generate'
+            }
+            
+            self.llm_instances = [llama_inst, nemo_inst, small_inst]
+
+        # Stockage des références UI
+        self.llm_ui_refs = {} 
+
+        # --- RENDU DE LA LISTE ---
+        for instance in self.llm_instances:
+            self._render_instance_row(instance)
+
+        # Barre de progression
+        self.progress_bar = Gtk.ProgressBar()
+        self.progress_bar.set_text("Prêt")
+        self.progress_bar.set_show_text(True)
+        main_box.pack_end(self.progress_bar, False, False, 0)
+
+        # Timer status
+        GLib.timeout_add(2000, self._refresh_instances_status)
+
+        return scroll
+
+    def _on_add_instance(self, btn, type_key):
+        import time
+        unique_id = f"{type_key}_{int(time.time()*1000)}"
+        new_instance = {
+            'id': unique_id,
+            'type': type_key,
+            'enabled': True,
+            'name': 'Nouveau Moteur'
+        }
+        # Valeurs par défaut
+        if type_key == 'llamacpp':
+            new_instance['url'] = 'http://localhost:8080/completion'
+        else:
+            new_instance['url'] = 'http://localhost:11434/api/generate'
+            new_instance['model_name'] = 'mistral'
+            
+        self._render_instance_row(new_instance)
+        # On scroll en bas (optionnel, simple hack)
+        # adj = self.llm_list_box.get_parent().get_vadjustment()
+        # GLib.idle_add(adj.set_value, adj.get_upper())
+
+    def _render_instance_row(self, instance):
+        if instance['type'] == 'llamacpp':
+            self._create_llamacpp_row(instance)
+        elif instance['type'] == 'ollama':
+            self._create_ollama_row(instance)
+        
+        self.llm_list_box.show_all()
+
+    def _create_llm_row_base(self, instance, status_label):
+        """Crée le cadre d'une ligne (Header + Expander)"""
+        unique_id = instance['id']
+        
+        row_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        row_box.get_style_context().add_class("llm-row") # Pour CSS
+        # Stockage de l'ID dans le widget pour la sauvegarde
+        row_box.instance_id = unique_id 
+        row_box.instance_type = instance['type']
+        
+        # 1. HEADER
+        header_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        
+        # Entry pour le nom (Editable)
+        entry_name = Gtk.Entry()
+        entry_name.set_text(instance.get('name', instance['type']))
+        entry_name.set_width_chars(20)
+        header_box.pack_start(entry_name, False, False, 0)
+        
+        # Status Label
+        header_box.pack_start(status_label, False, False, 0)
+        
+        # Spacer
+        header_box.pack_start(Gtk.Label(), True, True, 0)
+        
+        # Boutons Priorité
+        btn_up = Gtk.Button(label="⬆")
+        btn_up.set_tooltip_text("Monter la priorité")
+        btn_up.connect("clicked", self._on_move_llm, row_box, -1)
+        header_box.pack_start(btn_up, False, False, 0)
+        
+        btn_down = Gtk.Button(label="⬇")
+        btn_down.connect("clicked", self._on_move_llm, row_box, 1)
+        header_box.pack_start(btn_down, False, False, 0)
+        
+        # Switch Enable (SÉLECTION LOGIQUE)
+        # C'est celui-ci qui dit à l'agent : "Utilise cette configuration pour réfléchir"
+        sw_enable = Gtk.Switch()
+        sw_enable.set_active(instance.get('enabled', True))
+        sw_enable.set_tooltip_text("ACTIVER ce profil pour l'Agent.\n(Ne démarre pas forcément le serveur, sélectionne juste la config).")
+        header_box.pack_start(sw_enable, False, False, 5)
+        
+        # Bouton Supprimer
+        btn_del = Gtk.Button(label="✕")
+        btn_del.get_style_context().add_class("destructive-action") # Rouge si thème le supporte
+        btn_del.set_tooltip_text("Supprimer cette configuration")
+        btn_del.connect("clicked", self._on_delete_llm, row_box)
+        header_box.pack_start(btn_del, False, False, 0)
+        
+        row_box.pack_start(header_box, False, False, 5)
+        
+        # 2. CONFIG AREA
+        expander = Gtk.Expander(label="Détails de configuration")
+        config_area = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        config_area.set_margin_start(20); config_area.set_margin_top(5)
+        config_area.set_margin_bottom(10)
+        
+        # Bordure visuelle
+        frame = Gtk.Frame()
+        frame.add(config_area)
+        expander.add(frame)
+        row_box.pack_start(expander, False, False, 5)
+        
+        self.llm_list_box.pack_start(row_box, False, False, 0)
+        
+        # Initialisation refs
+        self.llm_ui_refs[unique_id] = {
+            'name': entry_name,
+            'switch': sw_enable,
+            'status_lbl': status_label
+        }
+        
+        return config_area
+
+    def _create_llamacpp_row(self, instance):
+        unique_id = instance['id']
+        lbl_stat = Gtk.Label()
+        lbl_stat.set_markup("<span background='#aa0000' foreground='white' size='small'> OFFLINE </span>")
+        
+        config_area = self._create_llm_row_base(instance, lbl_stat)
+        
+        # Switch Serveur Process (Marche/Arrêt)
+        hbox_srv = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        sw_process = Gtk.Switch()
+        sw_process.set_tooltip_text("Démarrer ou arrêter l'instance serveur Llama.cpp pour ce modèle.")
+        # On ne stocke pas l'état du process dans le JSON persistant (toujours off au démarrage UI)
+        sw_process.connect("state-set", self._on_llama_process_switch, unique_id)
+        
+        lbl_srv = Gtk.Label(label="🔌 Serveur Llama.cpp (Marche / Arrêt) :")
+        lbl_srv.set_markup("<b>🔌 Serveur Llama.cpp (Marche / Arrêt) :</b>")
+        
+        hbox_srv.pack_start(lbl_srv, False, False, 0)
+        hbox_srv.pack_start(sw_process, False, False, 0)
+        config_area.pack_start(hbox_srv, False, False, 0)
+        
+        # Grid Config
+        grid = Gtk.Grid()
+        grid.set_column_spacing(10); grid.set_row_spacing(10)
+        
+        # Binaire
+        entry_bin = Gtk.Entry(placeholder_text="/chemin/vers/llama-server")
+        entry_bin.set_text(instance.get('binary_path', ''))
+        entry_bin.set_hexpand(True)
+        btn_install = Gtk.Button(label="⬇️ Installer")
+        btn_install.connect("clicked", self._on_install_llama_bin, entry_bin) # On passe l'entry spécifique
+        
+        grid.attach(Gtk.Label(label="Exécutable :"), 0, 0, 1, 1)
+        grid.attach(entry_bin, 1, 0, 1, 1)
+        grid.attach(btn_install, 2, 0, 1, 1)
+
+        # Modèle GGUF
+        entry_gguf = Gtk.Entry(placeholder_text="/chemin/vers/model.gguf")
+        entry_gguf.set_text(instance.get('gguf_path', ''))
+        entry_gguf.set_hexpand(True)
+        
+        # Boutons de téléchargement modèles
+        box_dl_models = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
+        btn_dl_24b = Gtk.Button(label="Mistral 24B")
+        btn_dl_24b.connect("clicked", self._on_download_mistral, entry_gguf)
+        
+        btn_dl_nemo = Gtk.Button(label="Nemo 12B")
+        btn_dl_nemo.connect("clicked", self._on_download_nemo, entry_gguf)
+        
+        box_dl_models.pack_start(btn_dl_24b, False, False, 0)
+        box_dl_models.pack_start(btn_dl_nemo, False, False, 0)
+
+        grid.attach(Gtk.Label(label="Modèle GGUF :"), 0, 1, 1, 1)
+        grid.attach(entry_gguf, 1, 1, 1, 1)
+        grid.attach(box_dl_models, 2, 1, 1, 1)
+        
+        # URL
+        entry_url = Gtk.Entry()
+        entry_url.set_text(instance.get('url', 'http://localhost:8080/completion'))
+        entry_url.set_hexpand(True)
+        
+        grid.attach(Gtk.Label(label="URL API :"), 0, 2, 1, 1)
+        grid.attach(entry_url, 1, 2, 1, 1)
+        
+        config_area.pack_start(grid, False, False, 0)
+        
+        # Refs spécifiques
+        self.llm_ui_refs[unique_id]['bin'] = entry_bin
+        self.llm_ui_refs[unique_id]['gguf'] = entry_gguf
+        self.llm_ui_refs[unique_id]['url'] = entry_url
+        self.llm_ui_refs[unique_id]['sw_process'] = sw_process # Pour update visuel status
+
+    def _create_ollama_row(self, instance):
+        unique_id = instance['id']
+        lbl_stat = Gtk.Label()
+        lbl_stat.set_markup("<span background='#aa0000' foreground='white' size='small'> OFFLINE </span>")
+        
+        config_area = self._create_llm_row_base(instance, lbl_stat)
+        
+        # Switch Service Ollama (Global)
+        hbox_srv = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        sw_service = Gtk.Switch()
+        
+        # Tooltip d'avertissement demandé
+        sw_service.set_tooltip_text("⚠️ Attention : Ollama est un service global.\nCe bouton contrôle l'instance Ollama pour TOUS les modèles.")
+        
+        sw_service.connect("state-set", self._on_ollama_service_switch, unique_id)
+        
+        lbl_srv = Gtk.Label()
+        lbl_srv.set_markup("<b>🔌 Service Ollama (Global) :</b>")
+        
+        hbox_srv.pack_start(lbl_srv, False, False, 0)
+        hbox_srv.pack_start(sw_service, False, False, 0)
+        config_area.pack_start(hbox_srv, False, False, 0)
+        
+        grid = Gtk.Grid()
+        grid.set_column_spacing(10); grid.set_row_spacing(10)
+
+        entry_model = Gtk.Entry(placeholder_text="mistral-small")
+        entry_model.set_text(instance.get('model_name', 'mistral-small'))
+        entry_model.set_hexpand(True)
+        
+        entry_url = Gtk.Entry()
+        entry_url.set_text(instance.get('url', 'http://localhost:11434/api/generate'))
+        entry_url.set_hexpand(True)
+
+        grid.attach(Gtk.Label(label="Modèle Ollama :"), 0, 0, 1, 1)
+        grid.attach(entry_model, 1, 0, 1, 1)
+        
+        grid.attach(Gtk.Label(label="URL API :"), 0, 1, 1, 1)
+        grid.attach(entry_url, 1, 1, 1, 1)
+
+        config_area.pack_start(grid, False, False, 0)
+        
+        self.llm_ui_refs[unique_id]['model'] = entry_model
+        self.llm_ui_refs[unique_id]['url'] = entry_url
+        self.llm_ui_refs[unique_id]['sw_service'] = sw_service # Ref pour update visuel status
+
+    # --- ACTIONS UI ---
+
+    def _on_move_llm(self, btn, row_widget, direction):
+        parent = self.llm_list_box
+        children = parent.get_children()
+        try:
+            curr_idx = children.index(row_widget)
+            new_idx = curr_idx + direction
+            if 0 <= new_idx < len(children):
+                parent.reorder_child(row_widget, new_idx)
+        except: pass
+
+    def _on_delete_llm(self, btn, row_widget):
+        # Confirmation basique : on supprime direct (c'est un dialog de config après tout)
+        self.llm_list_box.remove(row_widget)
+        # On nettoie les refs
+        if row_widget.instance_id in self.llm_ui_refs:
+            del self.llm_ui_refs[row_widget.instance_id]
+
+    def _refresh_instances_status(self):
+        if not self.get_visible(): return True # Continue timer
+        
+        from igor_brain import check_llama_status, check_ollama_status
+        
+        # On check Llama local globalement (port 8080)
+        llama_ok = check_llama_status()
+        # On check Ollama globalement (port 11434)
+        ollama_ok = check_ollama_status()
+        
+        for uid, refs in self.llm_ui_refs.items():
+            # Si c'est un Llama local
+            if 'bin' in refs: 
+                # On vérifie si l'URL pointe bien vers localhost:8080
+                # (Simple check visuel, pour le switch process)
+                url = refs['url'].get_text()
+                if "8080" in url:
+                    if llama_ok:
+                        refs['status_lbl'].set_markup("<span background='#00aa00' foreground='white' weight='bold'> ONLINE </span>")
+                        if 'sw_process' in refs: refs['sw_process'].set_state(True)
+                    else:
+                        refs['status_lbl'].set_markup("<span background='#aa0000' foreground='white' size='small'> OFFLINE </span>")
+                        if 'sw_process' in refs: refs['sw_process'].set_state(False)
+            
+            # Si c'est Ollama
+            elif 'model' in refs:
+                if ollama_ok:
+                    refs['status_lbl'].set_markup("<span background='#00aa00' foreground='white' weight='bold'> ONLINE </span>")
+                    # Synchronise le switch si le service est détecté actif
+                    if 'sw_service' in refs: 
+                        refs['sw_service'].set_state(True)
+                else:
+                    refs['status_lbl'].set_markup("<span background='#aa0000' foreground='white' size='small'> OFFLINE </span>")
+                    if 'sw_service' in refs: 
+                        refs['sw_service'].set_state(False)
+        
+        return True
+
+    def _on_llama_process_switch(self, switch, state, unique_id):
+        from igor_brain import manage_local_server
+        
+        # On récupère les chemins de CETTE instance spécifique
+        refs = self.llm_ui_refs.get(unique_id)
+        if not refs: return True
+        
+        bin_path = refs['bin'].get_text().strip()
+        gguf_path = refs['gguf'].get_text().strip()
+        
+        # On met à jour la mémoire temporairement pour que manage_local_server sache quoi lancer
+        skills.MEMORY['llm_binary_path'] = bin_path
+        skills.MEMORY['llm_gguf_path'] = gguf_path
+        
+        action = "start" if state else "stop"
+        manage_local_server(action)
+        return True
+
+    def _on_ollama_service_switch(self, switch, state, unique_id):
+        """Lance ou arrête le service Ollama localement."""
+        try:
+            if state:
+                # Démarrage
+                print("  [OLLAMA-CTRL] Démarrage du service 'ollama serve'...", flush=True)
+                # On lance en mode détaché
+                subprocess.Popen(
+                    ["ollama", "serve"],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    start_new_session=True
+                )
+            else:
+                # Arrêt (Force brute utilisateur)
+                print("  [OLLAMA-CTRL] Arrêt du service Ollama...", flush=True)
+                # On essaie de tuer le processus proprement
+                subprocess.run(["pkill", "ollama"], check=False)
+                
+        except Exception as e:
+            print(f"  [OLLAMA-CTRL] Erreur : {e}", flush=True)
+            return True # Empêche le switch de basculer visuellement si erreur grave
+            
+        return False # Laisse l'état du switch changer
+
+    # --- TÉLÉCHARGEMENTS (Adaptés pour recevoir le widget cible) ---
+
+    def _update_progress(self, fraction):
+        self.progress_bar.set_fraction(fraction)
+        self.progress_bar.set_text(f"Téléchargement... {int(fraction*100)}%")
+
+    def _on_download_done(self, success, msg, target_entry=None):
+        self.progress_bar.set_fraction(1.0 if success else 0.0)
+        self.progress_bar.set_text(msg)
+        if success and target_entry:
+            # On met le chemin complet dans l'entry spécifique passée en argument
+            # On doit reconstruire le chemin complet car msg ne contient que le nom parfois
+            if "llama-server" in msg:
+                target_entry.set_text(os.path.join(igor_config.USER_HOME, "igor_llm/llama-server"))
+            elif "nemo" in msg.lower():
+                target_entry.set_text(os.path.join(igor_config.USER_HOME, "igor_llm/mistral-nemo-12b.gguf"))
+            elif "mistral" in msg.lower():
+                target_entry.set_text(os.path.join(igor_config.USER_HOME, "igor_llm/mistral-small.gguf"))
+
+    def _on_install_llama_bin(self, btn, target_entry):
+        install_dir = os.path.join(igor_config.USER_HOME, "igor_llm")
+        if not os.path.exists(install_dir): os.makedirs(install_dir)
+        url = "https://github.com/ggerganov/llama.cpp/releases/download/b4665/llama-b4665-bin-ubuntu-x64.zip"
+        zip_dest = os.path.join(install_dir, "llama.zip")
+        
+        def _install_logic():
+            import requests, zipfile
+            try:
+                GLib.idle_add(self.progress_bar.set_text, "Téléchargement ZIP...")
+                response = requests.get(url, stream=True)
+                total = int(response.headers.get('content-length', 0))
+                dl = 0
+                with open(zip_dest, 'wb') as f:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        f.write(chunk)
+                        dl += len(chunk)
+                        if total: GLib.idle_add(self.progress_bar.set_fraction, dl/total)
+                
+                GLib.idle_add(self.progress_bar.set_text, "Extraction...")
+                with zipfile.ZipFile(zip_dest, 'r') as zip_ref:
+                    for file in zip_ref.namelist():
+                        if "llama-server" in file:
+                            zip_ref.extract(file, install_dir)
+                            extracted_path = os.path.join(install_dir, file)
+                            final_path = os.path.join(install_dir, "llama-server")
+                            os.rename(extracted_path, final_path)
+                            os.chmod(final_path, 0o755)
+                            # Update UI
+                            GLib.idle_add(lambda: target_entry.set_text(final_path))
+                            break
+                os.remove(zip_dest)
+                GLib.idle_add(self._on_download_done, True, "Llama-server installé !", None)
+            except Exception as e:
+                GLib.idle_add(self._on_download_done, False, f"Erreur: {e}", None)
+
+        threading.Thread(target=_install_logic, daemon=True).start()
+
+    def _on_download_mistral(self, btn, target_entry):
+        self._generic_download_model(
+            "https://huggingface.co/MaziyarPanahi/Mistral-Small-24B-Instruct-2501-GGUF/resolve/main/Mistral-Small-24B-Instruct-2501.Q4_K_M.gguf",
+            "mistral-small.gguf",
+            target_entry
+        )
+
+    def _on_download_nemo(self, btn, target_entry):
+        self._generic_download_model(
+            "https://huggingface.co/bartowski/Mistral-Nemo-12B-Instruct-v1-GGUF/resolve/main/Mistral-Nemo-12B-Instruct-v1-Q4_K_M.gguf",
+            "mistral-nemo-12b.gguf",
+            target_entry
+        )
+
+    def _generic_download_model(self, url, filename, target_entry):
+        install_dir = os.path.join(igor_config.USER_HOME, "igor_llm")
+        if not os.path.exists(install_dir): os.makedirs(install_dir)
+        dest = os.path.join(install_dir, filename)
+        
+        # On utilise une lambda pour passer target_entry au callback de fin
+        done_cb = lambda success, msg: self._on_download_done(success, msg, target_entry)
+        igor_system.download_with_progress(url, dest, self._update_progress, done_cb)
+
+    # ============================================================
     # MÉTHODES AUDIO (monitoring, scan devices, etc.)
     # ============================================================
     
@@ -1011,14 +1573,14 @@ class ConfigDialog(Gtk.Dialog):
         return None
 
     # ============================================================
-    # SAUVEGARDE DES PARAMÈTRES
+    # SAUVEGARDE GLOBALE (MODIFIÉE POUR MULTI-INSTANCES)
     # ============================================================
     
     def get_settings(self):
-        """Récupère tous les paramètres configurés"""
+        """Récupère tous les paramètres et reconstruit la liste des LLMs"""
         settings = {}
         
-        # === AUDIO ===
+        # ... (Partie Audio/Apps/Général inchangée) ...
         settings['audio_config'] = {
             'mic_enabled': self.sw_mic.get_active(),
             'mic_index': self._get_selected_index(self.combo_mic),
@@ -1027,20 +1589,65 @@ class ConfigDialog(Gtk.Dialog):
             'sys_delay': int(self.scale_delay.get_value()),
             'debug_audio': self.sw_debug.get_active()
         }
-        
-        # === APPLICATIONS ===
         settings['fav_browser'] = self.entry_fav_browser.get_text().strip()
         settings['fav_email'] = self.entry_fav_email.get_text().strip()
         settings['fav_music_app'] = self.entry_fav_music_app.get_text().strip()
         settings['fav_voip'] = self.entry_fav_voip.get_text().strip()
         settings['fav_terminal'] = self.entry_fav_terminal.get_text().strip()
         settings['fav_filemanager'] = self.entry_fav_filemanager.get_text().strip()
-        
-        # === GÉNÉRAL ===
         settings['voice_speed'] = round(self.scale_speed.get_value(), 1)
         settings['alarm_sound'] = self.combo_alarm.get_active_text().lower()
         settings['auto_learn'] = self.sw_autolearn.get_active()
         settings['agent_name'] = self.entry_agent_name.get_text().strip()
         settings['user_name'] = self.entry_user_name.get_text().strip()
         
+        # === SAUVEGARDE LLMS ===
+        new_instances = []
+        children = self.llm_list_box.get_children()
+        
+        first_active_found = False
+        
+        # On parcourt l'ordre VISUEL
+        for row in children:
+            if hasattr(row, 'instance_id'):
+                uid = row.instance_id
+                refs = self.llm_ui_refs.get(uid)
+                if not refs: continue
+                
+                instance_data = {
+                    'id': uid,
+                    'type': row.instance_type,
+                    'name': refs['name'].get_text().strip(),
+                    'enabled': refs['switch'].get_active(),
+                    'url': refs['url'].get_text().strip()
+                }
+                
+                if row.instance_type == 'llamacpp':
+                    instance_data['binary_path'] = refs['bin'].get_text().strip()
+                    instance_data['gguf_path'] = refs['gguf'].get_text().strip()
+                elif row.instance_type == 'ollama':
+                    instance_data['model_name'] = refs['model'].get_text().strip()
+                
+                new_instances.append(instance_data)
+                
+                # Le premier moteur activé devient le moteur par défaut GLOBAL
+                if instance_data['enabled'] and not first_active_found:
+                    first_active_found = True
+                    settings['llm_backend'] = instance_data['type']
+                    settings['llm_api_url'] = instance_data['url']
+                    
+                    # On met à jour les clés legacy pour compatibilité avec igor_brain
+                    if row.instance_type == 'llamacpp':
+                        settings['llm_binary_path'] = instance_data['binary_path']
+                        settings['llm_gguf_path'] = instance_data['gguf_path']
+                    elif row.instance_type == 'ollama':
+                        settings['llm_model_name'] = instance_data['model_name']
+
+        settings['llm_instances'] = new_instances
+        
+        # Fallback si aucun actif
+        if not first_active_found:
+            settings['llm_backend'] = 'llamacpp'
+            settings['llm_api_url'] = 'http://localhost:8080/completion'
+
         return settings

@@ -167,16 +167,34 @@ def smart_summarize(text, source_name="résultat"):
             f"Ne dis pas 'Voici le résumé', donne juste les faits."
         )
 
-        payload = {
-            "prompt": prompt,
-            "n_predict": 150,
-            "temperature": 0.2,
-            "stop": ["\n\n"]
-        }
-        
-        # On utilise le serveur llama.cpp local (port 8080)
-        res = requests.post(LLM_TEXT_API_URL, json=payload, timeout=20)
-        summary = res.json().get('content', '').strip()
+        # Récupération de la config active (Ollama ou Llama.cpp)
+        backend = MEMORY.get('llm_backend', 'llamacpp')
+        url = MEMORY.get('llm_api_url', LLM_TEXT_API_URL)
+        model_name = MEMORY.get('llm_model_name', 'mistral-small')
+
+        if backend == 'ollama':
+            payload = {
+                "model": model_name,
+                "prompt": prompt,
+                "stream": False,
+                "options": {
+                    "num_predict": 150,
+                    "temperature": 0.2,
+                    "stop": ["\n\n"]
+                }
+            }
+            res = requests.post(url, json=payload, timeout=20)
+            summary = res.json().get('response', '').strip()
+        else:
+            # Format Llama.cpp Server
+            payload = {
+                "prompt": prompt,
+                "n_predict": 150,
+                "temperature": 0.2,
+                "stop": ["\n\n"]
+            }
+            res = requests.post(url, json=payload, timeout=20)
+            summary = res.json().get('content', '').strip()
         
         return f"(Résumé auto) : {summary}"
 

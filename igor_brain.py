@@ -1,4 +1,5 @@
 # igor_brain.py
+import os
 import re
 import json
 import hashlib
@@ -8,10 +9,170 @@ from functools import lru_cache
 import unicodedata
 import string
 import time
+import subprocess
 import igor_skills as skills
 import igor_config
 import igor_globals
 from igor_system import INSTALLED_APPS, APP_METADATA
+
+def call_llm_api(prompt, n_predict=150, stop=None, temperature=0.1, grammar=None):
+    """
+    Fonction unifiée pour appeler le LLM avec gestion de fallback automatique.
+    Si le premier modèle échoue, passe au suivant dans la liste configurée.
+    """
+    if stop is None:
+        stop = ["User:", "\n\n"]
+
+    # 1. Construction de la liste des candidats (Config actuelle + Instances enregistrées)
+    candidates = []
+    
+    # A. Configuration actuelle (Prioritaire)
+    candidates.append({
+        'type': skills.MEMORY.get('llm_backend', 'llamacpp'),
+        'url': skills.MEMORY.get('llm_api_url', igor_globals.API_URL),
+        'model_name': skills.MEMORY.get('llm_model_name', 'mistral-small'),
+        'is_current': True
+    })
+
+    # B. Autres instances disponibles (Fallback)
+    instances = skills.MEMORY.get('llm_instances', [])
+    for inst in instances:
+        if inst.get('enabled', True):
+            # On évite d'ajouter le doublon de la config actuelle
+            if inst.get('url') == candidates[0]['url'] and \
+               inst.get('model_name') == candidates[0]['model_name']:
+                continue
+            inst_copy = inst.copy()
+            inst_copy['is_current'] = False
+            candidates.append(inst_copy)
+
+    # 2. Boucle de tentative
+    for i, candidate in enumerate(candidates):
+        backend = candidate.get('type', 'llamacpp')
+        url = candidate.get('url')
+        model_name = candidate.get('model_name')
+        
+        # Log discret sauf si switch
+        if i > 0:
+            print(f"  [LLM] 🔄 Tentative fallback sur : {backend} ({model_name or 'Local'})...", flush=True)
+
+        if backend == 'ollama':
+            # Format API Ollama (/api/generate)
+            payload = {
+                "model": model_name,
+                "prompt": prompt,
+                "stream": False,
+                "options": {
+                    "num_predict": n_predict,
+                    "temperature": temperature,
+                    "stop": stop
+                }
+            }
+        else:
+            # Format API Llama.cpp Server (/completion)
+            payload = {
+                "prompt": prompt,
+                "n_predict": n_predict,
+                "temperature": temperature,
+                "stop": stop
+            }
+            if grammar:
+                payload["grammar"] = grammar
+
+        try:
+            # Utilisation de l'URL configurée (Llama.cpp ou Ollama)
+            res = requests.post(url, json=payload, timeout=300.0) 
+            
+            if res.status_code == 200:
+                data = res.json()
+                
+                # SI SUCCESS SUR UN FALLBACK -> MISE À JOUR DE LA CONFIGURATION
+                if not candidate.get('is_current'):
+                    print(f"  [LLM] ✅ Nouveau modèle actif : {model_name or backend}", flush=True)
+                    skills.MEMORY['llm_backend'] = backend
+                    skills.MEMORY['llm_api_url'] = url
+                    if model_name:
+                        skills.MEMORY['llm_model_name'] = model_name
+                    skills.save_memory(skills.MEMORY)
+
+                # Normalisation de la réponse
+                if backend == 'ollama':
+                    return data.get('response', '').strip()
+                else:
+                    return data.get('content', '').strip()
+            else:
+                print(f"  [LLM] ⚠️ Erreur {res.status_code} sur {model_name or url}: {res.text}", flush=True)
+                # On continue vers le prochain candidat
+        except Exception as e:
+            print(f"  [LLM] ⚠️ Exception sur {model_name or url}: {e}", flush=True)
+            # On continue vers le prochain candidat
+
+    print("  [LLM] ❌ CRITIQUE : Tous les modèles ont échoué.", flush=True)
+    return None
+    
+def check_llama_status():
+    """Vérifie si le serveur local llama.cpp répond (Port 8080)."""
+    try:
+        requests.get("http://localhost:8080/health", timeout=0.2)
+        return True
+    except:
+        return False
+
+def check_ollama_status():
+    """Vérifie si Ollama répond (Port 11434)."""
+    try:
+        requests.get("http://localhost:11434/", timeout=0.2)
+        return True
+    except:
+        return False
+
+def manage_local_server(action):
+    """Démarre ou arrête le serveur llama.cpp local."""
+    if action == "stop":
+        if igor_globals.LLM_SERVER_PROCESS:
+            print("  [LLM-SRV] Arrêt du serveur...", flush=True)
+            igor_globals.LLM_SERVER_PROCESS.terminate()
+            try:
+                igor_globals.LLM_SERVER_PROCESS.wait(timeout=2)
+            except:
+                igor_globals.LLM_SERVER_PROCESS.kill()
+            igor_globals.LLM_SERVER_PROCESS = None
+        return False
+
+    elif action == "start":
+        if igor_globals.LLM_SERVER_PROCESS:
+            return True # Déjà lancé
+
+        binary = skills.MEMORY.get('llm_binary_path')
+        model = skills.MEMORY.get('llm_gguf_path')
+        
+        if not binary or not model or not os.path.exists(binary) or not os.path.exists(model):
+            print("  [LLM-SRV] Erreur : Chemins binaire ou modèle invalides.", flush=True)
+            return False
+
+        try:
+            print(f"  [LLM-SRV] Démarrage : {os.path.basename(binary)} sur {os.path.basename(model)}", flush=True)
+            
+            # Commande de démarrage standard
+            cmd = [
+                binary,
+                "-m", model,
+                "-c", "4096",      # Contexte
+                "--port", "8080",  # Port
+                "-ngl", "99",      # GPU Layers (tout sur GPU si possible)
+                "--host", "0.0.0.0"
+            ]
+            
+            # Lancement non-bloquant
+            igor_globals.LLM_SERVER_PROCESS = subprocess.Popen(
+                cmd, 
+                stdout=subprocess.DEVNULL, # On cache les logs pour ne pas polluer
+                stderr=subprocess.DEVNULL
+            )
+            return True
+        except Exception as e:
+            print(f"  [LLM-SRV] Exception démarrage : {e}", flush=True)
+            return False
 
 def check_intent_category(words, actions, objects, category, focus = 0, inquiries = {}, states = {}, points_needed = 1):
     found_actions = words.intersection(actions)
@@ -351,49 +512,35 @@ Réponse (1 mot uniquement):"""
 #Phrase: "{user_input}"
 #Réponse (1 mot uniquement):"""
 
-    payload = {
-        "prompt": prompt,
-        "n_predict": 10,
-        "temperature": 0.0,
-        "top_k": 1
+    # Appel unifié
+    raw_intent = call_llm_api(prompt, n_predict=10, temperature=0.0)
+    
+    if not raw_intent:
+         print(f"  [CLASSIFY] API Error ou Vide → CHAT", flush=True)
+         return "CHAT"
+    
+    raw_intent = raw_intent.strip().upper()
+        
+    print(f" [RAW INTENT] {raw_intent}",flush=True)
+
+    if not raw_intent:
+        print(f"  [CLASSIFY] Réponse vide → CHAT", flush=True)
+        return "CHAT"
+    
+    intent = re.sub(r'[^A-Z]', '', raw_intent)
+    
+    valid_intents = {
+        "IDENTITY", "MEDIA", "SHORTCUT", "VISION", "PROJECT", 
+        "ALARM", "SEARCH", "KNOWLEDGE", "LAUNCH", "CONTROL", 
+        "MEMORY", "CHAT"
     }
     
-    try:
-        res = requests.post(igor_globals.API_URL, json=payload, timeout=3.0)
-        
-        if res.status_code != 200:
-            print(f"  [CLASSIFY] API Error {res.status_code} → CHAT", flush=True)
-            return "CHAT"
-        
-        raw_intent = res.json().get('content', '').strip().upper()
-        
-        print(f" [RAW INTENT] {payload}",flush=True)
-
-        if not raw_intent:
-            print(f"  [CLASSIFY] Réponse vide → CHAT", flush=True)
-            return "CHAT"
-        
-        intent = re.sub(r'[^A-Z]', '', raw_intent)
-        
-        valid_intents = {
-            "IDENTITY", "MEDIA", "SHORTCUT", "VISION", "PROJECT", 
-            "ALARM", "SEARCH", "KNOWLEDGE", "LAUNCH", "CONTROL", 
-            "MEMORY", "CHAT"
-        }
-        
-        if intent not in valid_intents:
-            print(f"  [CLASSIFY] Intent IA inconnu '{intent}' (raw:'{raw_intent}') → CHAT", flush=True)
-            return "CHAT"
-        
-        print(f"  [CLASSIFY] Intent IA: {intent}", flush=True)
-        return intent
-        
-    except requests.exceptions.Timeout:
-        print(f"  [CLASSIFY] Timeout IA (>3s) → CHAT", flush=True)
+    if intent not in valid_intents:
+        print(f"  [CLASSIFY] Intent IA inconnu '{intent}' (raw:'{raw_intent}') → CHAT", flush=True)
         return "CHAT"
-    except Exception as e:
-        print(f"  [CLASSIFY] Erreur: {e} → CHAT", flush=True)
-        return "CHAT"
+    
+    print(f"  [CLASSIFY] Intent IA: {intent}", flush=True)
+    return intent
 
 def remove_accents_and_special_chars(input_str):
     # Normalize to NFD (Normalization Form D) - decomposes accents into base characters and combining marks
@@ -649,106 +796,6 @@ def brain_query(user_input):
     #if quick_result:
     #    return quick_result
     
-    # --- DEBUT AJOUT DEBUG : COMPARAISON RAW ---
-    # On lance un thread silencieux pour voir ce que l'IA aurait dit "naturellement"
-    # sans ralentir le processus principal de l'agent.
-    def _debug_raw_response():
-        current_name = skills.MEMORY['agent_name']
-        user_name = skills.MEMORY['user_name']        
-        debug_tools_list = {
-    "BASE": [
-        "CHAT(msg: str) // Discuter ou répondre",
-        "EXIT() // Éteindre l'assistant",
-        "STATUS() // Diagnostic technique (Volume, Vitesse, Config, Uptime)",
-        "SYSTEM_STATS() // RAM/CPU/Uptime"
-    ],
-    "SYSTEM": [
-        "LAUNCH(app_name: str) // Ouvrir logiciel, site web ou vidéo ('Youtube [Titre]')",
-        "OPEN_FILE(args: 'Fichier.ext :: Dossier') // Ouvre fichier SYSTÈME (pas projet)",
-        "LIST_APPS(filter?: str) // Lister logiciels installés",
-        "LIST_WINDOWS(filter?: str) // Lister fenêtres ouvertes (accepte filtre par catégorie: 'calculatrice', 'navigateur', etc.)",
-        "FOCUS_WINDOW(name: str) // Mettre au premier plan (ex: 'Focus sur Arandr', 'Focus Firefox')",
-        "CLOSE_WINDOW(name_or_category: str) // Fermer fenêtre par NOM ou CATÉGORIE (ex: 'Firefox', 'calculatrice', 'navigateur', 'terminal')",
-        "FULLSCREEN(args: str) // Args: 'Firefox' (F11) ou 'Youtube :: video' (touche 'f').",
-        "SHELL(cmd: str) // Commande terminal simple",
-        "VISION(arg: str) // args: 'webcam' OU 'screen' OU 'fenêtre X'", 
-        "WATCH(state: 'on'|'off') // Surveillance continue",
-        "FIND(filename: str) // Recherche fichier local"
-    ],
-    "WEB": [
-        "SEARCH(query: str) // Recherche Google/DuckDuckGo",
-        "TIME(location?: str) // Heure",
-        "WEATHER(location?: str) // Météo",
-        "SET_DEFAULT_BROWSER(name: str) // Changer navigateur par défaut",
-        "SHORTCUT_ADD(args: 'Nom') // Donnez JUSTE le nom. Le système trouvera l'URL réelle. N'INVENTEZ JAMAIS L'URL.",
-        "SHORTCUT_LIST()",
-        "SHORTCUT_DELETE(name: str)",
-        "SHORTCUT_OPEN(name: str)"
-    ],
-    "AUDIO": [
-        "VOLUME(val: int) // 0-100",
-        "SET_MUTE(state: 'on'|'off'|'toggle') // Rendre l'assistant muet (ne coupe PAS la musique)",
-        "SET_SPEED(val: float) // Vitesse voix (ex: 1.2)",
-        "MEDIA(action: 'play'|'pause'|'next'|'prev') // Mettre en pause/lecture Youtube/Spotify/VLC",
-        "MUSIC_CHECK() // Vérifier l'ambiance. Lance la musique si tout est calme. (NE PAS utiliser pour 'Quelle est cette musique ?')",
-        "SET_DEFAULT_MUSIC(app_or_url: str) // Définir favori musical",
-        "LISTEN_SYSTEM(duration: int) // Écouter audio PC (sec)"
-    ],
-    "MEMORY": [
-        "NOTE(text: str) // Ajouter au carnet",
-        "READ_NOTE() // Lire carnet",
-        "DEL_NOTE(keyword: str) // Supprimer note",
-        "CLEAR_NOTE() // Vider carnet",
-        "MEM(fact: str) // Retenir fait durable sur user",
-        "READ_MEM() // Réciter ce que je sais sur l'utilisateur UNIQUEMENT (Pas de savoir général)",
-        "AGENTNAME(new_agent_name: str) //Si l'utilisateur change ton nom (agent)",
-        "USERNAME(new_user_name: str) //Si l'utilisateur change son nom (humain)",
-        "ALARM(phrase: str) // 'tous les jours à 8h'",
-        "DEL_ALARM(time_approx: str) // '8h'",
-        "SHOW_ALARMS()",
-        "SET_ALARM_SOUND(style: 'douceur'|'alerte'|'classique')"
-    ],
-    "KNOWLEDGE": [
-        "LEARN(topic: str) // Télécharger page Wikipedia",
-        "LOCALKNOWLEDGE(topic: str) // Lire savoir local",
-        "MATH(expr: str) // Calcul (2+2) ou équation (2x=4)"
-    ],
-    "DEV": [
-        "PROJECT_NEW(name: str) // Crée et active un projet",
-        "PROJECT_DISPLAY_CURRENT() // Quel est le projet actif ?",
-        "PROJECT_CHANGE_CURRENT(name: str) // Changer de projet actif",
-        "PROJECT_LIST()",
-        "PROJECT_SHOW(name?: str) // Fichiers du projet (actif si arg vide)",
-        "PROJECT_SAVE(args: 'Fichier :: Contenu' OR 'Projet :: Fichier :: Contenu')",
-        "PROJECT_DELETE(name: str) // AVEC CONFIRMATION CHAT AVANT",
-        "PROJECT_DELETE_FILE(args: 'Projet :: Fichier' OR 'Fichier') // AVEC CONFIRMATION",
-        "PROJECT_TODO_ADD(args: 'Tâche' OR 'Projet :: Tâche')",
-        "PROJECT_TODO_LIST(project: str) // Voir la liste",
-        "PROJECT_TODO_DONE(args: 'Projet :: Numéro' OR 'Numéro') // Valider une tâche (ex: 'Web :: 1')"
-    ]}
-        try:
-            # Prompt très basique pour simuler une conversation standard sans outils
-            raw_prompt = f"""L'Utilisateur est l'humain, celui qui vit dans le monde physique. Il s'appelle {user_name} et utilise Je, me, moi, pour parler de lui dans le chat. L'Utilisateur utilise Tu, te, toi pour parler à l'Assistant.
-            Assistant: Tu es l'assistant (agent IA), tu t'appelles {current_name}. Tu es un assistant virtuel, tu as accès aux système d'exploitation de l'utilisateur.
-            Tu dois vérifier les outils que tu possèdes pour répondre à l'utilisateur. Ces outils te permettent d'accéder à internet, aux ressources systèmes et autres fonctionnalités pour aider l'utilisateur. Tu n'invente pas d'outils qui ne sont pas dans la liste.
-            Liste des outils: {debug_tools_list}
-            Tu termines tes réponses par le nom de l'outil utilisé.
-            User: "{user_input}"
-            """
-            raw_payload = {
-                "prompt": raw_prompt,
-                "n_predict": 150,
-                "temperature": 0.1, # Un peu plus créatif pour le mode chat standard
-                "stop": ["User:", "\n\n"]
-            }
-            res = requests.post(igor_globals.API_URL, json=raw_payload, timeout=10)
-            if res.status_code == 200:
-                raw_ans = res.json().get('content', '').strip()
-                print(f"\n  [DEBUG COMPARISON] Sans outils, l'IA aurait répondu :\n  >> \"{raw_ans}\"\n", flush=True)
-        except Exception: pass
-
-    threading.Thread(target=_debug_raw_response, daemon=True).start()
-
     # === ÉTAPE 1 : CLASSIFICATION ===
     intent = classify_query_intent(user_input)
     
@@ -849,19 +896,14 @@ User: "{user_input}"
 JSON:"""
     
     # === ÉTAPE 6 : APPEL API ===
-    #print(f"\n{'='*20} [DEBUG] PROMPT ENVOYÉE {'='*20}\n{prompt}\n{'='*58}", flush=True) # <--- LOG AJOUTÉ
-
-    payload = {
-        "prompt": prompt,
-        "n_predict": 300,  # Réduit (était 1000)
-        "temperature": 0.1,
-        "stop": ["User:", "\n\n"],
-        "grammar": "root ::= object | list\nobject ::= \"{\" pair (\",\" pair)* \"}\"\npair ::= string \":\" value\nstring ::= '\"' [^\"]* '\"'\nvalue ::= string | number | object | list\nlist ::= \"[\" (object (\",\" object)*)? \"]\"\nnumber ::= [0-9]+"
-    }
+    grammar_json = "root ::= object | list\nobject ::= \"{\" pair (\",\" pair)* \"}\"\npair ::= string \":\" value\nstring ::= '\"' [^\"]* '\"'\nvalue ::= string | number | object | list\nlist ::= \"[\" (object (\",\" object)*)? \"]\"\nnumber ::= [0-9]+"
     
+    # Appel via la nouvelle fonction unifiée
+    raw = call_llm_api(prompt, n_predict=300, temperature=0.1, grammar=grammar_json)
+
     try:
-        resp = requests.post(igor_globals.API_URL, json=payload, timeout=20)
-        raw = resp.json().get('content', '').strip()
+        if not raw:
+             return fallback_intent_detection(user_input)
         
         print(f"\n{'='*20} [DEBUG] SORTIE AGENT (BRUT) {'='*15}\n{raw}", flush=True) # <--- LOG AJOUTÉ
 
@@ -874,9 +916,6 @@ JSON:"""
             print(f"  [BRAIN] Échec parsing : {error}", flush=True)
             return fallback_intent_detection(user_input)
         
-        if resp.status_code != 200:
-            return fallback_intent_detection(user_input)
-
         # === FILTRE ANTI-HALLUCINATION SPÉCIAL MÉTÉO ===
         # C'est ici qu'on empêche l'IA d'inventer "Paris"
         if isinstance(parsed, dict) and parsed.get('tool') == 'WEATHER':

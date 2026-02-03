@@ -6,6 +6,9 @@ import igor_skills as skills
 API_URL = "http://localhost:8080/completion"
 MODEL_PATH = "model"
 
+# --- GESTION PROCESSUS LLM LOCAL ---
+LLM_SERVER_PROCESS = None
+
 # --- GLOBALS PARTAGÉS ---
 # Ces variables sont modifiées par d'autres modules, donc on les centralise ici
 WAKE_WORD_LIST = '["igor", "assistant", "ordinateur"]'
