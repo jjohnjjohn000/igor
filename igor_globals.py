@@ -120,7 +120,11 @@ Savoirs locaux: {local_files}
 Exemples lancement:
 "Ouvre Firefox" → {{"tool": "LAUNCH", "args": "Firefox"}}
 "Lance la calculatrice" → {{"tool": "LAUNCH", "args": "calculatrice"}}
-"Démarre le terminal" → {{"tool": "LAUNCH", "args": "terminal"}}
+
+**COMMANDES TERMINAL / SHELL** :
+Si l'utilisateur dit "commande" ou une instruction shell précise :
+"Lance la commande ls -la" → {{"tool": "SHELL", "args": "ls -la"}}
+"Exécute echo test" → {{"tool": "SHELL", "args": "echo test"}}
 
 VIDÉOS YOUTUBE (TRÈS IMPORTANT):
 "Mets Daft Punk sur Youtube" → {{"tool": "LAUNCH", "args": "Youtube Daft Punk"}}
@@ -153,7 +157,12 @@ Exemples projet:
 "Crée projet Web" → {{"tool": "PROJECT_NEW", "args": "Web"}}
 "Sauve index.html" → {{"tool": "PROJECT_SAVE", "args": "index.html :: "}}
 "Liste fichiers" → {{"tool": "PROJECT_SHOW", "args": ""}}
-"Ajoute tâche" → {{"tool": "PROJECT_TODO_ADD", "args": "description tâche"}}
+
+**GESTION TÂCHES (TODO)** :
+"Ajoute tâche faire les tests" → {{"tool": "PROJECT_TODO_ADD", "args": "faire les tests"}}
+"Coche la tâche 1" → {{"tool": "PROJECT_TODO_DONE", "args": "1"}}
+"Met le point 2 à fait" → {{"tool": "PROJECT_TODO_DONE", "args": "2"}}
+"Valide la tache numéro 3" → {{"tool": "PROJECT_TODO_DONE", "args": "3"}}
 
 **RECHERCHE DE FICHIERS** (CRITIQUE):
 "Trouve index.html" → {{"tool": "FIND", "args": "index.html"}}
@@ -185,9 +194,15 @@ SI la phrase contient "et", "puis", "ensuite", "après" :
 
 **EXEMPLES ACTION UNIQUE** :
 "Ferme Firefox" → {"tool": "CLOSE_WINDOW", "args": "Firefox"}
-"Ferme TOUTES les calculatrices" → {"tool": "CLOSE_WINDOW", "args": "toutes les calculatrices"}
-"Maximise le terminal" → {"tool": "FULLSCREEN", "args": "Maximise terminal"}
+"Ferme le terminal" → {"tool": "CLOSE_WINDOW", "args": "terminal"}
+"Maximise le terminal" → {"tool": "FULLSCREEN", "args": "terminal"}
 "Mets Firefox en plein écran" → {"tool": "FULLSCREEN", "args": "Firefox"}
+
+**FERMETURE MASSIVE (IMPORTANT)** :
+Si l'utilisateur dit "tous", "toutes" ou utilise un PLURIEL ("les terminaux") :
+→ TU DOIS inclure le mot "tous/toutes" ou garder le pluriel dans 'args'.
+"Ferme tous les terminaux" → {"tool": "CLOSE_WINDOW", "args": "tous les terminaux"}
+"Ferme les fenêtres de code" → {"tool": "CLOSE_WINDOW", "args": "toutes les fenêtres code"}
 
 **IMPORTANT - LISTE VS ACTIONS** :
 - "Montre les fichiers" → {"tool": "PROJECT_SHOW", "args": ""}  (PAS une action de contrôle)
@@ -356,7 +371,7 @@ SHORTCUTLIST_OBJECTS = {"raccourci", "bookmark", "raccourcis"}
 MEDIA_ACTIONS = {"ecoute", "pause", "play", "augmente", "monte", "baisse", "reduit", "lecture", "met", "mets"}
 MEDIA_OBJECTS = {"musique", "son", "audio", "volume", "video", "film", "ambiance"}
 FILE_EXTENSIONS = {".pdf", ".jpg", ".doc", ".txt", ".mp4", ".zip"}
-MEMORY_ACTIONS = {"retiens", "carnet", "memorise", "souviens", "rappelle", "ajoute"}
+MEMORY_ACTIONS = {"retiens", "carnet", "memorise", "souviens", "rappelle", "ajoute", "note", "noter"}
 MEMORY_OBJECTS = {"carnet", "note", "notes", "alarme", "alarmes", "fait", "faits", "information", "informations"}
 MEMORY_INQUIRIES = {"que"}
 READMEM_ACTIONS = {"souviens", "rappelle"}

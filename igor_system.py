@@ -1281,23 +1281,30 @@ def tool_close_window(arg):
             arg_str = arg_str.replace(article, "").strip()
     
     # 🆕 Cas 2 : DÉTECTION PLURIEL (sur l'arg nettoyé)
-    # Maintenant on vérifie le pluriel APRÈS avoir enlevé "toutes"
-    if not close_all and arg_str.endswith('s') and len(arg_str) > 3:
-        exceptions = ["souris", "paris", "virus", "bus", "biais", "jus", "processus"]
+    # Maintenant on vérifie le pluriel (S ou X) APRÈS avoir enlevé "toutes"
+    if not close_all and (arg_str.endswith('s') or arg_str.endswith('x')) and len(arg_str) > 3:
+        exceptions = ["souris", "paris", "virus", "bus", "biais", "jus", "processus", "linux", "firefox", "box", "remix"]
         
         if arg_str not in exceptions:
-            print(f"  [CLOSE] 🔍 Pluriel détecté : '{arg_str}' → Mode ALL activé", flush=True)
+            print(f"  [CLOSE] 🔍 Pluriel détecté (S/X) : '{arg_str}' → Mode ALL activé", flush=True)
             close_all = True
 
-    # 🆕 FIX CRITIQUE : On prépare les variantes de recherche
-    # Si le mot finit par 's', on cherche aussi sans le 's'
+    # 🆕 FIX CRITIQUE : On prépare les variantes de recherche (Singularisation)
     search_variants = [arg_str]
     
-    if arg_str.endswith('s') and len(arg_str) > 3:
-        exceptions = ["souris", "paris", "virus", "bus", "biais", "jus", "processus"]
+    # Gestion simple S/X
+    if (arg_str.endswith('s') or arg_str.endswith('x')) and len(arg_str) > 3:
+        exceptions = ["souris", "paris", "virus", "bus", "biais", "jus", "processus", "linux", "firefox", "box"]
         if arg_str not in exceptions:
+            # Cas standard (fenêtres -> fenêtre)
             singular = arg_str[:-1]
             search_variants.append(singular)
+            
+            # Cas spécial "aux" -> "al" (terminaux -> terminal)
+            if arg_str.endswith("aux"):
+                singular_al = arg_str[:-3] + "al"
+                search_variants.append(singular_al)
+            
             print(f"  [CLOSE] 🔎 Recherche avec variantes : {search_variants}", flush=True)
 
     # Mapping catégories (on ajoute les versions plurielles)

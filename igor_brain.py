@@ -56,6 +56,26 @@ def call_llm_api(prompt, n_predict=150, stop=None, temperature=0.1, grammar=None
         if i > 0:
             print(f"  [LLM] 🔄 Tentative fallback sur : {backend} ({model_name or 'Local'})...", flush=True)
 
+        # --- DÉTECTION MODÈLE RAISONNEMENT (DEEPSEEK R1) ---
+        # Si le nom contient 'r1' ou 'deepseek', on augmente massivement le budget tokens et le timeout
+        is_reasoning = False
+        if model_name:
+            lower_name = model_name.lower()
+            if "r1" in lower_name or "deepseek" in lower_name or "reason" in lower_name:
+                is_reasoning = True
+
+        # Ajustement des limites pour laisser le modèle "penser"
+        effective_n_predict = n_predict
+        current_timeout = 300.0
+
+        if is_reasoning:
+            # On laisse au moins 2048 tokens pour la pensée + le JSON
+            effective_n_predict = max(n_predict, 2048)
+            current_timeout = 600.0 # 10 minutes max, la pensée peut être lente sur CPU
+            # Pour DeepSeek, une température un peu plus élevée aide parfois la créativité logique
+            # mais pour du JSON strict, on reste bas (0.1 ou 0.6 recommandé pour R1)
+            temperature = 0.6 
+
         if backend == 'ollama':
             # Format API Ollama (/api/generate)
             payload = {
@@ -63,25 +83,33 @@ def call_llm_api(prompt, n_predict=150, stop=None, temperature=0.1, grammar=None
                 "prompt": prompt,
                 "stream": False,
                 "options": {
-                    "num_predict": n_predict,
+                    "num_predict": effective_n_predict, # Utilisation de la valeur ajustée
                     "temperature": temperature,
                     "stop": stop
                 }
             }
+            
+            # Optionnel : Forcer le mode JSON pour Ollama si ce n'est PAS un modèle R1
+            # (R1 gère mal le format:json natif car il veut output <think> qui n'est pas du JSON)
+            if not is_reasoning:
+                payload["format"] = "json"
+
         else:
             # Format API Llama.cpp Server (/completion)
+            # Llama.cpp gère le grammar, donc pas besoin d'augmenter n_predict artificiellement
+            # sauf si on utilisait un GGUF R1 (support encore expérimental pour grammar + think)
             payload = {
                 "prompt": prompt,
-                "n_predict": n_predict,
+                "n_predict": n_predict, # On garde la valeur standard pour Llama.cpp pour l'instant
                 "temperature": temperature,
                 "stop": stop
             }
-            if grammar:
+            if grammar and not is_reasoning:
                 payload["grammar"] = grammar
 
         try:
             # Utilisation de l'URL configurée (Llama.cpp ou Ollama)
-            res = requests.post(url, json=payload, timeout=300.0) 
+            res = requests.post(url, json=payload, timeout=current_timeout)
             
             if res.status_code == 200:
                 data = res.json()
@@ -237,13 +265,58 @@ def check_intent_category(words, actions, objects, category, focus = 0, inquirie
 @lru_cache(maxsize=256)
 def classify_query_intent(user_input):
     """
-    Classification ultra-rapide de l'intention avec pré-filtres robustes.
+    Classification avec priorité à la compréhension sémantique (LLM) pour les phrases complexes.
     """
     current_timestamp = time.time()
     print(f"    [TIMESTAMP START] {current_timestamp}",flush=True)
 
     lower = user_input.lower().strip()
     cleaned = remove_accents_and_special_chars(lower)
+    
+    # === PHASE 0 : COMPRÉHENSION D'INTENTION BRUTE (LLM FIRST) ===
+    # On interroge le LLM en premier pour capturer le sens implicite (ex: "je me lève" = ALARME)
+    # Condition : Phrase > 3 mots pour ne pas ralentir les commandes simples ("Stop", "Heure")
+    if len(lower.split()) > 3:
+        print(f"  [CLASSIFY] 🧠 Analyse sémantique profonde (LLM)...", flush=True)
+        
+        # Prompt spécialisé pour la déduction de contexte implicite
+        pre_prompt = f"""Remplis la fiche technique de la demande.
+CATÉGORIES : ALARM, TIME, WEATHER, MULTIMEDIA, CHAT, DEVELOPMENT, CONTROL_OS, NOTEBOOK, WEB_SEARCH, USER_KNOWN_FACTS.
+COMMANDES déduites de la demande de l'utilisateur, les actions qui devront être entreprises pour régler la NATURE de la demande.
+NATURE de la demande, mot pour mot, exclue les COMMANDES.
+
+Règles de déduction :
+- "À quelle heure je me lève ?" (Réveil) -> CATÉGORIES: ALARM. COMMANDES: Lire les alarmes, trouver une alarme qui répond aux critères de sélections, répondre à l'utilisateur.
+- "C'est quoi ce son ?" (Identification) -> CATÉGORIES: MULTIMEDIA. COMMANDES: Écouter le son système, analyser le son, répondre à l'utilisateur.
+- "Rappelle-moi de..." (Note) -> CATÉGORIES: NOTEBOOK. COMMANDES: Lire les notes, vérifier les doublons, ajouter la note au carnet de notes, répondre à l'utilisateur.
+- "Il fera chaud ?" -> CATÉGORIES: WEATHER. COMMANDES: Rechercher la météo pour l'endroit précisé ou l'emplacement de géolocalisation de l'utilisateur, répondre à l'utilisateur.
+- "J'ai quel âge ?" -> CATÉGORIES: USER_KNOWN_FACTS. COMMANDES: Lire les faits connus de l'utilisateur en mémoire, trouver l'information pertinente, répondre à l'utilisateur.
+
+Phrase: "{user_input}"
+CATÉGORIES (1 MOT MAJUSCULE),
+COMMANDES (LISTE les actions),
+NATURE (littéral)"""
+
+        # Appel augmenté (besoin de plus de tokens pour générer la fiche complète)
+        raw_response = call_llm_api(pre_prompt, n_predict=200, temperature=0.0)
+        
+        detected = None
+        if raw_response:
+            # Extraction précise de la ligne CATÉGORIES via Regex
+            # Supporte "CATÉGORIES" (avec accent) ou "CATEGORIES" et capture le mot suivant
+            match = re.search(r"(?:CATÉGORIES|CATEGORIES)\s*[:]\s*([A-Z_]+)", raw_response, re.IGNORECASE)
+            if match:
+                detected = match.group(1).upper().strip()
+                print(f"  [CLASSIFY] 📄 Fiche extraite : {detected}\nRAW : {raw_response}", flush=True)
+            
+            # On accepte l'intention si ce n'est pas CHAT (pour CHAT, on laisse les filtres décider)
+            # Cela permet de forcer ALARM même si les mots clés "sonnerie" sont absents
+            valid_overrides = {"ALARM", "MEDIA", "WEATHER", "TIME", "MEMORY", "PROJECT"}
+            
+            if detected in valid_overrides:
+                print(f"  [CLASSIFY] 🎯 Intention comprise par LLM : {detected}", flush=True)
+                return detected
+
     ranking = dict()
     
     # === PRÉ-FILTRE ABSOLU : COMMANDES MULTIPLES ===
@@ -434,8 +507,12 @@ def classify_query_intent(user_input):
     has_launch = any(k in cleaned for k in launch_keywords)
     has_video = any(k in cleaned for k in video_keywords)
     
+    # Vérification anti-conflit (Calculs ou Commandes Shell)
+    is_calculation = any(calc in cleaned for calc in ["calcul de", "resultat de", "combien"])
+    is_shell_cmd = "commande" in cleaned or "shell" in cleaned
+    
     if has_launch:
-        if not any(calc in cleaned for calc in ["calcul de", "resultat de", "combien"]):
+        if not is_calculation and not is_shell_cmd:
             print(f"  [CLASSIFY] PRÉ-FILTRE: LAUNCH", flush=True)
             if ranking["LAUNCH"] < 7:
                 ranking["LAUNCH"] = 7
@@ -485,8 +562,10 @@ def classify_query_intent(user_input):
         is_config = any(s in cleaned for s in ["change", "règle", "définit", "style", "type", "bruit", "son"])
         
         if has_time and not is_config:
-            print(f"  [QUICK] ⏰ Pose d'alarme détectée -> ALARM: '{user_input}'", flush=True)
-            return ("ALARM", user_input)
+            # FIX : On retourne la CATEGORIE (str) pour que brain_query charge les outils ALARM.
+            # L'extraction des arguments sera faite par l'IA ou l'heuristique.
+            print(f"  [CLASSIFY] PRÉ-FILTRE: ALARM (Intent Detect)", flush=True)
+            return "ALARM"
 
         print(f"  [CLASSIFY] PRÉ-FILTRE: ALARM (Intent)", flush=True)
         return "ALARM"
@@ -566,6 +645,14 @@ def extract_json_from_response(raw_text):
     VERSION CORRIGÉE : Prend le PREMIER objet JSON valide trouvé.
     """
     import re
+
+    # --- SPÉCIAL DEEPSEEK R1 / REASONING ---
+    # Suppression radicale des blocs de pensée <think>...</think>
+    # Le flag re.DOTALL permet au . de matcher aussi les retours à la ligne
+    if "<think>" in raw_text:
+        print(f"  [BRAIN] 🧠 Nettoyage de la pensée (DeepSeek-R1 detected)", flush=True)
+        raw_text = re.sub(r'<think>.*?</think>', '', raw_text, flags=re.DOTALL).strip()
+    # ---------------------------------------
     
     # 🆕 STRATÉGIE 0 : Extraction ultra-précoce (avant même les regex)
     # Si le texte commence directement par { ou [, on essaie de parser jusqu'au premier objet/array complet
@@ -779,22 +866,19 @@ def force_batch_if_needed(user_input, parsed_result):
     return parsed_result
 
 def brain_query(user_input):
-    print(f"\n{'='*20} [DEBUG] ENTRÉE CHAT {'='*20}\n>>> {user_input}\n{'='*55}", flush=True) # <--- LOG AJOUTÉ
+    print(f"\n{'='*20} [DEBUG] ENTRÉE CHAT {'='*20}\n>>> {user_input}\n{'='*55}", flush=True)
 
     """
-    Cerveau de l'agent - Version 2.0 avec Classification + Micro-Prompts.
-    
-    Pipeline:
-    1. Pré-filtre heuristique (< 1ms)
-    2. Classification intention (< 2s)
-    3. Prompt contextuel minimal (< 3s)
-    
-    Total: ~5s max au lieu de 8-10s avec le gros prompt.
+    Cerveau de l'agent - Version 2.2 (Anti-Hallucination R1 & Json Fix).
     """
-    # === ÉTAPE 0 : PRÉ-FILTRE HEURISTIQUE ===
+    # === ÉTAPE 0 : PRÉ-FILTRE HEURISTIQUE (ACTIVÉ) ===
     #quick_result = quick_heuristic_check(user_input)
     #if quick_result:
-    #    return quick_result
+        #print(f"  [BRAIN] ⚡ Heuristique appliquée : {quick_result}", flush=True)
+        # On formate pour simuler une réponse IA si c'est un tuple (TOOL, ARGS)
+        #if isinstance(quick_result, tuple):
+            #return quick_result[0], quick_result[1]
+        #return quick_result
     
     # === ÉTAPE 1 : CLASSIFICATION ===
     intent = classify_query_intent(user_input)
@@ -839,14 +923,12 @@ def brain_query(user_input):
     micro_prompt_template = igor_globals.MICRO_PROMPTS.get(intent, igor_globals.MICRO_PROMPTS["CHAT"])
     
     # === INJECTION VARIABLES DYNAMIQUES ===
-    # On prépare TOUTES les variables possibles pour éviter les KeyError
     format_vars = {
         'current_proj': current_proj,
         'local_files': local_files_str if local_files_str else "Aucun",
         'facts': facts_str if facts_str else "Aucun"
     }
     
-    # Méthode sécurisée : on remplace chaque {var} individuellement
     micro_prompt = micro_prompt_template
     for key, value in format_vars.items():
         placeholder = "{" + key + "}"
@@ -856,7 +938,7 @@ def brain_query(user_input):
     # === ÉTAPE 4 : SÉLECTION OUTILS (Charge SEULEMENT le groupe concerné) ===
     relevant_groups = igor_globals.INTENT_TOOL_GROUPS.get(intent, ["BASE"])
     
-    print(f"\n{'='*20} [DEBUG] RAISON MICROPROMPT {'='*16}\nINTENTION DÉTECTÉE : {intent}\nGROUPES ASSOCIÉS   : {relevant_groups}\nRAISON             : L'intention '{intent}' force l'inclusion des outils {relevant_groups} et du guide spécifique '{intent}'.\n{'='*58}", flush=True) # <--- LOG AJOUTÉ
+    print(f"\n{'='*20} [DEBUG] RAISON MICROPROMPT {'='*16}\nINTENTION DÉTECTÉE : {intent}\nGROUPES ASSOCIÉS   : {relevant_groups}\nRAISON             : L'intention '{intent}' force l'inclusion des outils {relevant_groups} et du guide spécifique '{intent}'.\n{'='*58}", flush=True)
 
     tools_list = []
     
@@ -868,7 +950,33 @@ def brain_query(user_input):
     tools_list = list(set(tools_list))
     tools_str = "\n".join([f"- {t}" for t in tools_list])
     
-    # === ÉTAPE 5 : PROMPT FINAL (COURT ET CIBLÉ) ===
+    # === ÉTAPE 5 : PROMPT FINAL (DYNAMIQUE) ===
+    
+    # --- MODIFICATION DEEPSEEK-R1 ---
+    current_model = skills.MEMORY.get('llm_model_name', '').lower()
+    is_r1 = "r1" in current_model or "deepseek" in current_model or "reason" in current_model
+
+    if is_r1:
+        # Règles R1 : On autorise le <think> mais on blinde la sortie et les outils
+        # On ajoute une instruction explicite pour forcer l'usage des outils existants
+        rules_block = """RÈGLES DE GÉNÉRATION:
+1. Analyse la demande. Tu PEUX réfléchir dans un bloc <think>...</think>.
+2. Ta réponse FINALE (après la pensée) doit être UNIQUEMENT le bloc JSON.
+3. INTERDICTION D'INVENTER DES OUTILS. Utilise SEULEMENT la liste fournie.
+   - Pour fermer un programme/app : utilise "CLOSE_WINDOW".
+   - Pour lancer : utilise "LAUNCH".
+4. Format: {"tool": "NOM", "args": "valeur"}
+5. Pas de markdown autour du JSON final."""
+    else:
+        # Règles strictes pour Llama.cpp/Mistral
+        rules_block = """RÈGLES ABSOLUES:
+1. UNE action : {"tool": "NOM", "args": "valeur"}
+2. PLUSIEURS actions (si "et", "puis") : [{"tool":...}, {"tool":...}]
+3. PAS de texte avant/après le JSON
+4. PAS de markdown (```json)
+5. Si doute → utilise CHAT"""
+    # --------------------------------
+
     prompt = f"""Tu es {current_name} (l'agent IA). Tu DOIS répondre UNIQUEMENT avec du JSON valide.
 
 CONTEXTE:
@@ -880,17 +988,12 @@ GUIDE SPÉCIFIQUE:
 OUTILS:
 {tools_str}
 
-RÈGLES ABSOLUES:
-1. UNE action : {{"tool": "NOM", "args": "valeur"}}
-2. PLUSIEURS actions (si "et", "puis") : [{{"tool":...}}, {{"tool":...}}]
-3. PAS de texte avant/après le JSON
-4. PAS de markdown (```json)
-5. Si doute → utilise CHAT
+{rules_block}
 
 EXEMPLES:
 User: "Quelle heure ?" → {{"tool": "TIME", "args": ""}}
-User: "Ferme Chrome et ouvre Firefox" → [{{"tool": "CLOSE_WINDOW", "args": "Chrome"}}, {{"tool": "LAUNCH", "args": "Firefox"}}]
-User: "Cherche Python" → {{"tool": "SEARCH", "args": "Python"}}
+User: "Ferme Firefox" → {{"tool": "CLOSE_WINDOW", "args": "Firefox"}}
+User: "Ouvre la calculette" → {{"tool": "LAUNCH", "args": "calculatrice"}}
 
 User: "{user_input}"
 JSON:"""
@@ -905,39 +1008,77 @@ JSON:"""
         if not raw:
              return fallback_intent_detection(user_input)
         
-        print(f"\n{'='*20} [DEBUG] SORTIE AGENT (BRUT) {'='*15}\n{raw}", flush=True) # <--- LOG AJOUTÉ
+        # Log tronqué pour éviter le spam <think>
+        print(f"\n{'='*20} [DEBUG] SORTIE AGENT (BRUT) {'='*15}\n{raw[:500]}...", flush=True)
 
         parsed, error = extract_json_from_response(raw)
         
-        if parsed: # <--- LOG AJOUTÉ
-             print(f"{'-'*20} [DEBUG] JSON PARSÉ {'-'*20}\n{json.dumps(parsed, indent=2, ensure_ascii=False)}\n{'='*58}", flush=True)
+        # --- NOUVEAU BLOC : RÉPARATION DES HALLUCINATIONS JSON DE R1 (Renforcé) ---
+        if parsed:
+            # CAS 1 : Le modèle renvoie une liste simple [TOOL, ARGS] au lieu d'un dict
+            # Ex: ["CLOSE_WINDOW", "Firefox"]
+            if isinstance(parsed, list) and len(parsed) > 0 and isinstance(parsed[0], str):
+                print(f"  [BRAIN] 🔧 Correction R1 (Format Liste détecté)", flush=True)
+                tool = parsed[0]
+                args = str(parsed[1]) if len(parsed) > 1 else ""
+                
+                # NETTOYAGE RENFORCÉ DES ARGS : Si args ressemble à "args: 'Firefox'"
+                # R1 a tendance à mettre le nom de la clé dans la valeur quand il fait des listes
+                if "args" in args:
+                    # Enlève "args", ":", "=" et les quotes
+                    args = re.sub(r"args[:=]*\s*", "", args, flags=re.IGNORECASE).strip().strip("'").strip('"')
+                
+                parsed = {"tool": tool, "args": args}
+
+            # CAS 2 : Le champ 'tool' contient une liste (Hallucination imbriquée)
+            # Ex: {"tool": ["CLOSE_WINDOW", "Firefox"]}
+            elif isinstance(parsed, dict) and isinstance(parsed.get('tool'), list):
+                print(f"  [BRAIN] 🔧 Correction R1 (Tool est une liste)", flush=True)
+                raw_list = parsed['tool']
+                if len(raw_list) > 0:
+                    parsed['tool'] = raw_list[0]
+                    if not parsed.get('args') and len(raw_list) > 1:
+                        parsed['args'] = str(raw_list[1])
+
+            # CAS 3 : Le champ 'tool' contient les arguments collés
+            # Ex: {"tool": "CLOSE_WINDOW Firefox"}
+            elif isinstance(parsed, dict) and isinstance(parsed.get('tool'), str):
+                t = parsed['tool'].strip()
+                if " " in t and not parsed.get('args'):
+                    first_word = t.split(' ')[0]
+                    # On vérifie grossièrement si le premier mot ressemble à un outil (majuscules)
+                    if first_word.isupper() and len(first_word) > 2:
+                        print(f"  [BRAIN] 🔧 Correction R1 (Split Tool/Args)", flush=True)
+                        parsed['tool'] = first_word
+                        parsed['args'] = t[len(first_word):].strip()
+
+            # CAS 4 : Hallucination d'outil (Correction à la volée)
+            # Si R1 invente "DEL_WINDOW" ou "STOP_PROGRAM" -> On force CLOSE_WINDOW
+            if isinstance(parsed, dict):
+                tool_check = str(parsed.get('tool', '')).upper()
+                if tool_check in ["DEL_WINDOW", "DELETE_WINDOW", "STOP_PROGRAM", "KILL_APP", "KILL_WINDOW"]:
+                    print(f"  [BRAIN] 🔧 Correction Hallucination Outil: {tool_check} -> CLOSE_WINDOW", flush=True)
+                    parsed['tool'] = "CLOSE_WINDOW"
+
+            print(f"{'-'*20} [DEBUG] JSON FINAL {'-'*20}\n{json.dumps(parsed, indent=2, ensure_ascii=False)}\n{'='*58}", flush=True)
+        # -------------------------------------------------------------
 
         if error:
             print(f"  [BRAIN] Échec parsing : {error}", flush=True)
             return fallback_intent_detection(user_input)
         
         # === FILTRE ANTI-HALLUCINATION SPÉCIAL MÉTÉO ===
-        # C'est ici qu'on empêche l'IA d'inventer "Paris"
         if isinstance(parsed, dict) and parsed.get('tool') == 'WEATHER':
             arg_city = str(parsed.get('args', '')).strip()
-            
-            # Si l'IA propose une ville, mais que cette ville n'est PAS dans ce que vous avez dit
-            # (Comparaison souple : on vérifie si le mot clé est dans l'input utilisateur)
             if arg_city and len(arg_city) > 2:
-                # Nettoyage pour comparaison (minuscules, sans accents)
-                # CORRECTION : Utilisation de igor_config au lieu de skills
                 user_clean = igor_config.remove_accents(user_input.lower())
                 city_clean = igor_config.remove_accents(arg_city.lower())
-                
-                # Si la ville inventée (ex: "paris") n'est pas dans la phrase user (ex: "quel temps fait-il ?")
                 if city_clean not in user_clean:
                     print(f"  [ANTI-HALLUCINATION] Suppression de la ville inventée : '{arg_city}'", flush=True)
-                    parsed['args'] = "" # On force l'auto-détection
+                    parsed['args'] = ""
 
         # === VALIDATION FINALE ===
-        # Si c'est une liste (BATCH)
         if isinstance(parsed, list):
-            # Vérification que tous les éléments sont des dicts avec "tool"
             for item in parsed:
                 if not isinstance(item, dict) or 'tool' not in item:
                     print(f"  [BRAIN] Item BATCH invalide: {item}", flush=True)
@@ -946,11 +1087,9 @@ JSON:"""
             print(f"  [BRAIN] ✅ BATCH détecté ({len(parsed)} actions)", flush=True)
             return "BATCH", parsed
         
-        # Si c'est un dict simple
         elif isinstance(parsed, dict) and 'tool' in parsed:
             parsed = force_batch_if_needed(user_input, parsed)
 
-            # Re-vérification après correction
             if isinstance(parsed, list):
                 print(f"  [BRAIN] ✅ BATCH corrigé automatiquement ({len(parsed)} actions)", flush=True)
                 return "BATCH", parsed
@@ -1077,6 +1216,29 @@ def quick_heuristic_check(user_input):
         if has_note_verb and not any(ext in lower for ext in [".txt", ".md", ".pdf", ".doc"]):
             print(f"  [QUICK] 📝 LECTURE NOTE détectée (Prioritaire): '{user_input}'", flush=True)
             return ("READ_NOTE", user_input)
+
+    # === PRIORITÉ 1.55 : MÉMOIRE LONG TERME (MEM) ===
+    # Capture "Retiens que...", "Sache que..." pour les faits durables
+    if lower.startswith("retiens que ") or lower.startswith("sache que ") or lower.startswith("mémorise que "):
+        # Nettoyage : on garde tout ce qui suit "que "
+        # Ex: "Retiens que ma couleur est bleue" -> "ma couleur est bleue"
+        match = re.search(r"(?:retiens|sache|mémorise)\s+que\s+(.+)", user_input, re.IGNORECASE)
+        if match:
+            fact = match.group(1).strip()
+            print(f"  [QUICK] 🧠 Mémoire détectée : '{fact}'", flush=True)
+            return ("MEM", fact)
+
+    # === PRIORITÉ 1.6 : ÉCRITURE DE NOTE (HEURISTIQUE) ===
+    # Capture "Note acheter du pain", "Note que je dois..."
+    # On utilise startswith pour éviter de capturer "La note est de 10"
+    if lower.startswith("note ") or lower.startswith("noter ") or lower.startswith("ajoute une note"):
+        # Nettoyage intelligent : on retire le verbe et les conjonctions de début
+        # Regex: ^(note|noter|ajoute une note) (que|de|d'|ceci|:)?
+        clean_text = re.sub(r"^(?:note|noter|ajoute\s+une\s+note)\s*(?:que|qu'|de|d'|ceci|:)?\s*", "", user_input, flags=re.IGNORECASE).strip()
+        
+        if clean_text:
+            print(f"  [QUICK] 📝 Écriture note détectée : '{clean_text}'", flush=True)
+            return ("NOTE", clean_text)
     
     # === PRIORITÉ 2 : OUVERTURE DE FICHIERS (OPEN_FILE) ===
     # Verbes d'ouverture
@@ -1199,6 +1361,30 @@ def quick_heuristic_check(user_input):
         print(f"  [QUICK] 🆔 Changement nom AGENT détecté : '{new_name}' -> AGENTNAME", flush=True)
         return ("AGENTNAME", new_name)
 
+    # === PRIORITÉ 2.1 : ALARME (COMMANDES EXPLICITES) ===
+    # Capture "Réveille-moi à...", "Mets une alarme...", "Debout à 8h"
+    alarm_triggers = ["alarme", "reveil", "réveil", "sonnerie", "debout"]
+    if any(k in lower for k in alarm_triggers):
+        
+        # 1. DÉTECTION SUPPRESSION (PRIORITÉ ABSOLUE)
+        # Si on voit "supprime", "efface", "retire" + alarme -> DEL_ALARM
+        del_keywords = ["supprime", "efface", "retire", "enleve", "enlève", "annule", "arrete", "arrête", "stop"]
+        if any(w in lower for w in del_keywords):
+            print(f"  [QUICK] 🗑️ Suppression alarme détectée -> DEL_ALARM: '{user_input}'", flush=True)
+            return ("DEL_ALARM", user_input)
+
+        # 2. DÉTECTION CRÉATION
+        # On vérifie la présence d'une indication temporelle (chiffres ou mots temporels)
+        time_indicators = ["dans", "à", "a ", "pour", "minutes", "heures", "h", "min", "sec", "demain", "matin", "soir", "midi", "minuit"]
+        has_time = any(t in lower for t in time_indicators) or any(char.isdigit() for char in lower)
+        
+        # Exclusion des commandes de configuration ("change la sonnerie")
+        is_config = any(s in lower for s in ["change", "règle", "defin", "choisi", "style", "type", "bruit", "son"])
+        
+        if has_time and not is_config:
+             print(f"  [QUICK] ⏰ Alarme détectée -> ALARM: '{user_input}'", flush=True)
+             return ("ALARM", user_input)
+
     # === PRIORITÉ 2.2 : RAPPELS (Ambiguïté Alarme vs Note) ===
     # Gestion de : "Rappelle-moi à 8h" (Alarme) vs "Rappelle-moi de manger" (Note)
     if "rappel" in lower:
@@ -1218,6 +1404,20 @@ def quick_heuristic_check(user_input):
             print(f"  [QUICK] 📝 Rappel tâche détecté -> NOTE: '{clean_text}'", flush=True)
             return ("NOTE", clean_text)
 
+    # === PRIORITÉ 2.3 : GESTION TODO LIST (Done/Add) ===
+    # Détection explicite pour éviter la confusion avec CONFIG ("met")
+    if "todo" in lower or "tache" in lower or "tâche" in lower:
+        # 1. Marquer comme fait (Coche, Valide, Met à fait, Fini, Done)
+        # On cherche des mots clés de validation ET un chiffre
+        validation_keywords = ["fait", "done", "fini", "coche", "valide", "met", "marqu"]
+        if any(w in lower for w in validation_keywords) and any(char.isdigit() for char in lower):
+             # Extraction du numéro (ex: "point 2" -> "2")
+             nums = re.findall(r'\d+', user_input)
+             if nums:
+                 idx = nums[0] # On prend le premier chiffre trouvé
+                 print(f"  [QUICK] ✅ Validation Tâche détectée -> PROJECT_TODO_DONE: '{idx}'", flush=True)
+                 return ("PROJECT_TODO_DONE", idx)
+
     # === PRIORITÉ 2.5 : Commandes Muet/Parole (REGEX ROBUSTE) ===
     # Détecte: "parle à nouveau", "tu peux parler", "remets le son", "active la voix", "sors du mode muet", "désactive le silencieux", etc.
     regex_unmute = re.compile(
@@ -1233,8 +1433,14 @@ def quick_heuristic_check(user_input):
         return ("SET_MUTE", "off")
 
     # === PRIORITÉ 2.6 : COMMANDES SHELL ===
-    if "exécute la commande" in lower or "commande terminal" in lower or "commande shell" in lower:
-        for trigger in ["exécute la commande", "execute la commande", "commande terminal", "commande shell"]:
+    shell_triggers = [
+        "exécute la commande", "execute la commande", 
+        "commande terminal", "commande shell", 
+        "lance la commande", "run command"
+    ]
+    
+    if any(t in lower for t in shell_triggers):
+        for trigger in shell_triggers:
             if trigger in lower:
                 # Extraction commande (en gardant la casse)
                 idx = lower.find(trigger) + len(trigger)
@@ -1267,6 +1473,12 @@ def quick_heuristic_check(user_input):
     # === PRIORITÉ 4 : Questions système (REGEX) ===
     # Liste de tuples (Pattern Regex, Action)
     system_regexes = [
+        # NOUVEAU : État du système / Stats (RAM, CPU, Disque)
+        (r"(?:donne[- ]moi\s+|quel\s+est\s+)?l['\s]état\s+du\s+système|stats?\s+système|system\s+status|usage\s+(?:cpu|ram|memoire)|performances?", ("SYSTEM_STATS", "")),
+
+        # NOUVEAU : Statut de l'agent (Config, Alarmes, Mémoire interne)
+        (r"(?:quel\s+est\s+)?(?:ton\s+)?statut|configuration|paramètres?|diagnostic", ("STATUS", "")),
+
         # Apps: "Quelles apps", "Liste mes applications", "Logiciels installés"
         (r"(?:quelles?|liste|mes|voir)\s+(?:toutes\s+les\s+)?(?:applications?|apps?|logiciels?)", ("LIST_APPS", "")),
         
@@ -1285,7 +1497,8 @@ def quick_heuristic_check(user_input):
         
         # Memory: "Que sais-tu SUR MOI", "Ta mémoire", "Ce que tu sais DE MOI"
         # MODIFICATION : Ajout de (?:sur\s+moi|de\s+moi|me\s+concernant) pour ne pas intercepter "Que sais-tu des serpents"
-        (r"(?:qu'est\s+ce\s+que|que|ce\s+que)\s+(?:tu\s+)?sais\s+(?:sur\s+moi|de\s+moi|me\s+concernant)|ta\s+mémoire|faits?\s+mémorisés?", ("READ_MEM", ""))
+        # Correction Regex : Supporte "que sais-tu", "qu'est-ce que tu sais", "ce que tu sais"
+        (r"(?:qu'est\s+ce\s+que|que|ce\s+que)\s+(?:tu\s+sais|sais[-\s]tu)\s+(?:sur\s+moi|de\s+moi|me\s+concernant)|ta\s+mémoire|faits?\s+mémorisés?", ("READ_MEM", ""))
     ]
 
     for pattern, action in system_regexes:

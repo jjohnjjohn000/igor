@@ -21,14 +21,21 @@ except ImportError as e:
     print(f"  [WARN] 'google-generativeai' ou 'Pillow' manquant : {e}", flush=True)
 
 # 🔑 CLÉ API GEMINI
-# Remplacer ci-dessous ou utiliser os.environ["GOOGLE_API_KEY"]
-GEMINI_API_KEY = "AIzaSyAhVW2TyB84IOuX8d-ybmcQ2jded6vxLmU"
+# Chargement depuis le fichier .env pour la sécurité
+import os
+try:
+    from dotenv import load_dotenv
+    load_dotenv() # Charge les variables du fichier .env
+except ImportError:
+    pass # Si python-dotenv n'est pas installé, on espère que la variable est dans le système
+
+GEMINI_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 GEMINI_READY = False
 
 if GEMINI_LIB_AVAILABLE:
     if not GEMINI_API_KEY or "METS_TA_CLE" in GEMINI_API_KEY:
-        print("  [DEBUG-INIT] Clé Gemini invalide (Placeholder détecté).", flush=True)
+        print("  [DEBUG-INIT] Clé Gemini absente (Vérifiez votre fichier .env).", flush=True)
     else:
         try:
             genai.configure(api_key=GEMINI_API_KEY)

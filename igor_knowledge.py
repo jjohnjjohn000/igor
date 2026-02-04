@@ -52,14 +52,21 @@ from igor_system import bash_exec, tool_launch, INSTALLED_APPS
 # --- AJOUT GEMINI AUDIO ---
 try:
     import google.generativeai as genai
+    import os
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except: pass
+
     # Clé API (La même que dans igor_vision.py)
-    GEMINI_API_KEY = "AIzaSyAhVW2TyB84IOuX8d-ybmcQ2jded6vxLmU"
+    GEMINI_API_KEY = os.getenv("GOOGLE_API_KEY")
     
-    if "METS_TA_CLE" not in GEMINI_API_KEY:
+    if GEMINI_API_KEY and "METS_TA_CLE" not in GEMINI_API_KEY:
         genai.configure(api_key=GEMINI_API_KEY)
         GEMINI_AUDIO_AVAILABLE = True
     else:
         GEMINI_AUDIO_AVAILABLE = False
+
 except ImportError:
     GEMINI_AUDIO_AVAILABLE = False
 
@@ -227,7 +234,13 @@ def tool_weather(arg):
         safe_loc = location if location else ""
         url = f"https://wttr.in/{safe_loc}?format=%C+et+%t&lang=fr"
         
-        res = requests.get(url, headers=headers, timeout=10)
+        # Système de Retry (2 tentatives, Timeout augmenté à 20s)
+        try:
+            res = requests.get(url, headers=headers, timeout=20)
+        except requests.exceptions.RequestException:
+            print("  [WEATHER] ⚠️ Timeout/Erreur... Nouvelle tentative...", flush=True)
+            time.sleep(1)
+            res = requests.get(url, headers=headers, timeout=20)
         
         if res.status_code == 200:
             weather_text = res.text.strip().replace("+", "")

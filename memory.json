@@ -1,6 +1,6 @@
 {
-    "agent_name": "Jarvis",
-    "user_name": "Thomas",
+    "agent_name": "Igor",
+    "user_name": "Maître",
     "facts": [
         "J'aime les crudités (Igor)",
         "Utilisateur habite à Montréal",
@@ -18,9 +18,10 @@
         "aime la couleur bleue",
         "aime le café noir",
         "Mon chat s'appelle Felix",
-        "Felix"
+        "Felix",
+        "ma couleur préférée est le bleu"
     ],
-    "voice_speed": 3.0,
+    "voice_speed": 1.4,
     "notebook": [],
     "alarms": [
         {
@@ -36,28 +37,122 @@
                 6
             ],
             "raw": "tous les jours à 22h"
+        },
+        {
+            "type": "recurring",
+            "time": "05:20",
+            "days": [
+                0,
+                1,
+                2,
+                3,
+                4
+            ],
+            "raw": "reveille moi tous les matins de la semaine a 5:20"
         }
     ],
-    "alarm_sound": "douceur",
-    "auto_learn": true,
-    "pinned": false,
-    "muted": false,
+    "alarm_sound": "gong",
+    "auto_learn": false,
+    "pinned": true,
+    "muted": true,
     "fav_music_app": "Scary Videos",
-    "fav_browser": "firefox",
+    "fav_browser": "google-chrome",
     "window_x": 3334,
     "window_y": 1660,
-    "current_project": "SiteWeb",
+    "current_project": "Killtime",
     "wake_lang": "EN",
     "audio_config": {
         "mic_enabled": true,
-        "mic_index": 30,
+        "mic_index": null,
         "sys_enabled": true,
-        "sys_index": 156,
+        "sys_index": 146,
         "sys_delay": 0,
         "debug_audio": false
     },
     "fav_email": "gmail.com",
     "fav_voip": "zoiper5",
-    "fav_terminal": "Poker",
-    "fav_filemanager": "nautilus"
+    "fav_terminal": "tous les terminaux",
+    "fav_filemanager": "nautilus",
+    "llm_backend": "ollama",
+    "llm_model_name": "deepseek-coder-v2",
+    "llm_api_url": "http://localhost:11434/api/generate",
+    "llm_binary_path": "/home/wa/igor/llama.cpp/build/bin/llama-server",
+    "llm_gguf_path": "/home/wa/igor/models/llama-3-8b.gguf",
+    "llm_order": [
+        "ollama",
+        "llamacpp"
+    ],
+    "llm_enabled": {
+        "ollama": true,
+        "llamacpp": true
+    },
+    "llm_url_llamacpp": "http://localhost:8080/completion",
+    "llm_url_ollama": "http://localhost:11434/api/generate",
+    "llm_instances": [
+        {
+            "id": "llamacpp_custom_1769987472",
+            "type": "llamacpp",
+            "name": "Llama.cpp (Local)",
+            "enabled": false,
+            "url": "http://localhost:8080/completion",
+            "binary_path": "/home/wa/igor/llama.cpp/build/bin/llama-server",
+            "gguf_path": "/home/wa/igor/models/llama-3-8b.gguf"
+        },
+        {
+            "id": "ollama_1770082078970",
+            "type": "ollama",
+            "name": "deepseek-r1",
+            "enabled": false,
+            "url": "http://localhost:11434/api/generate",
+            "model_name": "mistral"
+        },
+        {
+            "id": "ollama_1770085196557",
+            "type": "ollama",
+            "name": "deepseek-coder-v2",
+            "enabled": false,
+            "url": "http://localhost:11434/api/generate",
+            "model_name": "deepseek-coder-v2"
+        },
+        {
+            "id": "mistral_nemo_1769987473",
+            "type": "ollama",
+            "name": "Ollama (Nemo)",
+            "enabled": false,
+            "url": "http://localhost:11434/api/generate",
+            "model_name": "mistral-nemo"
+        },
+        {
+            "id": "ollama_1769987689368",
+            "type": "ollama",
+            "name": "Ollama Mistral 7B",
+            "enabled": false,
+            "url": "http://localhost:11434/api/generate",
+            "model_name": "mistral"
+        },
+        {
+            "id": "mistral_small_1769987474",
+            "type": "ollama",
+            "name": "Ollama (Small)",
+            "enabled": false,
+            "url": "http://localhost:11434/api/generate",
+            "model_name": "mistral-small"
+        },
+        {
+            "id": "ollama_1770072202293",
+            "type": "ollama",
+            "name": "Qwen3",
+            "enabled": false,
+            "url": "http://localhost:11434/api/generate",
+            "model_name": "qwen3"
+        },
+        {
+            "id": "ollama_1770088761136",
+            "type": "ollama",
+            "name": "deepseek-coder-v2",
+            "enabled": true,
+            "url": "http://localhost:11434/api/generate",
+            "model_name": "deepseek-coder-v2"
+        }
+    ]
 }
