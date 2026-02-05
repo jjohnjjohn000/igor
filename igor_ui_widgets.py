@@ -1052,32 +1052,36 @@ class ConfigDialog(Gtk.Dialog):
         entry_bin = Gtk.Entry(placeholder_text="/chemin/vers/llama-server")
         entry_bin.set_text(instance.get('binary_path', ''))
         entry_bin.set_hexpand(True)
+        
+        # Boite pour Browse + Install
+        box_bin_actions = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
+        
+        btn_browse_bin = Gtk.Button(label="📁")
+        btn_browse_bin.set_tooltip_text("Parcourir...")
+        btn_browse_bin.connect("clicked", self._on_browse_file, entry_bin, "Sélectionner llama-server")
+        
         btn_install = Gtk.Button(label="⬇️ Installer")
-        btn_install.connect("clicked", self._on_install_llama_bin, entry_bin) # On passe l'entry spécifique
+        btn_install.connect("clicked", self._on_install_llama_bin, entry_bin)
+        
+        box_bin_actions.pack_start(btn_browse_bin, False, False, 0)
+        box_bin_actions.pack_start(btn_install, False, False, 0)
         
         grid.attach(Gtk.Label(label="Exécutable :"), 0, 0, 1, 1)
         grid.attach(entry_bin, 1, 0, 1, 1)
-        grid.attach(btn_install, 2, 0, 1, 1)
+        grid.attach(box_bin_actions, 2, 0, 1, 1)
 
         # Modèle GGUF
         entry_gguf = Gtk.Entry(placeholder_text="/chemin/vers/model.gguf")
         entry_gguf.set_text(instance.get('gguf_path', ''))
         entry_gguf.set_hexpand(True)
         
-        # Boutons de téléchargement modèles
-        box_dl_models = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
-        btn_dl_24b = Gtk.Button(label="Mistral 24B")
-        btn_dl_24b.connect("clicked", self._on_download_mistral, entry_gguf)
-        
-        btn_dl_nemo = Gtk.Button(label="Nemo 12B")
-        btn_dl_nemo.connect("clicked", self._on_download_nemo, entry_gguf)
-        
-        box_dl_models.pack_start(btn_dl_24b, False, False, 0)
-        box_dl_models.pack_start(btn_dl_nemo, False, False, 0)
+        btn_browse_gguf = Gtk.Button(label="📁")
+        btn_browse_gguf.set_tooltip_text("Choisir un modèle .gguf")
+        btn_browse_gguf.connect("clicked", self._on_browse_file, entry_gguf, "Sélectionner Modèle", "*.gguf")
 
         grid.attach(Gtk.Label(label="Modèle GGUF :"), 0, 1, 1, 1)
         grid.attach(entry_gguf, 1, 1, 1, 1)
-        grid.attach(box_dl_models, 2, 1, 1, 1)
+        grid.attach(btn_browse_gguf, 2, 1, 1, 1)
         
         # URL
         entry_url = Gtk.Entry()
@@ -1143,6 +1147,48 @@ class ConfigDialog(Gtk.Dialog):
 
     # --- ACTIONS UI ---
 
+    def _on_browse_file(self, btn, entry_target, title, filter_pattern=None):
+        """Ouvre un sélecteur de fichier."""
+        dialog = Gtk.FileChooserDialog(
+            title=title,
+            parent=self,
+            action=Gtk.FileChooserAction.OPEN
+        )
+        dialog.add_buttons(
+            Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+            Gtk.STOCK_OPEN, Gtk.ResponseType.OK
+        )
+        
+        if filter_pattern:
+            filter_file = Gtk.FileFilter()
+            filter_file.set_name(f"Fichiers {filter_pattern}")
+            filter_file.add_pattern(filter_pattern)
+            dialog.add_filter(filter_file)
+            
+        filter_all = Gtk.FileFilter()
+        filter_all.set_name("Tous les fichiers")
+        filter_all.add_pattern("*")
+        dialog.add_filter(filter_all)
+        
+        # Définit le dossier actuel si le chemin existe
+        current_path = entry_target.get_text().strip()
+        if current_path:
+            current_path = os.path.expanduser(current_path)
+            if os.path.exists(current_path):
+                if os.path.isdir(current_path):
+                    dialog.set_current_folder(current_path)
+                else:
+                    dialog.set_filename(current_path)
+            elif os.path.exists(os.path.dirname(current_path)):
+                dialog.set_current_folder(os.path.dirname(current_path))
+
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            filename = dialog.get_filename()
+            entry_target.set_text(filename)
+            
+        dialog.destroy()
+
     def _on_move_llm(self, btn, row_widget, direction):
         parent = self.llm_list_box
         children = parent.get_children()
@@ -1179,22 +1225,22 @@ class ConfigDialog(Gtk.Dialog):
                 if "8080" in url:
                     if llama_ok:
                         refs['status_lbl'].set_markup("<span background='#00aa00' foreground='white' weight='bold'> ONLINE </span>")
-                        if 'sw_process' in refs: refs['sw_process'].set_state(True)
+                        # if 'sw_process' in refs: refs['sw_process'].set_state(True) # Désactivé pour éviter boucle
                     else:
                         refs['status_lbl'].set_markup("<span background='#aa0000' foreground='white' size='small'> OFFLINE </span>")
-                        if 'sw_process' in refs: refs['sw_process'].set_state(False)
+                        # if 'sw_process' in refs: refs['sw_process'].set_state(False) # Désactivé pour éviter boucle
             
             # Si c'est Ollama
             elif 'model' in refs:
                 if ollama_ok:
                     refs['status_lbl'].set_markup("<span background='#00aa00' foreground='white' weight='bold'> ONLINE </span>")
                     # Synchronise le switch si le service est détecté actif
-                    if 'sw_service' in refs: 
-                        refs['sw_service'].set_state(True)
+                    # if 'sw_service' in refs: 
+                    #    refs['sw_service'].set_state(True) # Désactivé pour éviter boucle
                 else:
                     refs['status_lbl'].set_markup("<span background='#aa0000' foreground='white' size='small'> OFFLINE </span>")
-                    if 'sw_service' in refs: 
-                        refs['sw_service'].set_state(False)
+                    # if 'sw_service' in refs: 
+                    #    refs['sw_service'].set_state(False) # Désactivé pour éviter boucle
         
         return True
 
@@ -1205,41 +1251,85 @@ class ConfigDialog(Gtk.Dialog):
         refs = self.llm_ui_refs.get(unique_id)
         if not refs: return True
         
-        bin_path = refs['bin'].get_text().strip()
-        gguf_path = refs['gguf'].get_text().strip()
+        # FIX: Expanduser pour gérer le '~' et vérification basique
+        bin_path = os.path.expanduser(refs['bin'].get_text().strip())
+        gguf_path = os.path.expanduser(refs['gguf'].get_text().strip())
         
+        if state and (not bin_path or not gguf_path):
+            print("  [UI] Erreur: Chemins vides.", flush=True)
+            # On remet le switch à off visuellement si les chemins sont vides
+            switch.set_state(False)
+            return True
+
         # On met à jour la mémoire temporairement pour que manage_local_server sache quoi lancer
         skills.MEMORY['llm_binary_path'] = bin_path
         skills.MEMORY['llm_gguf_path'] = gguf_path
         
         action = "start" if state else "stop"
-        manage_local_server(action)
+        
+        # On tente l'action
+        success = manage_local_server(action)
+        
+        # Si le démarrage échoue, on remet le switch à OFF
+        if action == "start" and not success:
+             switch.set_state(False)
+             
         return True
 
     def _on_ollama_service_switch(self, switch, state, unique_id):
-        """Lance ou arrête le service Ollama localement."""
-        try:
-            if state:
-                # Démarrage
-                print("  [OLLAMA-CTRL] Démarrage du service 'ollama serve'...", flush=True)
-                # On lance en mode détaché
-                subprocess.Popen(
-                    ["ollama", "serve"],
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
-                    start_new_session=True
-                )
-            else:
-                # Arrêt (Force brute utilisateur)
-                print("  [OLLAMA-CTRL] Arrêt du service Ollama...", flush=True)
-                # On essaie de tuer le processus proprement
-                subprocess.run(["pkill", "ollama"], check=False)
+        """Lance ou arrête le service Ollama via systemd (SUDO SANS MDP)."""
+        import shutil
+        
+        print(f"  [DEBUG-OLLAMA] Switch toggled. State: {state}, ID: {unique_id}", flush=True)
+
+        if not shutil.which("systemctl"):
+            print("  [OLLAMA-CTRL] ❌ Erreur : 'systemctl' introuvable.", flush=True)
+            switch.set_state(False)
+            return True
+
+        # Utilisation de 'sudo -n' (non-interactive).
+        # Nécessite la config visudo : user ALL=(ALL) NOPASSWD: /usr/bin/systemctl start ollama
+        action = "start" if state else "stop"
+        cmd = ["sudo", "-n", "systemctl", action, "ollama"]
+        
+        def _run_bg():
+            try:
+                print(f"  [OLLAMA-CTRL] ⚙️ Exécution : {' '.join(cmd)}", flush=True)
                 
-        except Exception as e:
-            print(f"  [OLLAMA-CTRL] Erreur : {e}", flush=True)
-            return True # Empêche le switch de basculer visuellement si erreur grave
+                # On utilise run() pour capturer le code de retour immédiatement
+                res = subprocess.run(
+                    cmd,
+                    capture_output=True,
+                    text=True
+                )
+                
+                print(f"  [DEBUG-OLLAMA] Return Code: {res.returncode}", flush=True)
+                print(f"  [DEBUG-OLLAMA] STDOUT: {res.stdout.strip()}", flush=True)
+                print(f"  [DEBUG-OLLAMA] STDERR: {res.stderr.strip()}", flush=True)
+
+                if res.returncode == 0:
+                    icon = "🚀" if state else "🛑"
+                    print(f"  [OLLAMA-CTRL] {icon} Succès : Service {action}ed.", flush=True)
+                else:
+                    print(f"  [OLLAMA-CTRL] ❌ ÉCHEC (Code {res.returncode})", flush=True)
+                    print(f"  [OLLAMA-LOG] {res.stderr.strip()}", flush=True)
+                    if "password" in res.stderr.lower() or res.returncode == 1:
+                        print("  [OLLAMA-HELP] 💡 ASTUCE : Ajoutez ceci dans 'sudo visudo' :")
+                        try: user = os.getlogin()
+                        except: user = os.environ.get('USER', 'utilisateur')
+                        print(f"                 {user} ALL=(ALL) NOPASSWD: /usr/bin/systemctl start ollama, /usr/bin/systemctl stop ollama")
+                    
+                    # On remet le switch à l'état précédent visuellement
+                    GLib.idle_add(switch.set_state, not state)
+
+            except Exception as e:
+                print(f"  [OLLAMA-CTRL] ❌ Exception : {e}", flush=True)
+                GLib.idle_add(switch.set_state, not state)
+
+        # Lancement dans un thread pour ne pas freezer l'interface
+        threading.Thread(target=_run_bg, daemon=True).start()
             
-        return False # Laisse l'état du switch changer
+        return False
 
     # --- TÉLÉCHARGEMENTS (Adaptés pour recevoir le widget cible) ---
 

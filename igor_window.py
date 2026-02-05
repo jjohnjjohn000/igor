@@ -687,7 +687,6 @@ class AgentWindow(Gtk.Window):
                 safe_text = GLib.markup_escape_text(text)
             else:
                 # Si c'est du markup généré par nous (avec liens), on le garde tel quel
-                # Attention : le texte source doit avoir été échappé AVANT d'ajouter les balises <a>
                 safe_text = text
 
             safe_sender = GLib.markup_escape_text(str(sender))
@@ -705,15 +704,31 @@ class AgentWindow(Gtk.Window):
             lbl.set_markup(span_str)
 
             # --- SIGNAL CLIC HYPERLIEN ---
-            # C'est ici qu'on rend le lien actif
             lbl.connect("activate-link", self.on_chat_link_click)
             
-            bg = Gtk.Box()
+            # Conteneur horizontal pour le message + bouton éventuel
+            bg = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
+            
+            # Ajout du Label (Message)
             bg.pack_start(lbl, False, False, 2)
+
+            # Si c'est l'agent, on ajoute le bouton REPLAY à côté
+            if sender != "User":
+                btn_replay = Gtk.Button(label="🔊")
+                btn_replay.set_relief(Gtk.ReliefStyle.NONE)
+                btn_replay.set_tooltip_text("Relire ce message")
+                btn_replay.set_valign(Gtk.Align.START) # Alignement haut pour les longs textes
+                
+                # On connecte le clic à la fonction de relecture (texte brut)
+                btn_replay.connect("clicked", self.on_replay_click, text)
+                
+                bg.pack_start(btn_replay, False, False, 0)
+
             bg.set_halign(align)
             self.chat_box.pack_start(bg, False, False, 2)
             
-            lbl.show(); bg.show()
+            # On affiche tout récursivement
+            bg.show_all()
             
             def _smooth_scroll():
                 adj = self.scrolled.get_vadjustment()
@@ -728,6 +743,19 @@ class AgentWindow(Gtk.Window):
             
         except Exception as e:
             print(f"  [UI ERR] Erreur affichage: {e}", flush=True)
+
+    def on_replay_click(self, btn, text_to_speak):
+        """Relit un message spécifique via TTS (manuel)."""
+        def _speak_worker():
+            # On anime le visage pendant la lecture manuelle
+            GLib.idle_add(self.face.set_state, "SPEAKING")
+            try:
+                # ignore_mute=True car c'est une action utilisateur explicite
+                speak_logic(text_to_speak, ignore_mute=True)
+            finally:
+                GLib.idle_add(self.face.set_state, "IDLE")
+        
+        threading.Thread(target=_speak_worker, daemon=True).start()
 
     def on_chat_link_click(self, label, uri):
         """

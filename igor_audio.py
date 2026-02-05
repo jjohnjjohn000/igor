@@ -212,15 +212,19 @@ def listen_hybrid_logic():
     r = sr.Recognizer()
     
     # 1. RÉGLAGE DE LA SENSIBILITÉ
-    # On laisse l'algo décider du seuil de bruit (plus fiable que 300 fixe)
+    # Ajustement dynamique du seuil de bruit (Essentiel pour LINEAR16 qui capte tout)
     r.dynamic_energy_threshold = True  
+    r.dynamic_energy_adjustment_ratio = 1.5 
     
-    # 2. RÉGLAGE DE LA PATIENCE
-    # C'est ici que ça se joue : on passe de 1.0 à 1.5 secondes de silence
-    # nécessaire pour valider la fin de la phrase.
-    r.pause_threshold = 1.5 
+    # 2. RÉGLAGE DE LA PATIENCE (2.0s)
+    # C'est le compromis idéal. 3.0s bloque trop souvent l'agent sur des bruits ambiants.
+    r.pause_threshold = 2.2
     
-    # Évite de couper si on parle doucement
+    # 3. TOLÉRANCE AUX PAUSES
+    # Permet de respirer sans couper la phrase
+    r.non_speaking_duration = 0.5
+    
+    # Seuil minimum de parole pour valider une phrase
     r.phrase_threshold = 0.3
     
     # Ducking (Baisse le son du système pour mieux entendre)
@@ -230,14 +234,21 @@ def listen_hybrid_logic():
     text_out = ""
     try:
         with no_alsa_err():
+            # RECOMMANDATION GOOGLE APPLIQUÉE : sample_rate=16000
+            # On force la capture à 16kHz dès la source hardware pour éviter le resampling logiciel.
+            # Cela garantit un signal LINEAR16 propre pour l'API.
             with sr.Microphone(sample_rate=16000) as source:
-                # 3. DÉMARRAGE PLUS RAPIDE
-                # On réduit le temps de calibration de 0.5 à 0.2 pour ne pas rater le début
-                r.adjust_for_ambient_noise(source, duration=0.2)
+                
+                # 4. CALIBRATION
+                # Durée augmentée à 0.6s pour bien analyser le "silence" de la pièce
+                r.adjust_for_ambient_noise(source, duration=0.6)
                 
                 try: 
-                    # On augmente un peu le timeout global
-                    audio = r.listen(source, timeout=5, phrase_time_limit=15)
+                    # SÉCURITÉ : phrase_time_limit=30
+                    # On laisse 30 secondes max pour parler. 
+                    # Sans cette limite, le moindre bruit de ventilateur peut bloquer l'agent indéfiniment
+                    # et empêcher le Wake Word de fonctionner à nouveau.
+                    audio = r.listen(source, timeout=7, phrase_time_limit=30)
                     
                     try: 
                         text_out = r.recognize_google(audio, language="fr-FR")

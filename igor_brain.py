@@ -171,11 +171,35 @@ def manage_local_server(action):
         if igor_globals.LLM_SERVER_PROCESS:
             return True # Déjà lancé
 
-        binary = skills.MEMORY.get('llm_binary_path')
-        model = skills.MEMORY.get('llm_gguf_path')
+        # FIX : Gestion propre des chemins (expanduser pour le ~)
+        binary = os.path.expanduser(skills.MEMORY.get('llm_binary_path', '')).strip()
+        model = os.path.expanduser(skills.MEMORY.get('llm_gguf_path', '')).strip()
         
-        if not binary or not model or not os.path.exists(binary) or not os.path.exists(model):
-            print("  [LLM-SRV] Erreur : Chemins binaire ou modèle invalides.", flush=True)
+        # VÉRIFICATION DÉTAILLÉE (Pour savoir quel fichier manque)
+        missing = False
+        
+        if not binary:
+            print("  [LLM-SRV] ❌ Config: Chemin binaire vide.", flush=True)
+            missing = True
+        elif not os.path.isfile(binary):
+            print(f"  [LLM-SRV] ❌ FICHIER BINAIRE INTROUVABLE :\n    Attendu: '{binary}'\n    Conseil: Avez-vous compilé llama.cpp ? (make)", flush=True)
+            missing = True
+        elif not os.access(binary, os.X_OK):
+            print(f"  [LLM-SRV] ⚠️ Permission refusée : '{binary}' n'est pas exécutable.\n    Tentative de correction (chmod +x)...", flush=True)
+            try:
+                os.chmod(binary, 0o755)
+            except Exception as e:
+                print(f"    Echec chmod: {e}")
+                missing = True
+
+        if not model:
+            print("  [LLM-SRV] ❌ Config: Chemin modèle vide.", flush=True)
+            missing = True
+        elif not os.path.isfile(model):
+            print(f"  [LLM-SRV] ❌ FICHIER MODÈLE INTROUVABLE :\n    Attendu: '{model}'\n    Conseil: Vérifiez le nom exact du fichier.", flush=True)
+            missing = True
+
+        if missing:
             return False
 
         try:
@@ -185,19 +209,53 @@ def manage_local_server(action):
             cmd = [
                 binary,
                 "-m", model,
-                "-c", "4096",      # Contexte
-                "--port", "8080",  # Port
-                "-ngl", "99",      # GPU Layers (tout sur GPU si possible)
+                "-c", "8192",      # Contexte augmenté (8k standard ajd)
+                "--port", "8080",
+                "-ngl", "99",      # GPU Layers
                 "--host", "0.0.0.0"
             ]
             
-            # Lancement non-bloquant
+            # DEBUG : Affichage de la commande complète
+            import shlex
+            cmd_str = ' '.join(shlex.quote(s) for s in cmd)
+            print(f"  [LLM-SRV] 📟 COMMANDE LANCÉE :\n{cmd_str}", flush=True)
+            
+            # Lancement avec capture des erreurs (stderr=PIPE)
+            # On utilise text=True pour recevoir des chaînes de caractères
             igor_globals.LLM_SERVER_PROCESS = subprocess.Popen(
                 cmd, 
-                stdout=subprocess.DEVNULL, # On cache les logs pour ne pas polluer
-                stderr=subprocess.DEVNULL
+                stdout=subprocess.DEVNULL, 
+                stderr=subprocess.PIPE, # On capture les erreurs
+                text=True
             )
-            return True
+            
+            # VÉRIFICATION IMMÉDIATE (0.5s)
+            # On attend un instant pour voir si le processus crash tout de suite
+            try:
+                ret_code = igor_globals.LLM_SERVER_PROCESS.wait(timeout=0.5)
+                
+                # Si on arrive ici, c'est que le processus s'est ARRÊTÉ (Crash)
+                _, stderr_output = igor_globals.LLM_SERVER_PROCESS.communicate()
+                print(f"  [LLM-SRV] ❌ CRASH AU DÉMARRAGE (Code {ret_code}) :", flush=True)
+                print(f"  [LLM-LOG] {stderr_output}", flush=True)
+                igor_globals.LLM_SERVER_PROCESS = None
+                return False
+                
+            except subprocess.TimeoutExpired:
+                # Si TimeoutExpired, c'est que le processus TOURNE ENCORE -> Succès !
+                
+                # On lance un thread pour lire les erreurs futures sans bloquer (ex: Out of memory plus tard)
+                def monitor_stderr(proc):
+                    for line in proc.stderr:
+                        if "error" in line.lower() or "warning" in line.lower():
+                            print(f"  [LLM-LOG] {line.strip()}", flush=True)
+                
+                t = threading.Thread(target=monitor_stderr, args=(igor_globals.LLM_SERVER_PROCESS,), daemon=True)
+                t.start()
+                
+                print("  [LLM-SRV] ✅ Serveur démarré avec succès.", flush=True)
+                return True
+                
         except Exception as e:
             print(f"  [LLM-SRV] Exception démarrage : {e}", flush=True)
             return False

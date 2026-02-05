@@ -827,7 +827,7 @@ def tool_media_control(arg):
     except Exception as e: return f"Erreur : {e}"
 
 def tool_listen_system(arg):
-    """Enregistre l'audio système et l'analyse (Gemini ou STT)."""
+    """Enregistre l'audio système et l'analyse (Gemini ou STT + LLM Local)."""
     if 'sc' not in globals(): return "Module soundcard manquant."
     
     try:
@@ -865,27 +865,63 @@ def tool_listen_system(arg):
                 # 2. Configuration du modèle (Flash est rapide et gère l'audio)
                 model = genai.GenerativeModel("gemini-2.5-flash")
                 
-                # 3. Prompt contextuel
-                prompt = "Écoute cet audio. S'il y a de la parole, transcris-la. Si c'est de la musique ou un bruit, décris ce que c'est brièvement en français."
+                # 3. Prompt contextuel (Modifié pour l'analyse)
+                prompt = """Tu es un analyste audio expert. 
+1. Transcris fidèlement les dialogues entendus (mot pour mot si possible).
+2. Fais un résumé court du sujet de la discussion.
+3. Ajoute un bref commentaire ou une analyse sur le ton ou le contexte.
+Réponds en français."""
                 
                 # 4. Génération
                 result = model.generate_content([myfile, prompt])
                 
-                # 5. Nettoyage (optionnel mais recommandé pour ne pas saturer le stockage cloud temporaire)
-                # myfile.delete() 
-                
                 if result.text:
-                    return f"Analyse Audio : {result.text}"
+                    return f"Analyse Audio (Cloud) :\n{result.text}"
             except Exception as e:
                 print(f"  [LISTEN] Erreur Gemini ({e}), passage au mode classique.", flush=True)
 
-        # --- TENTATIVE 2 : FALLBACK CLASSIQUE (Transcription seule) ---
+        # --- TENTATIVE 2 : FALLBACK CLASSIQUE (Transcription + LLM Local) ---
         print("  [LISTEN] Transcription classique...", flush=True)
         rec = sr.Recognizer()
         with sr.AudioFile(fname) as src:
             aud = rec.record(src)
-            try: return f"Entendu : \"{rec.recognize_google(aud, language='fr-FR')}\""
-            except: return "Rien entendu (ou son non vocal)."
+            try: 
+                # 1. Transcription brute (Google Speech)
+                raw_text = rec.recognize_google(aud, language='fr-FR')
+                print(f"  [LISTEN] Transcrit brut : {raw_text[:50]}...", flush=True)
+                
+                # 2. Analyse via LLM Local (Fonction interne)
+                def _analyze_locally(text):
+                    backend = MEMORY.get('llm_backend', 'llamacpp')
+                    url = MEMORY.get('llm_api_url', "http://localhost:8080/completion")
+                    model_name = MEMORY.get('llm_model_name', 'mistral-small')
+                    
+                    prompt = f"""Voici une transcription audio : "{text}"
+Tâche :
+1. Résume le sujet.
+2. Donne un court commentaire ou une analyse pertinente.
+Ne répète pas le texte, analyse-le."""
+
+                    try:
+                        if backend == 'ollama':
+                            payload = {"model": model_name, "prompt": prompt, "stream": False, "options": {"num_predict": 150}}
+                            res = requests.post(url, json=payload, timeout=10)
+                            return res.json().get('response', '').strip()
+                        else:
+                            payload = {"prompt": prompt, "n_predict": 150}
+                            res = requests.post(url, json=payload, timeout=10)
+                            return res.json().get('content', '').strip()
+                    except:
+                        return "(Analyse IA indisponible)"
+
+                analysis = _analyze_locally(raw_text)
+                
+                return f"📝 Transcription : \"{raw_text}\"\n\n💡 Analyse : {analysis}"
+                
+            except sr.UnknownValueError: 
+                return "Je n'ai détecté aucune parole intelligible."
+            except Exception as e:
+                return f"Erreur transcription : {e}"
             
     except Exception as e: return f"Erreur technique : {e}"
 
